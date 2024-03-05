@@ -29,8 +29,6 @@ int main() {
     // Clear renderer
     SDL_RenderClear(renderer);
 
-    SDL_RenderGeometry()
-
     // Update screen
     SDL_RenderPresent(renderer);
 
