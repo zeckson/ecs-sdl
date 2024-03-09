@@ -21,7 +21,7 @@ SDL_TTF_LIBRARY := $(shell pkg-config SDL2_ttf --libs)
 SDL_LIBRARY := $(SDL_CORE_LIBRARY) $(SDL_IMAGE_LIBRARY) $(SDL_TTF_LIBRARY)
 
 # Compiler flags
-COMPILER_FLAGS := -std=c++17 -Wall -O0 -g -mmacosx-version-min=13.0 $(SDL_LIBRARY_FLAGS)
+COMPILER_FLAGS := -std=c++17 -Wall -O0 -g -mmacosx-version-min=14.0 $(SDL_LIBRARY_FLAGS)
 
 CXXFLAGS = $(COMPILER_FLAGS)
 
@@ -39,7 +39,7 @@ $(BUILD_DIR):
 # Rule for object files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	@echo "Compiling: " $< " into: " $@
-	$(CC) $(CXXFLAGS) -c $< -o $@
+	$(CC) $(CXXFLAGS) -DPROJECT_NAME='"$(PROJECT_NAME)"' -c $< -o $@
 
 # Build rule for the executable
 compile: $(OBJS)

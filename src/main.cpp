@@ -1,6 +1,10 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#ifndef PROJECT_NAME
+#define PROJECT_NAME "SDL Window"
+#endif
+
 int main() {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -9,7 +13,8 @@ int main() {
     }
 
     // Create window
-    SDL_Window* window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+    const char *const TITLE = PROJECT_NAME;
+    SDL_Window* window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                           800, 600, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         std::cerr << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
