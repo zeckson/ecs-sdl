@@ -39,6 +39,7 @@ $(BUILD_DIR):
 # Rule for object files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	@echo "Compiling: " $< " into: " $@
+	mkdir -p $(dir $@)
 	$(CC) $(CXXFLAGS) -DPROJECT_NAME='"$(PROJECT_NAME)"' -c $< -o $@
 
 # Build rule for the executable

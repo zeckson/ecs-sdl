@@ -1,57 +1,37 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "game.h"
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+
 #ifndef PROJECT_NAME
 #define PROJECT_NAME "SDL Window"
 #endif
 
+class ECSDemoGame: public Game {
+public:
+    ECSDemoGame(): Game(PROJECT_NAME, SCREEN_WIDTH, SCREEN_HEIGHT) {}
+
+    bool onGameCreate() override {
+        return true;
+    }
+
+    bool onGameUpdate(double elapsedTime) override {
+        renderer->setColor(RED);
+        renderer->drawCircle(width / 2, height / 2, std::min(width, height) / 4);
+        return true;
+    }
+
+    void onKeyDown(const SDL_Keysym &keysym) override {
+    }
+};
+
 int main() {
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize! SDL Error: " << SDL_GetError() << std::endl;
-        return 1;
-    }
+    ECSDemoGame game;
 
-    // Create window
-    const char *const TITLE = PROJECT_NAME;
-    SDL_Window* window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                          800, 600, SDL_WINDOW_SHOWN);
-    if (window == nullptr) {
-        std::cerr << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
-        return 1;
-    }
-
-    // Create renderer
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == nullptr) {
-        std::cerr << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
-        return 1;
-    }
-
-    // Set render draw color
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White color
-
-    // Clear renderer
-    SDL_RenderClear(renderer);
-
-    // Update screen
-    SDL_RenderPresent(renderer);
-
-    // Main loop
-    bool quit = false;
-    SDL_Event e;
-    while (!quit) {
-        while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) {
-                quit = true;
-            }
-        }
-    }
-
-    // Clean up
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    game.start();
 
     return 0;
 }
