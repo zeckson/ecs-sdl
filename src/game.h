@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 #include <memory>
 #include "renderer/pixelrenderer.h"
+#include "entity/entitymanager.h"
 
 class Game {
 public:
@@ -16,6 +17,7 @@ public:
 
 protected:
     explicit Game(const char *title, Uint16 width, Uint16 height);
+
 
     std::shared_ptr<PixelRenderer> renderer;
 
@@ -26,8 +28,15 @@ protected:
 
 private:
     SDL_Window *window;
+    SDL_Renderer *pSDLRenderer;
 
-    bool input(SDL_Event &e);
+    EntityManager manager;
+
+    bool input();
+
+    bool update(const float elapsedTime);
+
+    Uint64 frame = 0;
 };
 
 

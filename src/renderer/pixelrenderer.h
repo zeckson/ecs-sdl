@@ -9,28 +9,27 @@
 #include "SDL2/SDL.h"
 
 #include "pixel.h"
+#include "../entity/vec2.h"
 
 class PixelRenderer {
 public:
     const Uint16 width, height;
 
-    explicit PixelRenderer(SDL_Window *window, const Uint16 width, const Uint16 height)
+    explicit PixelRenderer(SDL_Renderer *renderer, const Uint16 width, const Uint16 height)
             : width(width), height(height),
-            pSDLRenderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE)) {
+            pSDLRenderer(renderer) {
 
     }
 
     ~PixelRenderer() {
-        destroy();
     }
 
     PixelRenderer *setColor(const Pixel &pixel);
     PixelRenderer *clear();
     PixelRenderer *present();
 
-    void destroy();
-
-    void drawLine(int startX, int startY, int endX, int endY);
+    void drawLine(Uint32 startX, Uint32 startY, Uint32 endX, Uint32 endY);
+    void drawLine(const Vec2<Uint32> &from, const Vec2<Uint32> &to);
 
     void drawRect(const SDL_Rect *pRect);
 

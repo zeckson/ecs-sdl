@@ -9,12 +9,15 @@
 #include <tuple>
 #include <memory>
 
-#include "component/sprite.h"
+#include "../component/sprite.h"
 
 
 class Entity {
-    std::string name;
+public:
+    const std::string &name;
+    const Uint8 id;
 
+    explicit Entity(const std::string &name, const Uint8 &id): name(name), id(id) {};
 };
 
 

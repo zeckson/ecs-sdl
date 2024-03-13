@@ -8,9 +8,9 @@
 #include <SDL2/SDL.h>
 
 struct Sprite {
-    SDL_Texture* texture;
-    int width;
-    int height;
+    const SDL_Texture* texture;
+    const Uint16 width;
+    const Uint16 height;
 };
 
 #endif //ECS_SDL_SPRITE_H

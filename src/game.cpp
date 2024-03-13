@@ -34,7 +34,18 @@ Game::Game(const char *title, Uint16 width, Uint16 height) : width(width), heigh
         exit(1);
     }
 
-    renderer = std::make_shared<PixelRenderer>(window, width, height);
+    SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1,
+                                                   SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+
+    if (!sdlRenderer) {
+        printf("Failed to create renderer: %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    pSDLRenderer = sdlRenderer;
+
+    renderer = std::make_shared<PixelRenderer>(sdlRenderer, width, height);
 }
 
 void Game::start() {
@@ -46,34 +57,33 @@ void Game::start() {
     onGameCreate();
 
     bool quit = false;
-    SDL_Event e;
     while (!quit) {
 
         renderer->setColor(BLACK);
         renderer->clear();
 
-        onGameUpdate(frameTime);
+        quit = update(frameTime);
 
         renderer->present();
 
         //timing for input and FPS counter
+        frame++;
         oldTime = time;
         time = SDL_GetTicks();
         frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
 //        print(1.0 / frameTime); //FPS counter
 //        redraw();
 //        cls();
-
-
-        quit = input(e);
     }
 
-    renderer->destroy();
+    SDL_DestroyRenderer(pSDLRenderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
 
-bool Game::input(SDL_Event &e) {
+bool Game::input() {
+    SDL_Event e;
+
     bool quit;
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) {
@@ -97,4 +107,9 @@ bool Game::input(SDL_Event &e) {
         }
     }
     return quit;
+}
+
+bool Game::update(const float elapsedTime) {
+    onGameUpdate(elapsedTime);
+    return input();
 }

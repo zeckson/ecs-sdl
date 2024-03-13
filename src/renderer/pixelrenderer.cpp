@@ -20,12 +20,12 @@ PixelRenderer *PixelRenderer::present() {
     return this;
 }
 
-void PixelRenderer::destroy() {
-    SDL_DestroyRenderer(pSDLRenderer);
+void PixelRenderer::drawLine(Uint32 startX, Uint32 startY, Uint32 endX, Uint32 endY) {
+    SDL_RenderDrawLine(pSDLRenderer, startX, startY, endX, endY);
 }
 
-void PixelRenderer::drawLine(int startX, int startY, int endX, int endY) {
-    SDL_RenderDrawLine(pSDLRenderer, startX, startY, endX, endY);
+void PixelRenderer::drawLine(const Vec2<Uint32> &from, const Vec2<Uint32> &to) {
+    drawLine(from.x, from.y, to.x, to.y);
 }
 
 void PixelRenderer::drawRect(const SDL_Rect *pRect) {
@@ -41,3 +41,4 @@ void PixelRenderer::drawCircle(int centerX, int centerY, int radius) {
         }
     }
 }
+
