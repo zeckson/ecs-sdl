@@ -27,7 +27,7 @@ void Game::start() {
 
         renderer->renderText("FPS: " + std::to_string((int) std::floor(1.0 / frameTime)), 0, 0);
 
-        quit = update(frameTime);
+        quit = update((float) frameTime);
 
         renderer->present();
 
