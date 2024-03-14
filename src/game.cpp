@@ -8,14 +8,14 @@
 
 Game::Game(const char *title, Uint16 width, Uint16 height) : width(width), height(height),
                                                              app(App(title, width, height)) {
-    renderer = std::make_shared<PixelRenderer>(app.pSDLRenderer, width, height);
+    renderer = std::make_shared<PixelRenderer>(app.pSDLRenderer, app.font, width, height);
 }
 
 void Game::start() {
     Uint32 time = 0; //time of current frame
     Uint32 oldTime = 0; //time of previous frame
 
-    float frameTime = 0;
+    double frameTime = 0;
 
     onGameCreate();
 
@@ -25,6 +25,8 @@ void Game::start() {
         renderer->setColor(BLACK);
         renderer->clear();
 
+        renderer->renderText("FPS: " + std::to_string((int) std::floor(1.0 / frameTime)), 0, 0);
+
         quit = update(frameTime);
 
         renderer->present();
@@ -33,10 +35,7 @@ void Game::start() {
         frame++;
         oldTime = time;
         time = SDL_GetTicks();
-        frameTime = (float) ((time - oldTime) / 1000.0); //frameTime is the time this frame has taken, in seconds
-//        print(1.0 / frameTime); //FPS counter
-//        redraw();
-//        cls();
+        frameTime = ((time - oldTime) / 1000.0); //frameTime is the time this frame has taken, in seconds
     }
 
     app.destroy();

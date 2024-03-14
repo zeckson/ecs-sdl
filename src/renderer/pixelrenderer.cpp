@@ -42,3 +42,15 @@ void PixelRenderer::drawCircle(int centerX, int centerY, int radius) {
     }
 }
 
+void PixelRenderer::renderText(const std::string &text, const Uint32 x, const Uint32 y) {
+    SDL_Color color = {255, 255, 255}; // White text color
+    SDL_Surface *surface = TTF_RenderText_Solid(this->font, text.c_str(), color);
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(pSDLRenderer, surface);
+    SDL_Rect textRect = {(int) x, (int) y, surface->w, surface->h};
+
+    SDL_RenderCopy(pSDLRenderer, texture, nullptr, &textRect);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+}
+
