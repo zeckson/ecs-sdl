@@ -6,46 +6,9 @@
 
 #include "game.h"
 
-Game::Game(const char *title, Uint16 width, Uint16 height) : width(width), height(height) {
-    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN);
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cout << "SDL could not be initialized: " << SDL_GetError();
-    } else {
-        std::cout << "SDL video system is ready to go\n";
-    }
-
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-
-    // Create an application window with the following settings:
-    window = SDL_CreateWindow(
-            title,        // window title
-            SDL_WINDOWPOS_CENTERED, // initial x position
-            SDL_WINDOWPOS_CENTERED, // initial y position
-            width,                     // width, in pixels
-            height,                     // height, in pixels
-            SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
-    );
-
-    // Check that the window was successfully created
-    if (!window) {
-        // In the case that the window could not be made...
-        printf("Failed to open %d x %d window: %s\n", width, height, SDL_GetError());
-        exit(1);
-    }
-
-    SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1,
-                                                   SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-
-    if (!sdlRenderer) {
-        printf("Failed to create renderer: %s\n", SDL_GetError());
-        exit(1);
-    }
-
-    pSDLRenderer = sdlRenderer;
-
-    renderer = std::make_shared<PixelRenderer>(sdlRenderer, width, height);
+Game::Game(const char *title, Uint16 width, Uint16 height) : width(width), height(height),
+                                                             app(App(title, width, height)) {
+    renderer = std::make_shared<PixelRenderer>(app.pSDLRenderer, width, height);
 }
 
 void Game::start() {
@@ -76,9 +39,7 @@ void Game::start() {
 //        cls();
     }
 
-    SDL_DestroyRenderer(pSDLRenderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    app.destroy();
 }
 
 bool Game::input() {

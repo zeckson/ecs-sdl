@@ -6,7 +6,10 @@
 #define RAYCASTING_GAME_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <memory>
+
+#include "app.h"
 #include "renderer/pixelrenderer.h"
 #include "entity/entitymanager.h"
 
@@ -27,9 +30,7 @@ protected:
     virtual void onKeyDown(const SDL_Keysym &keysym) = 0;
 
 private:
-    SDL_Window *window;
-    SDL_Renderer *pSDLRenderer;
-
+    App app;
     EntityManager manager;
 
     bool input();
@@ -37,6 +38,7 @@ private:
     bool update(const float elapsedTime);
 
     Uint64 frame = 0;
+
 };
 
 
