@@ -10,7 +10,7 @@ bool BallGame::onGameCreate() {
     auto player = manager.createEntity("player");
     player->sprite = std::make_shared<SpriteComponent>(nullptr, 60, 60);
     auto center = Vec2<Uint32>((Uint32) width / 2, (Uint32) height / 2);
-    auto toRight = Vec2<float>{400.0, 0.0};
+    auto toRight = Vec2<float>{1.0, 1.0};
     player->transform = std::make_shared<TransformComponent>(center, toRight, 0);
     manager.addEntity(player);
     return true;
@@ -38,16 +38,36 @@ void BallGame::spawnEnemySystem() {
 void BallGame::movementSystem(float elapsedTime) {
     for (const auto &entity: manager.getAllEntities()) {
         auto &component = entity->transform;
+        float speed = ENTITY_SPEED * elapsedTime;
         if (component) {
-            component->position.x += (Uint32) (component->velocity.x * elapsedTime);
-            component->position.y += (Uint32) (component->velocity.y * elapsedTime);
+            component->position.x += (component->velocity.x * speed);
+            component->position.y += (component->velocity.y * speed);
         }
     }
 
 }
 
 void BallGame::collisionSystem() {
-    // TODO
+    for (const auto &entity: manager.getAllEntities()) {
+        auto &component = entity->transform;
+        if (component) {
+            Uint32 x = component->position.x;
+            Uint32 radius = entity->sprite->size.x;
+            if (x >= width - radius) {
+                component->velocity.x = -1.0;
+            }
+            if (x <= 0 + radius) {
+                component->velocity.x = 1.0;
+            }
+            Uint32 y = component->position.y;
+            if (y >= height - radius) {
+                component->velocity.y = -1.0;
+            }
+            if (y <= 0 + radius) {
+                component->velocity.y = 1.0;
+            }
+        }
+    }
 }
 
 void BallGame::renderSystem() {

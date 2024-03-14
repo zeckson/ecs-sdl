@@ -8,6 +8,8 @@
 #include "game.h"
 
 
+#define ENTITY_SPEED 400
+
 class BallGame: public Game {
 public:
     explicit BallGame(const char *title, Uint16 width, Uint16 height): Game(title, width, height) {}
