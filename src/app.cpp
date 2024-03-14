@@ -32,8 +32,7 @@ App::App(const char *title, const Uint16 width, const Uint16 height) {
         exit(1);
     }
 
-    SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1,
-                                                   SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 
     if (!sdlRenderer) {
@@ -44,7 +43,7 @@ App::App(const char *title, const Uint16 width, const Uint16 height) {
     // Loading textures
     // Init img support
     if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG))) {
-        printf("SDL_image initialization failed: %s\n",  IMG_GetError());
+        printf("SDL_image initialization failed: %s\n", IMG_GetError());
         exit(1);
     }
 
