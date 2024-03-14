@@ -82,7 +82,6 @@ void BallGame::renderSystem() {
             }
         }
     }
-//    renderer->drawCircle(width / 2, height / 2, std::min(width, height) / 4);
 }
 
 void BallGame::userInputSystem(const SDL_Keysym &keysym) {
