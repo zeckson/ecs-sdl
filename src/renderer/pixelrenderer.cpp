@@ -32,11 +32,11 @@ void PixelRenderer::drawRect(const SDL_Rect *pRect) {
     SDL_RenderDrawRect(pSDLRenderer, pRect);
 }
 
-void PixelRenderer::drawCircle(int centerX, int centerY, int radius) {
+void PixelRenderer::drawCircle(const Vec2<Uint32> center, int radius) {
     for (int y = -radius; y <= radius; ++y) {
         for (int x = -radius; x <= radius; ++x) {
             if (x * x + y * y <= radius * radius) {
-                SDL_RenderDrawPoint(pSDLRenderer, centerX + x, centerY + y);
+                SDL_RenderDrawPoint(pSDLRenderer, (int) center.x + x, (int) center.y + y);
             }
         }
     }
@@ -52,5 +52,10 @@ void PixelRenderer::renderText(const std::string &text, const Uint32 x, const Ui
 
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
+}
+
+void PixelRenderer::renderTexture(SDL_Texture *texture, const Vec2<Uint32> &size, const Vec2<Uint32> &dest) {
+    SDL_Rect rect = {(int) dest.x, (int) dest.y, (int) size.x, (int) size.y};
+    SDL_RenderCopy(pSDLRenderer, texture, nullptr, &rect);
 }
 

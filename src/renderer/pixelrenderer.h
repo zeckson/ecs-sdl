@@ -36,9 +36,11 @@ public:
 
     void drawRect(const SDL_Rect *pRect);
 
-    void drawCircle(int centerX, int centerY, int radius);
+    void drawCircle(const Vec2<Uint32> center, int radius);
 
     void renderText(const std::string &text, const Uint32 x, const Uint32 y);
+
+    void renderTexture(SDL_Texture *texture, const Vec2<Uint32> &size, const Vec2<Uint32> &dest);
 
 private:
     TTF_Font *font;

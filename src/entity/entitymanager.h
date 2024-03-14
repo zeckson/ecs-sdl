@@ -11,8 +11,8 @@
 
 #include "entity.h"
 
-typedef std::list<std::shared_ptr<Entity>> EntityVector;
-typedef std::map<std::string, std::shared_ptr<Entity>> EntityMap;
+typedef std::list<std::shared_ptr<Entity>> EntityList;
+typedef std::map<std::string, EntityList> EntityMap;
 
 class EntityManager {
 public:
@@ -29,12 +29,17 @@ public:
 
     void update();
 
+    const std::list<std::shared_ptr<Entity>> &getAllEntities() {
+        return entities;
+    }
+
 private:
     Uint32 counter = 0;
 
-    EntityVector entities;
-    EntityVector entitiesToAdd;
-    EntityVector entitiesToRemove;
+    EntityMap entityMap;
+    EntityList entities;
+    EntityList entitiesToAdd;
+    EntityList entitiesToRemove;
 };
 
 

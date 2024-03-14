@@ -15,10 +15,22 @@ public:
 protected:
     bool onGameCreate() override;
 
-    bool onGameUpdate(double elapsedTime) override;
+    bool onGameUpdate(float elapsedTime) override;
 
     void onKeyDown(const SDL_Keysym &keysym) override;
 
+private:
+    EntityManager manager;
+
+    void spawnEnemySystem();
+
+    void movementSystem(float elapsedTime);
+
+    void collisionSystem();
+
+    void renderSystem();
+
+    void userInputSystem(const SDL_Keysym &keysym);
 };
 
 

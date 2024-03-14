@@ -26,12 +26,11 @@ protected:
 
     virtual bool onGameCreate() = 0;
 
-    virtual bool onGameUpdate(double elapsedTime) = 0;
+    virtual bool onGameUpdate(float elapsedTime) = 0;
     virtual void onKeyDown(const SDL_Keysym &keysym) = 0;
 
 private:
     App app;
-    EntityManager manager;
 
     bool input();
 

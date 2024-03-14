@@ -6,10 +6,11 @@
 #define ECS_SDL_ENTITY_H
 
 #include <string>
-#include <tuple>
+#include <unordered_map> // hash_map
 #include <memory>
 
-#include "../component/sprite.h"
+#include "../component/spritecomponent.h"
+#include "../component/transformcomponent.h"
 
 
 class Entity {
@@ -18,6 +19,9 @@ public:
     const Uint8 id;
 
     explicit Entity(const std::string &name, const Uint8 &id): name(name), id(id) {};
+
+    std::shared_ptr<SpriteComponent> sprite;
+    std::shared_ptr<TransformComponent> transform;
 };
 
 
