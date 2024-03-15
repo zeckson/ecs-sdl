@@ -6,36 +6,69 @@
 
 #include "game.h"
 
-Game::Game(const char *title, Uint16 width, Uint16 height) : width(width), height(height),
-                                                             app(App(title, width, height)) {
+void FrameRate::limit() const {
+    if (currentFrameTime <= DELAY_TIME) {
+        SDL_Delay(DELAY_TIME - currentFrameTime);
+    }
+}
+
+void FrameRate::render(const std::shared_ptr<PixelRenderer> &renderer) const {
+    renderer->renderText("FPS: " + std::to_string(int(std::ceil(fps))), 5, 5);
+    renderer->renderText("Delay Time: " + std::to_string(DELAY_TIME), 5, 30);
+    renderer->renderText("Current Frame Time: " + std::to_string(currentFrameTime), 5, 55);
+}
+
+float FrameRate::elapsedTime() const {
+    return float(currentFrameTime) / ONE_SECOND;
+}
+
+void FrameRate::frameStart() {
+    frameStartTime = SDL_GetTicks();
+}
+
+void FrameRate::frameEnd() {
+    Uint32 currentTime = SDL_GetTicks();
+    if (currentTime - startTime >= ONE_SECOND) {
+        fps = ((double) frameCount / (currentTime - startTime)) * ONE_SECOND;
+
+        // Reset frame rate counters
+        startTime = frameStartTime;
+        frameCount = 0;
+    }
+
+    currentFrameTime = currentTime - frameStartTime;
+    totalFrame++;
+    frameCount++;
+}
+
+
+Game::Game(const char *title, Uint16 width, Uint16 height) :
+        width(width), height(height), app(App(title, width, height)) {
     renderer = std::make_shared<PixelRenderer>(app.pSDLRenderer, app.font, width, height);
 }
 
 void Game::start() {
-    Uint32 time = 0; //time of current frame
-    Uint32 oldTime = 0; //time of previous frame
-
-    double frameTime = 0;
 
     onGameCreate();
 
     bool quit = false;
     while (!quit) {
+        frameRate.frameStart();
 
         renderer->setColor(BLACK);
         renderer->clear();
 
-        renderer->renderText("FPS: " + std::to_string((int) std::floor(1.0 / frameTime)), 0, 0);
+        quit = input();
 
-        quit = update((float) frameTime);
+        onGameUpdate(frameRate.elapsedTime());
+
+        frameRate.render(renderer);
 
         renderer->present();
 
-        //timing for input and FPS counter
-        frame++;
-        oldTime = time;
-        time = SDL_GetTicks();
-        frameTime = ((time - oldTime) / 1000.0); //frameTime is the time this frame has taken, in seconds
+        // timing for input and FPS counter
+        frameRate.frameEnd();
+        frameRate.limit();
     }
 
     app.destroy();
@@ -69,7 +102,3 @@ bool Game::input() {
     return quit;
 }
 
-bool Game::update(const float elapsedTime) {
-    onGameUpdate(elapsedTime);
-    return input();
-}
