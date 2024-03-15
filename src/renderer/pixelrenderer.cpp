@@ -33,10 +33,12 @@ void PixelRenderer::drawRect(const SDL_Rect *pRect) {
 }
 
 void PixelRenderer::drawCircle(const Vec2<Uint32> center, int radius) {
+    int centerX = (int) center.x;
+    int centerY = (int) center.y;
     for (int y = -radius; y <= radius; ++y) {
         for (int x = -radius; x <= radius; ++x) {
             if (x * x + y * y <= radius * radius) {
-                SDL_RenderDrawPoint(pSDLRenderer, (int) center.x + x, (int) center.y + y);
+                SDL_RenderDrawPoint(pSDLRenderer, centerX + x, centerY + y);
             }
         }
     }
