@@ -34,6 +34,10 @@ public:
 
     void drawLine(const Vec2 &from, const Vec2 &to);
 
+    void drawPoint(const Vec2 &point);
+
+    void drawPoint(const int x, const int y);
+
     void drawRect(const SDL_Rect *pRect);
 
     void drawCircle(const Vec2 &center, int radius);

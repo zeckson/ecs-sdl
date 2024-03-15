@@ -11,6 +11,8 @@
 
 #include "../component/spritecomponent.h"
 #include "../component/transformcomponent.h"
+#include "../component/shapecomponent.h"
+#include "../component/collisioncomponent.h"
 
 
 class Entity {
@@ -21,6 +23,8 @@ public:
     explicit Entity(const std::string &name, const Uint8 &id): name(name), id(id) {};
 
     std::shared_ptr<SpriteComponent> sprite;
+    std::shared_ptr<ShapeComponent> shape;
+    std::shared_ptr<CollisionComponent> collision;
     std::shared_ptr<TransformComponent> transform;
 };
 

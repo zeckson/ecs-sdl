@@ -5,6 +5,8 @@
 #ifndef RAYCASTING_PIXEL_H
 #define RAYCASTING_PIXEL_H
 
+#include "SDL2/SDL.h"
+
 struct Pixel {
     Uint32 data;
 
