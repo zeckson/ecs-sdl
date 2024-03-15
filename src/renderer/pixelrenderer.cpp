@@ -24,7 +24,7 @@ void PixelRenderer::drawLine(Uint32 startX, Uint32 startY, Uint32 endX, Uint32 e
     SDL_RenderDrawLine(pSDLRenderer, startX, startY, endX, endY);
 }
 
-void PixelRenderer::drawLine(const Vec2<Uint32> &from, const Vec2<Uint32> &to) {
+void PixelRenderer::drawLine(const Vec2 &from, const Vec2 &to) {
     drawLine(from.x, from.y, to.x, to.y);
 }
 
@@ -32,7 +32,7 @@ void PixelRenderer::drawRect(const SDL_Rect *pRect) {
     SDL_RenderDrawRect(pSDLRenderer, pRect);
 }
 
-void PixelRenderer::drawCircle(const Vec2<Uint32> center, int radius) {
+void PixelRenderer::drawCircle(const Vec2 &center, int radius) {
     int centerX = (int) center.x;
     int centerY = (int) center.y;
     for (int y = -radius; y <= radius; ++y) {
@@ -56,7 +56,7 @@ void PixelRenderer::renderText(const std::string &text, const Uint32 x, const Ui
     SDL_DestroyTexture(texture);
 }
 
-void PixelRenderer::renderTexture(SDL_Texture *texture, const Vec2<Uint32> &size, const Vec2<Uint32> &dest) {
+void PixelRenderer::renderTexture(SDL_Texture *texture, const Vec2 &size, const Vec2 &dest) {
     SDL_Rect rect = {(int) dest.x, (int) dest.y, (int) size.x, (int) size.y};
     SDL_RenderCopy(pSDLRenderer, texture, nullptr, &rect);
 }

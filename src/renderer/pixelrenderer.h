@@ -11,7 +11,7 @@
 #include "SDL2/SDL_ttf.h"
 
 #include "pixel.h"
-#include "../entity/vec2.h"
+#include "../geometry/vec2.h"
 
 class PixelRenderer {
 public:
@@ -32,15 +32,15 @@ public:
 
     void drawLine(Uint32 startX, Uint32 startY, Uint32 endX, Uint32 endY);
 
-    void drawLine(const Vec2<Uint32> &from, const Vec2<Uint32> &to);
+    void drawLine(const Vec2 &from, const Vec2 &to);
 
     void drawRect(const SDL_Rect *pRect);
 
-    void drawCircle(const Vec2<Uint32> center, int radius);
+    void drawCircle(const Vec2 &center, int radius);
 
     void renderText(const std::string &text, const Uint32 x, const Uint32 y);
 
-    void renderTexture(SDL_Texture *texture, const Vec2<Uint32> &size, const Vec2<Uint32> &dest);
+    void renderTexture(SDL_Texture *texture, const Vec2 &size, const Vec2 &dest);
 
 private:
     TTF_Font *font;

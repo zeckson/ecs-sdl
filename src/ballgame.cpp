@@ -9,8 +9,8 @@
 bool BallGame::onGameCreate() {
     auto player = manager.createEntity("player");
     player->sprite = std::make_shared<SpriteComponent>(nullptr, 60, 60);
-    auto center = Vec2<Uint32>((Uint32) width / 2, (Uint32) height / 2);
-    auto toRight = Vec2<float>{1.0, 1.0};
+    auto center = Vec2(float(width) / 2, float(height) / 2);
+    auto toRight = Vec2(1.0, 1.0);
     player->transform = std::make_shared<TransformComponent>(center, toRight, 0);
     manager.addEntity(player);
     return true;
