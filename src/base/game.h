@@ -10,8 +10,8 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "app.h"
-#include "renderer/pixelrenderer.h"
-#include "entity/entitymanager.h"
+#include "../renderer/pixelrenderer.h"
+#include "../entity/entitymanager.h"
 
 #define ONE_SECOND 1000
 #define FPS 60

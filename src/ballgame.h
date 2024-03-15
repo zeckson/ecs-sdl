@@ -5,7 +5,7 @@
 #ifndef ECS_SDL_BALLGAME_H
 #define ECS_SDL_BALLGAME_H
 
-#include "game.h"
+#include "base/game.h"
 
 
 #define ENTITY_SPEED 400

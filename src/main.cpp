@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-#include "game.h"
+#include "base/game.h"
 #include "ballgame.h"
 
 #define SCREEN_WIDTH 800
