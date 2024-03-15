@@ -40,8 +40,8 @@ void BallGame::movementSystem(float elapsedTime) {
         auto &component = entity->transform;
         float speed = ENTITY_SPEED * elapsedTime;
         if (component) {
-            component->position.x += (component->velocity.x * speed);
-            component->position.y += (component->velocity.y * speed);
+            component->position.x += std::round(component->velocity.x * speed);
+            component->position.y += std::round(component->velocity.y * speed);
         }
     }
 
