@@ -6,6 +6,7 @@
 #define ECS_SDL_BALLGAME_H
 
 #include "base/game.h"
+#include "randomizer.h"
 
 
 #define ENTITY_SPEED 400
@@ -22,7 +23,6 @@ protected:
     void onKeyDown(const SDL_Keysym &keysym) override;
 
 private:
-    EntityManager manager;
 
     void spawnEnemySystem();
 
@@ -33,6 +33,10 @@ private:
     void renderSystem();
 
     void userInputSystem(const SDL_Keysym &keysym);
+
+    std::shared_ptr<Entity> player;
+    EntityManager manager;
+    Randomizer random;
 };
 
 

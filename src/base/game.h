@@ -42,8 +42,8 @@ public:
 protected:
     explicit Game(const char *title, Uint16 width, Uint16 height);
 
-
     std::shared_ptr<PixelRenderer> renderer;
+    FrameRate frameRate;
 
     virtual bool onGameCreate() = 0;
 
@@ -54,8 +54,6 @@ private:
     App app;
 
     bool input();
-
-    FrameRate frameRate;
 };
 
 
