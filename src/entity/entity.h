@@ -13,6 +13,7 @@
 #include "../component/transformcomponent.h"
 #include "../component/shapecomponent.h"
 #include "../component/collisioncomponent.h"
+#include "../component/inputcomponent.h"
 
 
 class Entity {
@@ -28,6 +29,7 @@ public:
     std::shared_ptr<ShapeComponent> shape;
     std::shared_ptr<CollisionComponent> collision;
     std::shared_ptr<TransformComponent> transform;
+    std::shared_ptr<InputComponent> input;
 
     [[nodiscard]] bool isAlive() const { return alive; }
 };
