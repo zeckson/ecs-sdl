@@ -31,7 +31,7 @@ public:
 
     void update();
 
-    const std::list<std::shared_ptr<Entity>> &getAllEntities() {
+    const EntityList &getAllEntities() {
         return entities;
     }
 
