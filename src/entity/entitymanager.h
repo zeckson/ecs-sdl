@@ -11,6 +11,8 @@
 
 #include "entity.h"
 
+#define MAX_ENTITIES 255
+
 typedef std::list<std::shared_ptr<Entity>> EntityList;
 typedef std::map<std::string, EntityList> EntityMap;
 
