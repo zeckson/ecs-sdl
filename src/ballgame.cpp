@@ -10,8 +10,6 @@
 #include "component/shapecomponent.h"
 
 bool BallGame::onGameCreate() {
-    std::srand(time(nullptr));
-
     player = manager.createEntity("player");
     const auto radius = 60;
     player->collision = std::make_shared<CollisionComponent>(radius);
@@ -56,10 +54,9 @@ void BallGame::onKeyDown(const SDL_Keysym &keysym) {
 void BallGame::movementSystem(float elapsedTime) {
     for (const auto &entity: manager.getAllEntities()) {
         auto &component = entity->transform;
-        float speed = ENTITY_SPEED * elapsedTime;
         if (component) {
-            component->position.x += std::round(component->velocity.x * speed);
-            component->position.y += std::round(component->velocity.y * speed);
+            component->position.x += std::round(component->velocity.x);
+            component->position.y += std::round(component->velocity.y);
         }
     }
 

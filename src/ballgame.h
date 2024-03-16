@@ -9,7 +9,7 @@
 #include "randomizer.h"
 
 
-#define ENTITY_SPEED 400 // per second
+#define ENTITY_SPEED 400 // units/second
 
 #define PLAYER_SPEED 1.0
 
