@@ -35,7 +35,6 @@ void BallGame::spawnEnemySystem() {
         auto velocity = Vec2(-4, 4);
         enemy->transform = std::make_shared<TransformComponent>(center, velocity, 0);
         logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name, startX, startY, radius);
-//        logInfo("Entity created: %u", 120);
         manager.addEntity(enemy);
     }
 }
