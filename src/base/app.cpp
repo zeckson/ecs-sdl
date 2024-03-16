@@ -6,6 +6,7 @@
 
 App::App(const char *title, const Uint16 width, const Uint16 height) {
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN);
+    SDL_LogSetPriority(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_INFO);
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL could not be initialized: %s", SDL_GetError());

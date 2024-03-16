@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <utility>
 
 #include "game.h"
 
@@ -93,8 +94,7 @@ bool Game::input() {
             const SDL_Keysym &keysym = e.key.keysym;
 
 
-            SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO,
-                           "Keydown code: %u", keysym.scancode);
+            logInfo("Keydown code: %u", keysym.scancode);
 
             onKeyDown(keysym);
         }
@@ -102,3 +102,9 @@ bool Game::input() {
     return quit;
 }
 
+void Game::logInfo(const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    SDL_LogMessageV(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_INFO, format, args);
+    va_end(args);
+}

@@ -24,15 +24,18 @@ bool BallGame::onGameCreate() {
 
 void BallGame::spawnEnemySystem() {
     if (frameRate.totalFrame % 1000 == 0 && manager.getAllEntities().size() < 10) {
-        auto enemy = manager.createEntity("enemy");
+        const char *name = "enemy";
+        auto enemy = manager.createEntity(name);
         int radius = random.between(10, 40);
         enemy->collision = std::make_shared<CollisionComponent>(radius);
         enemy->shape = std::make_shared<ShapeComponent>(radius, BLUE, RED);
         int startX = random.between(radius, width - radius);
         int startY = random.between(radius, height - radius);
         auto center = Vec2(startX, startY);
-        auto velocity = Vec2(-2, 2);
+        auto velocity = Vec2(-4, 4);
         enemy->transform = std::make_shared<TransformComponent>(center, velocity, 0);
+        logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name, startX, startY, radius);
+//        logInfo("Entity created: %u", 120);
         manager.addEntity(enemy);
     }
 }
