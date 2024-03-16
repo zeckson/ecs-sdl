@@ -16,7 +16,7 @@ public:
     };
 
     int between(const int min = 0, const int max = INT_MAX) {
-        return min + (std::rand() % (max - min)); // NOLINT(*-msc50-cpp)
+        return min + (std::rand() % (1 + max - min)); // NOLINT(*-msc50-cpp)
     }
 
 };
