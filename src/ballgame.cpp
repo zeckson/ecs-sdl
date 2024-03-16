@@ -71,22 +71,37 @@ void BallGame::collisionSystem() {
         auto &transform = entity->transform;
         auto &collision = entity->collision;
         if (transform && collision) {
-            Uint32 x = transform->position.x;
-            Uint32 radius = collision->radius;
-            if (x >= width - radius) {
-                transform->velocity.x = -1.0;
-            }
-            if (x <= 0 + radius) {
-                transform->velocity.x = 1.0;
-            }
-            Uint32 y = transform->position.y;
-            if (y >= height - radius) {
-                transform->velocity.y = -1.0;
-            }
-            if (y <= 0 + radius) {
-                transform->velocity.y = 1.0;
-            }
+            borderCollision(transform, collision);
         }
+    }
+}
+
+void BallGame::borderCollision(const std::shared_ptr<TransformComponent> &transform,
+                               const std::shared_ptr<CollisionComponent> &collision) const {
+    Vec2 &velocity = transform->velocity;
+    Vec2 &position = transform->position;
+    Uint32 x = position.x;
+    Uint32 y = position.y;
+    Uint32 radius = collision->radius;
+    Uint32 right = width - radius;
+    Uint32 left = 0 + radius;
+    if (x >= right) {
+        velocity.x *= -1.0;
+        position.x = right;
+    }
+    if (x <= left) {
+        velocity.x *= -1.0;
+        position.x = left;
+    }
+    Uint32 bottom = height - radius;
+    Uint32 top = 0 + radius;
+    if (y >= bottom) {
+        velocity.y *= -1.0;
+        position.y = bottom;
+    }
+    if (y <= top) {
+        velocity.y *= -1.0;
+        position.y = top;
     }
 }
 

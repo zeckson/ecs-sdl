@@ -11,9 +11,9 @@
 
 #define ENTITY_SPEED 400
 
-class BallGame: public Game {
+class BallGame : public Game {
 public:
-    explicit BallGame(const char *title, Uint16 width, Uint16 height): Game(title, width, height) {}
+    explicit BallGame(const char *title, Uint16 width, Uint16 height) : Game(title, width, height) {}
 
 protected:
     bool onGameCreate() override;
@@ -37,6 +37,9 @@ private:
     std::shared_ptr<Entity> player;
     EntityManager manager;
     Randomizer random;
+
+    void borderCollision(const std::shared_ptr<TransformComponent> &transform,
+                         const std::shared_ptr<CollisionComponent> &collision) const;
 };
 
 
