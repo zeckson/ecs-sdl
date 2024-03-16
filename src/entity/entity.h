@@ -16,16 +16,20 @@
 
 
 class Entity {
+private:
+    bool alive = true;
 public:
     const std::string &name;
     const Uint8 id;
 
-    explicit Entity(const std::string &name, const Uint8 &id): name(name), id(id) {};
+    explicit Entity(const std::string &name, const Uint8 &id) : name(name), id(id) {};
 
     std::shared_ptr<SpriteComponent> sprite;
     std::shared_ptr<ShapeComponent> shape;
     std::shared_ptr<CollisionComponent> collision;
     std::shared_ptr<TransformComponent> transform;
+
+    [[nodiscard]] bool isAlive() const { return alive; }
 };
 
 
