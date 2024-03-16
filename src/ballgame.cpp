@@ -3,6 +3,7 @@
 //
 
 #include <memory>
+#include <cmath>
 
 #include "ballgame.h"
 #include "component/transformcomponent.h"
@@ -16,8 +17,7 @@ bool BallGame::onGameCreate() {
     player->collision = std::make_shared<CollisionComponent>(radius);
     player->shape = std::make_shared<ShapeComponent>(radius, GREEN, BLUE, 2);
     auto center = Vec2(float(width) / 2, float(height) / 2);
-    auto toRight = Vec2(1.0, 1.0);
-    player->transform = std::make_shared<TransformComponent>(center, toRight, 0);
+    player->transform = std::make_shared<TransformComponent>(center, PLAYER_SPEED, M_PI_4);
     manager.addEntity(player);
     return true;
 }
@@ -32,8 +32,7 @@ void BallGame::spawnEnemySystem() {
         int startX = random.between(radius, width - radius);
         int startY = random.between(radius, height - radius);
         auto center = Vec2(startX, startY);
-        auto velocity = Vec2(-4, 4);
-        enemy->transform = std::make_shared<TransformComponent>(center, velocity, 0);
+        enemy->transform = std::make_shared<TransformComponent>(center, ENEMY_SPEED, M_PI_4);
         logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name, startX, startY, radius);
         manager.addEntity(enemy);
     }
@@ -115,6 +114,29 @@ void BallGame::renderSystem() {
     }
 }
 
-void BallGame::userInputSystem(const SDL_Keysym &keysym) {
+void BallGame::userInputSystem(const SDL_Keysym &key) {
+    for (const auto &entity: manager.getAllEntities()) {
+        const auto input = entity->input;
+        if (input) {
+            switch (key.scancode) {
+                case SDL_SCANCODE_UP:
+                    input->up = true;
+                    break;
+                case SDL_SCANCODE_DOWN:
+                    input->down = true;
+                    break;
+                case SDL_SCANCODE_LEFT:
+                    input->left = true;
+                    break;
+                case SDL_SCANCODE_RIGHT:
+                    input->right = true;
+                    break;
+                default:
+                    // do nothing
+                    break;
+            }
+
+        }
+    }
 
 }

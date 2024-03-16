@@ -9,7 +9,11 @@
 #include "randomizer.h"
 
 
-#define ENTITY_SPEED 400
+#define ENTITY_SPEED 400 // per second
+
+#define PLAYER_SPEED 1.0
+
+#define ENEMY_SPEED 4.0
 
 class BallGame : public Game {
 public:

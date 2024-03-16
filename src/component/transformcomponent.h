@@ -5,6 +5,7 @@
 #ifndef ECS_SDL_TRANSFORMCOMPONENT_H
 #define ECS_SDL_TRANSFORMCOMPONENT_H
 
+#include <cmath>
 #include "SDL2/SDL.h"
 
 #include "../geometry/vec2.h"
@@ -14,8 +15,11 @@
 
 class TransformComponent : public Component {
 public:
-    TransformComponent(const Vec2 &position, const Vec2 &speed, float angle) :
-            Component(TRANSFORM_COMPONENT_NAME), position(position), velocity(speed), angle(angle) {}
+    /*
+     *  Speed in units / frame
+     */
+    TransformComponent(const Vec2 &position, const float speed, float angle) :
+            Component(TRANSFORM_COMPONENT_NAME), position(position), velocity({std::cosf(angle) * speed, std::sinf(angle) * speed}), angle(angle) {}
 
     Vec2 position;
     Vec2 velocity;
