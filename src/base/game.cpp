@@ -59,9 +59,9 @@ void Game::start() {
         renderer->setColor(BLACK);
         renderer->clear();
 
-        quit = input();
-
         onGameUpdate(frameRate.elapsedTime());
+
+        quit = input();
 
         frameRate.render(renderer);
 

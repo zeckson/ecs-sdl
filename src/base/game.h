@@ -48,9 +48,7 @@ protected:
     FrameRate frameRate;
 
     virtual bool onGameCreate() = 0;
-
     virtual bool onGameUpdate(float elapsedTime) = 0;
-    virtual void onKeyDown(const SDL_Keysym &keysym) = 0;
 
     virtual void onKeyEvent(const SDL_Event &event) = 0;
     virtual void onMouseEvent(const SDL_Event &event) = 0;

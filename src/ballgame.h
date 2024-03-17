@@ -24,8 +24,6 @@ protected:
 
     bool onGameUpdate(float elapsedTime) override;
 
-    void onKeyDown(const SDL_Keysym &keysym) override;
-
     void onKeyEvent(const SDL_Event &event) override;
 
     void onMouseEvent(const SDL_Event &event) override;

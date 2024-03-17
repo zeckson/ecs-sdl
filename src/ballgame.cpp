@@ -49,32 +49,6 @@ bool BallGame::onGameUpdate(float elapsedTime) {
     return true;
 }
 
-void BallGame::onKeyDown(const SDL_Keysym &key) {
-    for (const auto &entity: manager.getAllEntities()) {
-        const auto input = entity->input;
-        if (input) {
-            switch (key.scancode) {
-                case SDL_SCANCODE_UP:
-                    input->yAxisMove += -1;
-                    break;
-                case SDL_SCANCODE_DOWN:
-                    input->yAxisMove += 1;
-                    break;
-                case SDL_SCANCODE_LEFT:
-                    input->xAxisMove += -1;
-                    break;
-                case SDL_SCANCODE_RIGHT:
-                    input->xAxisMove += 1;
-                    break;
-                default:
-                    // do nothing
-                    break;
-            }
-
-        }
-    }
-}
-
 void BallGame::movementSystem(float elapsedTime) {
     for (const auto &entity: manager.getAllEntities()) {
         auto &component = entity->transform;
