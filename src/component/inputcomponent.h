@@ -11,6 +11,15 @@
 
 #define INPUT_COMPONENT_NAME "input"
 
+// Define bitmask flags
+enum class Direction : Uint8 {
+    NONE = 0,           // 0
+    UP = 0b0001,        // 1
+    DOWN = 0b0010,      // 2
+    LEFT = 0b0100,      // 4
+    RIGHT = 0b1000      // 8
+};
+
 class InputComponent : public Component {
 public:
     InputComponent() : Component(INPUT_COMPONENT_NAME) { reset(); }
@@ -19,8 +28,20 @@ public:
         xAxisMove = 0;
         yAxisMove = 0;
 
+        direction = static_cast<Uint8>(Direction::NONE);
+
         fire = false;
     }
+
+    void set(Direction bit) {
+        direction |= static_cast<Uint8>(bit);
+    }
+
+    void unset(Direction bit) {
+        direction &= ~static_cast<Uint8>(bit);
+    }
+
+    Uint8 direction = static_cast<Uint8>(Direction::NONE);
 
     int xAxisMove = 0;
     int yAxisMove = 0;
