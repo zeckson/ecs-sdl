@@ -19,7 +19,7 @@ public:
      *  Speed in units / frame
      */
     TransformComponent(const Vec2 &position, const float speed, float angle) :
-            Component(TRANSFORM_COMPONENT_NAME), position(position), velocity(toVelocity(speed, angle)), angle(angle) {}
+            Component(TRANSFORM_COMPONENT_NAME), position(position), velocity(Util::toVelocity(speed, angle)), angle(angle) {}
 
     Vec2 position;
     Vec2 velocity;

@@ -16,16 +16,15 @@ public:
     InputComponent() : Component(INPUT_COMPONENT_NAME) { reset(); }
 
     void reset() {
-        left = false;
-        right = false;
-        up = false;
-        down = false;
+        xAxisMove = 0;
+        yAxisMove = 0;
+
+        fire = false;
     }
 
-    bool left = false;
-    bool right = false;
-    bool up = false;
-    bool down = false;
+    int xAxisMove = 0;
+    int yAxisMove = 0;
+    bool fire = false;
 };
 
 

@@ -11,7 +11,7 @@
 
 #define ENTITY_SPEED 400 // units/second
 
-#define PLAYER_SPEED 1.0
+#define PLAYER_SPEED 100.0f
 
 #define ENEMY_SPEED 4.0
 
@@ -36,7 +36,7 @@ private:
 
     void renderSystem();
 
-    void userInputSystem(const SDL_Keysym &keysym);
+    void userInputSystem();
 
     std::shared_ptr<Entity> player;
     EntityManager manager;

@@ -15,7 +15,8 @@ bool BallGame::onGameCreate() {
     player->collision = std::make_shared<CollisionComponent>(radius);
     player->shape = std::make_shared<ShapeComponent>(radius, GREEN, BLUE, 2);
     auto center = Vec2(float(width) / 2, float(height) / 2);
-    player->transform = std::make_shared<TransformComponent>(center, PLAYER_SPEED, M_PI_4);
+    player->transform = std::make_shared<TransformComponent>(center, 0, 0);
+    player->input = std::make_shared<InputComponent>();
     manager.addEntity(player);
     return true;
 }
@@ -43,12 +44,35 @@ bool BallGame::onGameUpdate(float elapsedTime) {
     movementSystem(elapsedTime);
     collisionSystem();
     renderSystem();
+    userInputSystem();
 
     return true;
 }
 
-void BallGame::onKeyDown(const SDL_Keysym &keysym) {
-    userInputSystem(keysym);
+void BallGame::onKeyDown(const SDL_Keysym &key) {
+    for (const auto &entity: manager.getAllEntities()) {
+        const auto input = entity->input;
+        if (input) {
+            switch (key.scancode) {
+                case SDL_SCANCODE_UP:
+                    input->yAxisMove += -1;
+                    break;
+                case SDL_SCANCODE_DOWN:
+                    input->yAxisMove += 1;
+                    break;
+                case SDL_SCANCODE_LEFT:
+                    input->xAxisMove += -1;
+                    break;
+                case SDL_SCANCODE_RIGHT:
+                    input->xAxisMove += 1;
+                    break;
+                default:
+                    // do nothing
+                    break;
+            }
+
+        }
+    }
 }
 
 void BallGame::movementSystem(float elapsedTime) {
@@ -111,29 +135,16 @@ void BallGame::renderSystem() {
     }
 }
 
-void BallGame::userInputSystem(const SDL_Keysym &key) {
-    for (const auto &entity: manager.getAllEntities()) {
-        const auto input = entity->input;
-        if (input) {
-            switch (key.scancode) {
-                case SDL_SCANCODE_UP:
-                    input->up = true;
-                    break;
-                case SDL_SCANCODE_DOWN:
-                    input->down = true;
-                    break;
-                case SDL_SCANCODE_LEFT:
-                    input->left = true;
-                    break;
-                case SDL_SCANCODE_RIGHT:
-                    input->right = true;
-                    break;
-                default:
-                    // do nothing
-                    break;
-            }
-
+void BallGame::userInputSystem() {
+    const auto &input = player->input;
+    if (input) {
+        const auto &transform = player->transform;
+        if (transform) {
+            float moveX = float(input->xAxisMove) * PLAYER_SPEED;
+            float moveY = float(input->yAxisMove) * PLAYER_SPEED;
+            transform->position.x += moveX;
+            transform->position.y += moveY;
         }
+        input->reset();
     }
-
 }
