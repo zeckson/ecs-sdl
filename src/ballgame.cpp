@@ -183,5 +183,11 @@ void BallGame::onKeyEvent(const SDL_Event &event) {
 }
 
 void BallGame::onMouseEvent(const SDL_Event &event) {
-
+    if (event.type == SDL_MOUSEBUTTONDOWN) {
+        if (event.button.button == SDL_BUTTON_LEFT) {
+            int mouseX, mouseY;
+            SDL_GetMouseState(&mouseX, &mouseY);
+            logInfo("Left mouse button clicked at: [%u, %u]", mouseX, mouseY);
+        }
+    }
 }
