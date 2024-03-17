@@ -44,7 +44,7 @@ bool BallGame::onGameUpdate(float elapsedTime) {
     movementSystem(elapsedTime);
     collisionSystem();
     renderSystem();
-    userInputSystem();
+    updatePlayerPosition();
 
     return true;
 }
@@ -81,6 +81,9 @@ void BallGame::movementSystem(float elapsedTime) {
         if (component) {
             component->position.x += std::round(component->velocity.x);
             component->position.y += std::round(component->velocity.y);
+        }
+        if (entity == player) {
+            updatePlayerPosition();
         }
     }
 
@@ -135,16 +138,77 @@ void BallGame::renderSystem() {
     }
 }
 
-void BallGame::userInputSystem() {
+void BallGame::updatePlayerPosition() {
     const auto &input = player->input;
     if (input) {
         const auto &transform = player->transform;
         if (transform) {
-            float moveX = float(input->xAxisMove) * PLAYER_SPEED;
-            float moveY = float(input->yAxisMove) * PLAYER_SPEED;
-            transform->position.x += moveX;
-            transform->position.y += moveY;
+            float yAxisMove = 0;
+            if (input->isset(Direction::UP)) yAxisMove -= 1;
+            if (input->isset(Direction::DOWN)) yAxisMove += 1;
+
+            float xAxisMove = 0;
+            if (input->isset(Direction::LEFT)) xAxisMove -= 1;
+            if (input->isset(Direction::RIGHT)) xAxisMove += 1;
+
+            // TODO: fix diagonal movement speed (should be sqrt(2))
+            transform->position.x += xAxisMove * PLAYER_SPEED;
+            transform->position.y += yAxisMove * PLAYER_SPEED;
         }
-        input->reset();
     }
+}
+
+void BallGame::onKeyEvent(const SDL_Event &event) {
+    const auto key = event.key.keysym;
+
+    logInfo("Keyevent[%u] code: %u", event.type, key.scancode);
+
+    for (const auto &entity: manager.getAllEntities()) {
+        const auto input = entity->input;
+        if (input) {
+            if (event.type == SDL_KEYDOWN) {
+                switch (key.scancode) {
+                    case SDL_SCANCODE_UP:
+                        input->set(Direction::UP);
+                        break;
+                    case SDL_SCANCODE_DOWN:
+                        input->set(Direction::DOWN);
+                        break;
+                    case SDL_SCANCODE_LEFT:
+                        input->set(Direction::LEFT);
+                        break;
+                    case SDL_SCANCODE_RIGHT:
+                        input->set(Direction::RIGHT);
+                        break;
+                    default:
+                        // do nothing
+                        break;
+                }
+            }
+            if (event.type == SDL_KEYUP) {
+                switch (key.scancode) {
+                    case SDL_SCANCODE_UP:
+                        input->unset(Direction::UP);
+                        break;
+                    case SDL_SCANCODE_DOWN:
+                        input->unset(Direction::DOWN);
+                        break;
+                    case SDL_SCANCODE_LEFT:
+                        input->unset(Direction::LEFT);
+                        break;
+                    case SDL_SCANCODE_RIGHT:
+                        input->unset(Direction::RIGHT);
+                        break;
+                    default:
+                        // do nothing
+                        break;
+                }
+            }
+        }
+    }
+
+}
+
+void BallGame::onMouseEvent(const SDL_Event &event) {
+
 }

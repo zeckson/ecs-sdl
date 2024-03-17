@@ -41,6 +41,13 @@ public:
         direction &= ~static_cast<Uint8>(bit);
     }
 
+    bool isset(Direction bit) const {
+        // Perform bitwise AND operation
+        unsigned int result = static_cast<unsigned int>(direction) & static_cast<unsigned int>(bit);
+        // If result is non-zero, the bit is set
+        return result != 0;
+    }
+
     Uint8 direction = static_cast<Uint8>(Direction::NONE);
 
     int xAxisMove = 0;

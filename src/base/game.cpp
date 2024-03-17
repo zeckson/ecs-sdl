@@ -78,31 +78,35 @@ void Game::start() {
 bool Game::input() {
     SDL_Event e;
 
-    bool quit;
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) {
-            quit = true;
+            // Just exit
+            return true;
         }
 
-        if (e.type == SDL_KEYDOWN) {
+        switch (e.type) {
+            case SDL_KEYDOWN:
+                // TODO: Show menu on escape
+                if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                    // Just exit
+                    return true;
+                }
+            case SDL_KEYUP:
+                onKeyEvent(e);
+                break;
 
-            // Show menu on escape
-            if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
-                quit = true;
-            }
-
-            const SDL_Keysym &keysym = e.key.keysym;
-
-
-            logInfo("Keydown code: %u", keysym.scancode);
-
-            onKeyDown(keysym);
+            case SDL_MOUSEMOTION:
+            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONUP:
+                onMouseEvent(e);
+                break;
         }
     }
-    return quit;
+
+    return false;
 }
 
-void Game::logInfo(const char* format, ...) {
+void Game::logInfo(const char *format, ...) {
     va_list args;
     va_start(args, format);
     SDL_LogMessageV(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_INFO, format, args);

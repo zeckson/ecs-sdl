@@ -11,7 +11,7 @@
 
 #define ENTITY_SPEED 400 // units/second
 
-#define PLAYER_SPEED 100.0f
+#define PLAYER_SPEED 1.0f
 
 #define ENEMY_SPEED 4.0
 
@@ -26,6 +26,10 @@ protected:
 
     void onKeyDown(const SDL_Keysym &keysym) override;
 
+    void onKeyEvent(const SDL_Event &event) override;
+
+    void onMouseEvent(const SDL_Event &event) override;
+
 private:
 
     void spawnEnemySystem();
@@ -36,7 +40,7 @@ private:
 
     void renderSystem();
 
-    void userInputSystem();
+    void updatePlayerPosition();
 
     std::shared_ptr<Entity> player;
     EntityManager manager;
