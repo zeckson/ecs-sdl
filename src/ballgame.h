@@ -8,12 +8,8 @@
 #include "base/game.h"
 #include "randomizer.h"
 
-
-#define ENTITY_SPEED 400 // units/second
-
-#define PLAYER_SPEED 1.0f
-
-#define ENEMY_SPEED 4.0
+#define PLAYER_SPEED 1.0
+#define ENEMY_SPEED 2.0
 
 class BallGame : public Game {
 public:
@@ -32,7 +28,7 @@ private:
 
     void spawnEnemySystem();
 
-    void movementSystem(float elapsedTime);
+    void movementSystem();
 
     void collisionSystem();
 
@@ -40,12 +36,13 @@ private:
 
     void updatePlayerPosition();
 
+    void borderCollision(const std::shared_ptr<TransformComponent> &transform,
+                         const std::shared_ptr<CollisionComponent> &collision) const;
+
     std::shared_ptr<Entity> player;
     EntityManager manager;
     Randomizer random;
 
-    void borderCollision(const std::shared_ptr<TransformComponent> &transform,
-                         const std::shared_ptr<CollisionComponent> &collision) const;
 };
 
 

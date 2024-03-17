@@ -41,15 +41,14 @@ bool BallGame::onGameUpdate(float elapsedTime) {
     manager.update();
 
     spawnEnemySystem();
-    movementSystem(elapsedTime);
+    movementSystem();
     collisionSystem();
     renderSystem();
-    updatePlayerPosition();
 
     return true;
 }
 
-void BallGame::movementSystem(float elapsedTime) {
+void BallGame::movementSystem() {
     for (const auto &entity: manager.getAllEntities()) {
         auto &component = entity->transform;
         if (component) {
