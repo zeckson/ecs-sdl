@@ -10,6 +10,7 @@
 
 #define PLAYER_SPEED 1.0
 #define ENEMY_SPEED 2.0
+#define BULLET_SPEED 4.0
 
 class BallGame : public Game {
 public:
@@ -43,6 +44,7 @@ private:
     EntityManager manager;
     Randomizer random;
 
+    void spawnBullet(const Vec2 &target);
 };
 
 

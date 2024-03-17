@@ -6,6 +6,7 @@
 #define ECS_SDL_VEC2_H
 
 #include <cmath>
+#include <sstream>
 
 class Vec2 {
 public:
@@ -22,6 +23,16 @@ public:
 
     Vec2 operator+(const Vec2 &rhs) const { return {x + rhs.x, y + rhs.y}; }
 
+    Vec2 operator-(const Vec2 &rhs) const { return {x - rhs.x, y - rhs.y}; }
+
+    Vec2 operator*(const float value) const { return {x * value, y * value}; }
+
+    Vec2 normalize() const {
+        float length = std::sqrt(x * x + y * y);
+        return length != 0 ? Vec2{x / length, y / length} : Vec2{0, 0};
+    }
+
+    std::string toString() const;
 };
 
 namespace Util {

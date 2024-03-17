@@ -3,3 +3,9 @@
 //
 
 #include "vec2.h"
+
+std::string Vec2::toString() const {
+    std::stringstream ss;
+    ss << "[" << x << ", " << y << "]";
+    return ss.str();
+}

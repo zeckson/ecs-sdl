@@ -188,6 +188,22 @@ void BallGame::onMouseEvent(const SDL_Event &event) {
             int mouseX, mouseY;
             SDL_GetMouseState(&mouseX, &mouseY);
             logInfo("Left mouse button clicked at: [%u, %u]", mouseX, mouseY);
+            spawnBullet(Vec2(mouseX, mouseY));
         }
     }
+}
+
+void BallGame::spawnBullet(const Vec2 &target) {
+    const char *name = "bullet";
+    auto enemy = manager.createEntity(name);
+    int radius = 5;
+    enemy->collision = std::make_shared<CollisionComponent>(radius);
+    enemy->shape = std::make_shared<ShapeComponent>(radius, WHITE, WHITE);
+    const auto &playerPosition = player->transform->position;
+    auto distance = target - playerPosition;
+    auto velocity = distance.normalize();
+    logInfo("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(), target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
+    enemy->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
+    logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name, playerPosition.x, playerPosition.y, radius);
+    manager.addEntity(enemy);
 }
