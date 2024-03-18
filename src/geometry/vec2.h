@@ -27,10 +27,18 @@ public:
 
     Vec2 operator*(const float value) const { return {x * value, y * value}; }
 
-    Vec2 normalize() const {
-        float length = std::sqrt(x * x + y * y);
-        return length != 0 ? Vec2{x / length, y / length} : Vec2{0, 0};
-    }
+    Vec2 operator/(const float value) const { return {x / value, y / value}; }
+
+
+    void operator+=(const Vec2 &rhs);
+
+    void operator-=(const Vec2 &rhs);
+
+    void operator*=(const float value);
+
+    void operator/=(const float value);
+
+    Vec2 normalize() const;
 
     std::string toString() const;
 };

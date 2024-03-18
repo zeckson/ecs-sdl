@@ -156,9 +156,8 @@ void BallGame::updatePlayerPosition() {
             if (input->isset(Direction::LEFT)) xAxisMove -= 1;
             if (input->isset(Direction::RIGHT)) xAxisMove += 1;
 
-            // TODO: fix diagonal movement speed (should be sqrt(2))
-            transform->position.x += xAxisMove * PLAYER_SPEED;
-            transform->position.y += yAxisMove * PLAYER_SPEED;
+            const Vec2 &velocity = Vec2{xAxisMove, yAxisMove}.normalize() * PLAYER_SPEED;
+            transform->position += velocity;
         }
     }
 }
