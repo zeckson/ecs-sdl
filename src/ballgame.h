@@ -12,6 +12,10 @@
 #define ENEMY_SPEED 2.0
 #define BULLET_SPEED 4.0
 
+#define ENTITY_BULLET_TAG "bullet"
+#define ENTITY_ENEMY_TAG "enemy"
+#define ENTITY_PLAYER_TAG "player"
+
 class BallGame : public Game {
 public:
     explicit BallGame(const char *title, Uint16 width, Uint16 height) : Game(title, width, height) {}
@@ -37,7 +41,7 @@ private:
 
     void updatePlayerPosition();
 
-    void borderCollision(const std::shared_ptr<TransformComponent> &transform,
+    bool borderCollision(const std::shared_ptr<TransformComponent> &transform,
                          const std::shared_ptr<CollisionComponent> &collision) const;
 
     std::shared_ptr<Entity> player;

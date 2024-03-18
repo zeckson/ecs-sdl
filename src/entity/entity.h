@@ -19,11 +19,11 @@
 class Entity {
 private:
     bool alive = true;
+    const std::string name;
 public:
-    const std::string &name;
     const Uint8 id;
 
-    explicit Entity(const std::string &name, const Uint8 &id) : name(name), id(id) {};
+    explicit Entity(const std::string &name, const Uint8 &id) : name(std::string(name)), id(id) {};
 
     std::shared_ptr<SpriteComponent> sprite;
     std::shared_ptr<ShapeComponent> shape;
@@ -32,6 +32,8 @@ public:
     std::shared_ptr<InputComponent> input;
 
     [[nodiscard]] bool isAlive() const { return alive; }
+
+    const std::string &tag() const { return name; }
 };
 
 

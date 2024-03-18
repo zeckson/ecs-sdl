@@ -16,13 +16,13 @@ std::shared_ptr<Entity> EntityManager::createEntity(const std::string &name) {
 void EntityManager::update() {
     for (const auto& entityToRemove: entitiesToRemove) {
         entities.remove(entityToRemove);
-        entityMap[entityToRemove->name].remove(entityToRemove);
+        entityMap[entityToRemove->tag()].remove(entityToRemove);
     }
     entitiesToRemove.clear();
 
     for (const auto& entityToAdd: entitiesToAdd) {
         entities.push_back(entityToAdd);
-        entityMap[entityToAdd->name].push_back(entityToAdd);
+        entityMap[entityToAdd->tag()].push_back(entityToAdd);
     }
     entitiesToAdd.clear();
 

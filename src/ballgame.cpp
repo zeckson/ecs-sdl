@@ -10,7 +10,7 @@
 #include "component/shapecomponent.h"
 
 bool BallGame::onGameCreate() {
-    player = manager.createEntity("player");
+    player = manager.createEntity(ENTITY_PLAYER_TAG);
     const auto radius = 60;
     player->collision = std::make_shared<CollisionComponent>(radius);
     player->shape = std::make_shared<ShapeComponent>(radius, GREEN, BLUE, 2);
@@ -23,7 +23,7 @@ bool BallGame::onGameCreate() {
 
 void BallGame::spawnEnemySystem() {
     if (frameRate.totalFrame % 1000 == 0 && manager.getAllEntities().size() < 10) {
-        const char *name = "enemy";
+        const std::string name = ENTITY_ENEMY_TAG;
         auto enemy = manager.createEntity(name);
         int radius = random.between(10, 40);
         enemy->collision = std::make_shared<CollisionComponent>(radius);
@@ -32,10 +32,28 @@ void BallGame::spawnEnemySystem() {
         int startY = random.between(radius, height - radius);
         auto center = Vec2(startX, startY);
         enemy->transform = std::make_shared<TransformComponent>(center, ENEMY_SPEED, M_PI_4);
-        logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name, startX, startY, radius);
+        logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
         manager.addEntity(enemy);
     }
 }
+
+void BallGame::spawnBullet(const Vec2 &target) {
+    const std::string name = ENTITY_BULLET_TAG;
+    auto enemy = manager.createEntity(name);
+    int radius = 5;
+    enemy->collision = std::make_shared<CollisionComponent>(radius);
+    enemy->shape = std::make_shared<ShapeComponent>(radius, WHITE, WHITE);
+    const auto &playerPosition = player->transform->position;
+    auto distance = target - playerPosition;
+    auto velocity = distance.normalize();
+    logInfo("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(),
+            target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
+    enemy->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
+    logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), playerPosition.x, playerPosition.y,
+            radius);
+    manager.addEntity(enemy);
+}
+
 
 bool BallGame::onGameUpdate(float elapsedTime) {
     manager.update();
@@ -67,38 +85,52 @@ void BallGame::collisionSystem() {
         auto &transform = entity->transform;
         auto &collision = entity->collision;
         if (transform && collision) {
-            borderCollision(transform, collision);
+            const bool collide = borderCollision(transform, collision);
+            if (collide) {
+                logInfo("Collision detected on entity: %s", entity->tag().c_str());
+                if (entity->tag() == ENTITY_BULLET_TAG) {
+                    manager.removeEntity(entity);
+                }
+            }
         }
     }
 }
 
-void BallGame::borderCollision(const std::shared_ptr<TransformComponent> &transform,
+bool BallGame::borderCollision(const std::shared_ptr<TransformComponent> &transform,
                                const std::shared_ptr<CollisionComponent> &collision) const {
     Vec2 &velocity = transform->velocity;
     Vec2 &position = transform->position;
-    Uint32 x = position.x;
-    Uint32 y = position.y;
+    float x = position.x;
+    float y = position.y;
+
+    bool collide = false;
+
     Uint32 radius = collision->radius;
-    Uint32 right = width - radius;
-    Uint32 left = 0 + radius;
+    float right = width - radius;
+    float left = 0 + radius;
     if (x >= right) {
         velocity.x *= -1.0;
         position.x = right;
+        collide = true;
     }
     if (x <= left) {
         velocity.x *= -1.0;
         position.x = left;
+        collide = true;
     }
     Uint32 bottom = height - radius;
     Uint32 top = 0 + radius;
     if (y >= bottom) {
         velocity.y *= -1.0;
         position.y = bottom;
+        collide = true;
     }
     if (y <= top) {
         velocity.y *= -1.0;
         position.y = top;
+        collide = true;
     }
+    return collide;
 }
 
 void BallGame::renderSystem() {
@@ -191,19 +223,4 @@ void BallGame::onMouseEvent(const SDL_Event &event) {
             spawnBullet(Vec2(mouseX, mouseY));
         }
     }
-}
-
-void BallGame::spawnBullet(const Vec2 &target) {
-    const char *name = "bullet";
-    auto enemy = manager.createEntity(name);
-    int radius = 5;
-    enemy->collision = std::make_shared<CollisionComponent>(radius);
-    enemy->shape = std::make_shared<ShapeComponent>(radius, WHITE, WHITE);
-    const auto &playerPosition = player->transform->position;
-    auto distance = target - playerPosition;
-    auto velocity = distance.normalize();
-    logInfo("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(), target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
-    enemy->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
-    logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name, playerPosition.x, playerPosition.y, radius);
-    manager.addEntity(enemy);
 }
