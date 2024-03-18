@@ -61,6 +61,7 @@ bool BallGame::onGameUpdate(float elapsedTime) {
     spawnEnemySystem();
     movementSystem();
     collisionSystem();
+    lifecycleSystem();
     renderSystem();
 
     return true;
@@ -95,6 +96,11 @@ void BallGame::collisionSystem() {
         }
     }
 }
+
+void BallGame::lifecycleSystem() {
+
+}
+
 
 bool BallGame::checkScreenCollision(const std::shared_ptr<TransformComponent> &transform,
                                     const std::shared_ptr<CollisionComponent> &collision) const {

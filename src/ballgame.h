@@ -39,6 +39,8 @@ private:
 
     void renderSystem();
 
+    void lifecycleSystem();
+
     void updatePlayerPosition();
 
     bool checkScreenCollision(const std::shared_ptr<TransformComponent> &transform,

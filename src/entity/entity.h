@@ -14,6 +14,7 @@
 #include "../component/shapecomponent.h"
 #include "../component/collisioncomponent.h"
 #include "../component/inputcomponent.h"
+#include "../component/lifecyclecomponent.h"
 
 
 class Entity {
@@ -30,6 +31,7 @@ public:
     std::shared_ptr<CollisionComponent> collision;
     std::shared_ptr<TransformComponent> transform;
     std::shared_ptr<InputComponent> input;
+    std::shared_ptr<LifecycleComponent> lifecycle;
 
     [[nodiscard]] bool isAlive() const { return alive; }
 
