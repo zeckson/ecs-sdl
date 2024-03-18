@@ -8,6 +8,7 @@
 #include "ballgame.h"
 #include "component/transformcomponent.h"
 #include "component/shapecomponent.h"
+#include "base/logger.h"
 
 bool BallGame::onGameCreate() {
     player = manager.createEntity(ENTITY_PLAYER_TAG);
@@ -31,7 +32,7 @@ void BallGame::spawnEnemySystem() {
         int startY = random.between(radius, height - radius);
         auto center = Vec2(startX, startY);
         enemy->transform = std::make_shared<TransformComponent>(center, ENEMY_SPEED, M_PI_4);
-        logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
+        Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
     }
 }
 
@@ -44,11 +45,11 @@ void BallGame::spawnBullet(const Vec2 &target) {
     const auto &playerPosition = player->transform->position;
     auto distance = target - playerPosition;
     auto velocity = distance.normalize();
-    logInfo("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(),
+    Logger::info("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(),
             target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
     bullet->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
     bullet->lifecycle = std::make_shared<LifecycleComponent>(BULLET_LIFECYCLE);
-    logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), playerPosition.x, playerPosition.y,
+    Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), playerPosition.x, playerPosition.y,
             radius);
 }
 
@@ -86,7 +87,7 @@ void BallGame::collisionSystem() {
         if (transform && collision) {
             const bool collide = checkScreenCollision(transform, collision);
             if (collide) {
-                logInfo("Collision detected on entity: %s", entity->tag().c_str());
+                Logger::info("Collision detected on entity: %s", entity->tag().c_str());
                 if (entity->tag() == ENTITY_BULLET_TAG) {
                     manager.removeEntity(entity);
                 }
@@ -186,7 +187,7 @@ void BallGame::updatePlayerPosition() {
 void BallGame::onKeyEvent(const SDL_Event &event) {
     const auto key = event.key.keysym;
 
-    logInfo("Keyevent[%u] code: %u", event.type, key.scancode);
+    Logger::info("Keyevent[%u] code: %u", event.type, key.scancode);
 
     for (const auto &entity: manager.getAllEntities()) {
         const auto input = entity->input;
@@ -239,7 +240,7 @@ void BallGame::onMouseEvent(const SDL_Event &event) {
         if (event.button.button == SDL_BUTTON_LEFT) {
             int mouseX, mouseY;
             SDL_GetMouseState(&mouseX, &mouseY);
-            logInfo("Left mouse button clicked at: [%u, %u]", mouseX, mouseY);
+            Logger::info("Left mouse button clicked at: [%u, %u]", mouseX, mouseY);
             spawnBullet(Vec2(mouseX, mouseY));
         }
     }

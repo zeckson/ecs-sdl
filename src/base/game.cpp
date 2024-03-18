@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "game.h"
+#include "logger.h"
 
 void FrameRate::limit() const {
     if (currentFrameTime <= DELAY_TIME) {
@@ -104,11 +105,4 @@ bool Game::input() {
     }
 
     return false;
-}
-
-void Game::logInfo(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-    SDL_LogMessageV(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_INFO, format, args);
-    va_end(args);
 }

@@ -3,6 +3,7 @@
 //
 
 #include "app.h"
+#include "logger.h"
 
 App::App(const char *title, const Uint16 width, const Uint16 height) {
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN);

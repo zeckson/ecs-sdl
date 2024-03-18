@@ -38,9 +38,6 @@ class Game {
 public:
     const Uint16 width, height;
     void start();
-
-    static void logInfo(const char* format, ...);
-
 protected:
     explicit Game(const char *title, Uint16 width, Uint16 height);
 

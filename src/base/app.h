@@ -14,10 +14,6 @@
 
 class Game;
 
-enum ApplicationLog {
-    GAME_ENGINE = SDL_LOG_CATEGORY_CUSTOM,
-};
-
 class App {
     explicit App(const char *title, Uint16 width, Uint16 height);
 
