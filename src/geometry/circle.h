@@ -20,6 +20,11 @@ public:
 
     void draw(const std::shared_ptr<PixelRenderer> &renderer, const Vec2 &position) const;
 
+    void setOpacity(const Uint8 opacity) {
+        outlineColor.setAlpha(opacity);
+        fillColor.setAlpha(opacity);
+    }
+
 };
 
 

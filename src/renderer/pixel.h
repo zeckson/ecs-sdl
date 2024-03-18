@@ -39,6 +39,10 @@ struct Pixel {
     Pixel operator*(const double value) const {
         return {Uint8(r() * value), Uint8(g() * value), Uint8(b() * value), Uint8(a() * value)};
     }
+
+    void setAlpha(const Uint8 alpha) {
+        data |= alpha << 24;
+    }
 };
 
 static const Pixel
