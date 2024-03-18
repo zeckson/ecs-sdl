@@ -85,7 +85,7 @@ void BallGame::collisionSystem() {
         auto &transform = entity->transform;
         auto &collision = entity->collision;
         if (transform && collision) {
-            const bool collide = borderCollision(transform, collision);
+            const bool collide = checkScreenCollision(transform, collision);
             if (collide) {
                 logInfo("Collision detected on entity: %s", entity->tag().c_str());
                 if (entity->tag() == ENTITY_BULLET_TAG) {
@@ -96,8 +96,8 @@ void BallGame::collisionSystem() {
     }
 }
 
-bool BallGame::borderCollision(const std::shared_ptr<TransformComponent> &transform,
-                               const std::shared_ptr<CollisionComponent> &collision) const {
+bool BallGame::checkScreenCollision(const std::shared_ptr<TransformComponent> &transform,
+                                    const std::shared_ptr<CollisionComponent> &collision) const {
     Vec2 &velocity = transform->velocity;
     Vec2 &position = transform->position;
     float x = position.x;
