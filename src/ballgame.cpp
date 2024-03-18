@@ -156,8 +156,9 @@ void BallGame::renderSystem() {
         if (lifecycle && shape) {
             const auto step = SDL_ALPHA_OPAQUE / lifecycle->framesToLive;
             const auto opacity = lifecycle->framesLeft * step;
-            logInfo("Opacity: %d", opacity);
-            shape->circle.setOpacity(opacity);
+            const auto &fade = Pixel(opacity, opacity, opacity);
+            shape->circle.setFillColor(fade);
+            shape->circle.setOutlineColor(fade);
         }
         const auto &transform = entity->transform;
         if (shape && transform) {

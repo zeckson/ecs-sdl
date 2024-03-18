@@ -4,6 +4,9 @@
 
 #include "circle.h"
 
+Circle::Circle(int radius, const Pixel &outlineColor, const Pixel &fillColor, int thickness)
+        : radius(radius), outlineColor(outlineColor), fillColor(fillColor), thickness(thickness) {}
+
 void Circle::draw(const std::shared_ptr<PixelRenderer> &renderer, const Vec2 &position) const {
     int centerX = (int) position.x;
     int centerY = (int) position.y;
@@ -23,5 +26,10 @@ void Circle::draw(const std::shared_ptr<PixelRenderer> &renderer, const Vec2 &po
     }
 }
 
-Circle::Circle(int radius, const Pixel &outlineColor, const Pixel &fillColor, int thickness)
-        : radius(radius), outlineColor(outlineColor), fillColor(fillColor), thickness(thickness) {}
+void Circle::setOutlineColor(const Pixel &color) {
+    Circle::outlineColor = color;
+}
+
+void Circle::setFillColor(const Pixel &color) {
+    Circle::fillColor = color;
+}

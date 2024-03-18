@@ -40,9 +40,7 @@ struct Pixel {
         return {Uint8(r() * value), Uint8(g() * value), Uint8(b() * value), Uint8(a() * value)};
     }
 
-    void setAlpha(const Uint8 alpha) {
-        data |= alpha << 24;
-    }
+    void setAlpha(const Uint8 alpha);
 };
 
 static const Pixel

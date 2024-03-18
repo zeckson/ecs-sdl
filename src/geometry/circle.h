@@ -19,11 +19,8 @@ public:
     explicit Circle(int radius, const Pixel &outlineColor, const Pixel &fillColor, int thickness);
 
     void draw(const std::shared_ptr<PixelRenderer> &renderer, const Vec2 &position) const;
-
-    void setOpacity(const Uint8 opacity) {
-        outlineColor.setAlpha(opacity);
-        fillColor.setAlpha(opacity);
-    }
+    void setOutlineColor(const Pixel &color);
+    void setFillColor(const Pixel &color);
 
 };
 
