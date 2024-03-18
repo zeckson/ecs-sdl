@@ -17,7 +17,6 @@ bool BallGame::onGameCreate() {
     auto center = Vec2(float(width) / 2, float(height) / 2);
     player->transform = std::make_shared<TransformComponent>(center, 0, 0);
     player->input = std::make_shared<InputComponent>();
-    manager.addEntity(player);
     return true;
 }
 
@@ -33,7 +32,6 @@ void BallGame::spawnEnemySystem() {
         auto center = Vec2(startX, startY);
         enemy->transform = std::make_shared<TransformComponent>(center, ENEMY_SPEED, M_PI_4);
         logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
-        manager.addEntity(enemy);
     }
 }
 
@@ -52,7 +50,6 @@ void BallGame::spawnBullet(const Vec2 &target) {
     bullet->lifecycle = std::make_shared<LifecycleComponent>(BULLET_LIFECYCLE);
     logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), playerPosition.x, playerPosition.y,
             radius);
-    manager.addEntity(bullet);
 }
 
 

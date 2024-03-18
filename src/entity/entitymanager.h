@@ -22,9 +22,6 @@ public:
 
     std::shared_ptr<Entity> createEntity(const std::string &name);
 
-    void addEntity(const std::shared_ptr<Entity> &entity) {
-        entitiesToAdd.push_back(entity);
-    };
     void removeEntity(const std::shared_ptr<Entity> &entity) {
         entitiesToRemove.push_back(entity);
     };
@@ -42,6 +39,10 @@ private:
     EntityList entities;
     EntityList entitiesToAdd;
     EntityList entitiesToRemove;
+
+    void addEntity(const std::shared_ptr<Entity> &entity) {
+        entitiesToAdd.push_back(entity);
+    };
 };
 
 

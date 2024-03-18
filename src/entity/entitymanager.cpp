@@ -10,7 +10,9 @@ std::shared_ptr<Entity> EntityManager::createEntity(const std::string &name) {
         // TODO: get dead entities pool and clean one and resurrect otherwise die!
         throw std::runtime_error("Maximum entities created: " + std::to_string(MAX_ENTITIES));
     }
-    return std::make_shared<Entity>(name, counter++);
+    const auto &entity = std::make_shared<Entity>(name, counter++);
+    addEntity(entity);
+    return entity;
 }
 
 void EntityManager::update() {
