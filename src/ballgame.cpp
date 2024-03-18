@@ -108,24 +108,24 @@ bool BallGame::borderCollision(const std::shared_ptr<TransformComponent> &transf
     Uint32 radius = collision->radius;
     float right = width - radius;
     float left = 0 + radius;
-    if (x >= right) {
+    if (x > right) {
         velocity.x *= -1.0;
         position.x = right;
         collide = true;
     }
-    if (x <= left) {
+    if (x < left) {
         velocity.x *= -1.0;
         position.x = left;
         collide = true;
     }
     Uint32 bottom = height - radius;
     Uint32 top = 0 + radius;
-    if (y >= bottom) {
+    if (y > bottom) {
         velocity.y *= -1.0;
         position.y = bottom;
         collide = true;
     }
-    if (y <= top) {
+    if (y < top) {
         velocity.y *= -1.0;
         position.y = top;
         collide = true;
