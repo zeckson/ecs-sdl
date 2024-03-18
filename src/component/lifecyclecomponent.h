@@ -16,7 +16,8 @@ public:
     LifecycleComponent(const int framesToLive) :
             Component(LIFECYCLE_COMPONENT_NAME), framesToLive(framesToLive) {}
 
-    int framesToLive;
+    const int framesToLive;
+    int framesLeft = framesToLive;
 };
 
 

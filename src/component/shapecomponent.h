@@ -16,7 +16,7 @@
 class ShapeComponent: public Component {
 
 public:
-    const Circle circle;
+    Circle circle;
 
     ShapeComponent(int radius, const Pixel &outline, const Pixel &fill, const int thickness = 1)
             : Component(SHAPE_COMPONENT_NAME), circle(Circle(radius, outline, fill, thickness)) {}

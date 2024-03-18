@@ -62,8 +62,8 @@ bool BallGame::onGameUpdate(float elapsedTime) {
     spawnEnemySystem();
     movementSystem();
     collisionSystem();
-    lifecycleSystem();
     renderSystem();
+    lifecycleSystem();
 
     return true;
 }
@@ -102,13 +102,13 @@ void BallGame::lifecycleSystem() {
     for (const auto &entity: manager.getAllEntities()) {
         const auto &lifecycle = entity->lifecycle;
         if (lifecycle) {
-            lifecycle->framesToLive--;
-            if (lifecycle->framesToLive < 0) {
+            lifecycle->framesLeft--;
+            if (lifecycle->framesLeft < 0) {
                 manager.removeEntity(entity);
             }
         }
     }
-    
+
 }
 
 
@@ -151,10 +151,17 @@ bool BallGame::checkScreenCollision(const std::shared_ptr<TransformComponent> &t
 
 void BallGame::renderSystem() {
     for (const auto &entity: manager.getAllEntities()) {
-        const auto &component = entity->shape;
-        const auto transform = entity->transform;
-        if (component && transform) {
-            component->circle.draw(renderer, transform->position);
+        const auto &shape = entity->shape;
+        const auto &lifecycle = entity->lifecycle;
+        if (lifecycle && shape) {
+            const auto step = SDL_ALPHA_OPAQUE / lifecycle->framesToLive;
+            const auto opacity = lifecycle->framesLeft * step;
+            logInfo("Opacity: %d", opacity);
+            shape->circle.setOpacity(opacity);
+        }
+        const auto &transform = entity->transform;
+        if (shape && transform) {
+            shape->circle.draw(renderer, transform->position);
         }
     }
 }
