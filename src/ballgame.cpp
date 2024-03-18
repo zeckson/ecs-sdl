@@ -39,19 +39,20 @@ void BallGame::spawnEnemySystem() {
 
 void BallGame::spawnBullet(const Vec2 &target) {
     const std::string name = ENTITY_BULLET_TAG;
-    auto enemy = manager.createEntity(name);
+    auto bullet = manager.createEntity(name);
     int radius = 5;
-    enemy->collision = std::make_shared<CollisionComponent>(radius);
-    enemy->shape = std::make_shared<ShapeComponent>(radius, WHITE, WHITE);
+    bullet->collision = std::make_shared<CollisionComponent>(radius);
+    bullet->shape = std::make_shared<ShapeComponent>(radius, WHITE, WHITE);
     const auto &playerPosition = player->transform->position;
     auto distance = target - playerPosition;
     auto velocity = distance.normalize();
     logInfo("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(),
             target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
-    enemy->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
+    bullet->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
+    bullet->lifecycle = std::make_shared<LifecycleComponent>(BULLET_LIFECYCLE);
     logInfo("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), playerPosition.x, playerPosition.y,
             radius);
-    manager.addEntity(enemy);
+    manager.addEntity(bullet);
 }
 
 
@@ -98,7 +99,16 @@ void BallGame::collisionSystem() {
 }
 
 void BallGame::lifecycleSystem() {
-
+    for (const auto &entity: manager.getAllEntities()) {
+        const auto &lifecycle = entity->lifecycle;
+        if (lifecycle) {
+            lifecycle->framesToLive--;
+            if (lifecycle->framesToLive < 0) {
+                manager.removeEntity(entity);
+            }
+        }
+    }
+    
 }
 
 

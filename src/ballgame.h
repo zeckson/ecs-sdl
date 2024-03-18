@@ -16,6 +16,8 @@
 #define ENTITY_ENEMY_TAG "enemy"
 #define ENTITY_PLAYER_TAG "player"
 
+#define BULLET_LIFECYCLE 100
+
 class BallGame : public Game {
 public:
     explicit BallGame(const char *title, Uint16 width, Uint16 height) : Game(title, width, height) {}
