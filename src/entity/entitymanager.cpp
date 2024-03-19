@@ -29,3 +29,7 @@ void EntityManager::update() {
     entitiesToAdd.clear();
 
 }
+
+const EntityList &EntityManager::getEntities(const std::string &tag) {
+    return entityMap[tag];
+}

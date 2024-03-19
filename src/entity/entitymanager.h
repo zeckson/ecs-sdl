@@ -32,6 +32,8 @@ public:
         return entities;
     }
 
+    const EntityList &getEntities(const std::string &tag);
+
 private:
     Uint32 counter = 0;
 

@@ -35,6 +35,8 @@ private:
 
     void spawnEnemySystem();
 
+    void spawnBullet(const Vec2 &target);
+
     void movementSystem();
 
     void collisionSystem();
@@ -52,7 +54,10 @@ private:
     EntityManager manager;
     Randomizer random;
 
-    void spawnBullet(const Vec2 &target);
+
+    bool collides(const std::shared_ptr<Entity> &source, const std::shared_ptr<Entity> &target);
+
+
 };
 
 

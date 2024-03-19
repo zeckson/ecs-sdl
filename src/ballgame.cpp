@@ -93,7 +93,47 @@ void BallGame::collisionSystem() {
                 }
             }
         }
+
     }
+    const auto &enemyList = manager.getEntities(ENTITY_ENEMY_TAG);
+    const auto enemyVector = std::vector(enemyList.begin(), enemyList.end());
+    for (int i = 0; i < enemyVector.size(); ++i) {
+        for (int j = i + 1; j < enemyVector.size(); ++j) {
+            auto &source = enemyVector[i];
+            auto &target = enemyVector[j];
+
+            collides(source, target);
+            if (collides(source, target)) {
+                // Circles collide, reverse velocities
+                Vec2 sourceVelocity = source->transform->velocity;
+                source->transform->velocity = target->transform->velocity;
+                target->transform->velocity = sourceVelocity;
+            }
+        }
+    }
+}
+
+
+bool BallGame::collides(const std::shared_ptr<Entity> &source, const std::shared_ptr<Entity> &target) {
+    const auto &sourceCollision = source->collision;
+    const auto &targetCollision = target->collision;
+    if (!(sourceCollision && targetCollision)) {
+        return false;
+    }
+
+    const auto &sourceTransform = source->transform;
+    const auto &targetTransform = target->transform;
+    if (!(sourceTransform && targetTransform)) {
+        return false;
+    }
+
+    const auto &left = source->transform->position;
+    const auto &right = target->transform->position;
+    float dx = left.x - right.x;
+    float dy = left.y - right.y;
+    float distance = dx * dx + dy * dy;
+    int minDistance = (sourceCollision->radius + targetCollision->radius) * (sourceCollision->radius + targetCollision->radius);
+    return distance < float(minDistance);
 }
 
 void BallGame::lifecycleSystem() {
