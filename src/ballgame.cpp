@@ -15,7 +15,7 @@ bool BallGame::onGameCreate() {
     const auto radius = 60;
     player->collision = std::make_shared<CollisionComponent>(radius);
     player->shape = std::make_shared<ShapeComponent>(radius, GREEN, BLUE, 2);
-    auto center = Vec2(float(width) / 2, float(height) / 2);
+    auto center = Vec2(width / 2, height / 2);
     player->transform = std::make_shared<TransformComponent>(center, 0, 0);
     player->input = std::make_shared<InputComponent>();
     return true;
@@ -96,31 +96,44 @@ void BallGame::collisionSystem() {
 
     const auto &enemyList = manager.getEntities(ENTITY_ENEMY_TAG);
     const auto &bulletList = manager.getEntities(ENTITY_BULLET_TAG);
-    for (const auto &bullet: bulletList) {
-        for (const auto &enemy: enemyList) {
-            if (collides(bullet, enemy)) {
-                manager.removeEntity(enemy);
-                manager.removeEntity(bullet);
-            }
-        }
-    }
 
     // TODO: try to get rid of excessive memory copy
     const auto enemyVector = std::vector(enemyList.begin(), enemyList.end());
     for (int i = 0; i < enemyVector.size(); ++i) {
-        for (int j = i + 1; j < enemyVector.size(); ++j) {
-            auto &source = enemyVector[i];
-            auto &target = enemyVector[j];
+        const auto &enemy = enemyVector[i];
 
-            if (collides(source, target)) {
+        // enemy - player collision
+        if (collides(player, enemy)) {
+            manager.removeEntity(enemy);
+            player->transform->position = Vec2(width / 2, height / 2);
+
+            goto endloop; // we don't care about collision enemy is dead
+        }
+
+        // enemy - bullet collision
+        for (const auto &bullet: bulletList) {
+            if (collides(bullet, enemy)) {
+                manager.removeEntity(enemy);
+                manager.removeEntity(bullet);
+
+                goto endloop; // we don't care about collision enemy is dead
+            }
+        }
+
+        // enemy - enemy collision
+        for (int j = i + 1; j < enemyVector.size(); ++j) {
+            const auto &otherEnemy = enemyVector[j];
+
+            if (collides(enemy, otherEnemy)) {
                 // Circles collide, reverse velocities
-                Vec2 sourceVelocity = source->transform->velocity;
-                source->transform->velocity = target->transform->velocity;
-                target->transform->velocity = sourceVelocity;
+                Vec2 enemyVelocity = enemy->transform->velocity;
+                enemy->transform->velocity = otherEnemy->transform->velocity;
+                otherEnemy->transform->velocity = enemyVelocity;
 
                 // TODO: resolve collision overlapping (circles can attach or stick together)
             }
         }
+        endloop:;
     }
 }
 
@@ -148,7 +161,7 @@ bool BallGame::collides(const std::shared_ptr<Entity> &source, const std::shared
     const auto collided = distance < float(minDistance);
     if (collided) {
         Logger::debug("Entity collision: [%s]:%s and [%s]:%s", source->tag().c_str(), left.toString().c_str(),
-                     target->tag().c_str(), right.toString().c_str());
+                      target->tag().c_str(), right.toString().c_str());
     }
     return collided;
 }
