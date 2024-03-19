@@ -46,11 +46,11 @@ void BallGame::spawnBullet(const Vec2 &target) {
     auto distance = target - playerPosition;
     auto velocity = distance.normalize();
     Logger::info("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(),
-            target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
+                 target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
     bullet->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
     bullet->lifecycle = std::make_shared<LifecycleComponent>(BULLET_LIFECYCLE);
     Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), playerPosition.x, playerPosition.y,
-            radius);
+                 radius);
 }
 
 
@@ -144,7 +144,8 @@ bool BallGame::collides(const std::shared_ptr<Entity> &source, const std::shared
     float dx = left.x - right.x;
     float dy = left.y - right.y;
     float distance = dx * dx + dy * dy;
-    int minDistance = (sourceCollision->radius + targetCollision->radius) * (sourceCollision->radius + targetCollision->radius);
+    int minDistance =
+            (sourceCollision->radius + targetCollision->radius) * (sourceCollision->radius + targetCollision->radius);
     const auto collided = distance < float(minDistance);
     if (collided) {
         Logger::info("Entity [%s]:[%s] and entity [%s]:[%s] collided", source->tag().c_str(), left.toString().c_str(),
@@ -209,8 +210,8 @@ void BallGame::renderSystem() {
         const auto &shape = entity->shape;
         const auto &lifecycle = entity->lifecycle;
         if (lifecycle && shape) {
-            const auto step = SDL_ALPHA_OPAQUE / lifecycle->framesToLive;
-            const auto opacity = lifecycle->framesLeft * step;
+            const auto step = (SDL_ALPHA_OPAQUE - BULLET_MINIMUM_FADE) / lifecycle->framesToLive;
+            const auto opacity = lifecycle->framesLeft * step + BULLET_MINIMUM_FADE;
 
             // NB! Since SDL2 doesn't support alpha channel on screen rendering
             // Imitate it by blending with background

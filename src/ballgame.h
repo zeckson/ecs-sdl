@@ -22,6 +22,8 @@
 
 #define MAX_ENEMIES 10
 
+#define BULLET_MINIMUM_FADE 100
+
 class BallGame : public Game {
 public:
     explicit BallGame(const char *title, Uint16 width, Uint16 height) : Game(title, width, height) {}
