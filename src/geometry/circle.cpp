@@ -10,12 +10,14 @@ Circle::Circle(int radius, const Pixel &outlineColor, const Pixel &fillColor, in
 void Circle::draw(const std::shared_ptr<PixelRenderer> &renderer, const Vec2 &position) const {
     int centerX = (int) position.x;
     int centerY = (int) position.y;
+
+    int outerRadius = radius * radius;
+    int innerRadius = (radius - thickness) * (radius - thickness);
     for (int y = -radius; y <= radius; ++y) {
         for (int x = -radius; x <= radius; ++x) {
-            int border = (radius * radius);
             int location = x * x + y * y;
-            if (location <= border) {
-                if (border - location <= (thickness * 10) * (thickness * 10)) {
+            if (location <= outerRadius) {
+                if (location > innerRadius) {
                     renderer->setColor(outlineColor);
                 } else {
                     renderer->setColor(fillColor);

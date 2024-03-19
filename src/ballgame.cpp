@@ -14,7 +14,7 @@ bool BallGame::onGameCreate() {
     player = manager.createEntity(ENTITY_PLAYER_TAG);
     const auto radius = 60;
     player->collision = std::make_shared<CollisionComponent>(radius);
-    player->shape = std::make_shared<ShapeComponent>(radius, GREEN, BLUE, 2);
+    player->shape = std::make_shared<ShapeComponent>(radius, GREEN, BLUE, 8);
     auto center = Vec2(width / 2, height / 2);
     player->transform = std::make_shared<TransformComponent>(center, 0, 0);
     player->input = std::make_shared<InputComponent>();
@@ -27,7 +27,7 @@ void BallGame::spawnEnemySystem() {
         auto enemy = manager.createEntity(name);
         int radius = random.between(1, 4) * 10;
         enemy->collision = std::make_shared<CollisionComponent>(radius);
-        enemy->shape = std::make_shared<ShapeComponent>(radius, BLUE, RED);
+        enemy->shape = std::make_shared<ShapeComponent>(radius, BLUE, RED, 4);
         int startX = random.between(radius, width - radius);
         int startY = random.between(radius, height - radius);
         auto center = Vec2(startX, startY);
