@@ -19,6 +19,15 @@ public:
         return min + (std::rand() % (1 + max - min)); // NOLINT(*-msc50-cpp)
     }
 
+    int get(const int max) {
+        return std::rand() % (1 + max); // NOLINT(*-msc50-cpp)
+    }
+
+    // from 0..1
+    float get() {
+        return float(get(100)) / 100; // NOLINT(*-msc50-cpp)
+    }
+
 };
 
 
