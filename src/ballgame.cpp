@@ -118,6 +118,8 @@ void BallGame::collisionSystem() {
                 Vec2 sourceVelocity = source->transform->velocity;
                 source->transform->velocity = target->transform->velocity;
                 target->transform->velocity = sourceVelocity;
+
+                // TODO: resolve collision overlapping (circles can attach or stick together)
             }
         }
     }
