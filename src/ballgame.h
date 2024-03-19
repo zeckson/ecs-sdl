@@ -18,6 +18,10 @@
 
 #define BULLET_LIFECYCLE 100
 
+#define SPAWN_ENEMY_FRAME 1000
+
+#define MAX_ENEMIES 10
+
 class BallGame : public Game {
 public:
     explicit BallGame(const char *title, Uint16 width, Uint16 height) : Game(title, width, height) {}

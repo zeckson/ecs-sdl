@@ -22,10 +22,10 @@ bool BallGame::onGameCreate() {
 }
 
 void BallGame::spawnEnemySystem() {
-    if (frameRate.totalFrame % 1000 == 0 && manager.getAllEntities().size() < 10) {
+    if (frameRate.totalFrame % SPAWN_ENEMY_FRAME == 0 && manager.getAllEntities().size() < MAX_ENEMIES) {
         const std::string name = ENTITY_ENEMY_TAG;
         auto enemy = manager.createEntity(name);
-        int radius = random.between(10, 40);
+        int radius = random.between(1, 4) * 10;
         enemy->collision = std::make_shared<CollisionComponent>(radius);
         enemy->shape = std::make_shared<ShapeComponent>(radius, BLUE, RED);
         int startX = random.between(radius, width - radius);
@@ -42,7 +42,7 @@ void BallGame::spawnBullet(const Vec2 &target) {
     int radius = 5;
     bullet->collision = std::make_shared<CollisionComponent>(radius);
     bullet->shape = std::make_shared<ShapeComponent>(radius, WHITE, WHITE);
-    const auto &playerPosition = player->transform->position;
+    const auto playerPosition = player->transform->position;
     auto distance = target - playerPosition;
     auto velocity = distance.normalize();
     Logger::info("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(),
@@ -95,15 +95,24 @@ void BallGame::collisionSystem() {
         }
     }
 
-    // TODO: try to get rid of excessive memory copy
     const auto &enemyList = manager.getEntities(ENTITY_ENEMY_TAG);
+    const auto &bulletList = manager.getEntities(ENTITY_BULLET_TAG);
+    for (const auto &bullet: bulletList) {
+        for (const auto &enemy: enemyList) {
+            if (collides(bullet, enemy)) {
+                manager.removeEntity(enemy);
+                manager.removeEntity(bullet);
+            }
+        }
+    }
+
+    // TODO: try to get rid of excessive memory copy
     const auto enemyVector = std::vector(enemyList.begin(), enemyList.end());
     for (int i = 0; i < enemyVector.size(); ++i) {
         for (int j = i + 1; j < enemyVector.size(); ++j) {
             auto &source = enemyVector[i];
             auto &target = enemyVector[j];
 
-            collides(source, target);
             if (collides(source, target)) {
                 // Circles collide, reverse velocities
                 Vec2 sourceVelocity = source->transform->velocity;
@@ -128,13 +137,18 @@ bool BallGame::collides(const std::shared_ptr<Entity> &source, const std::shared
         return false;
     }
 
-    const auto &left = source->transform->position;
-    const auto &right = target->transform->position;
+    const auto &left = sourceTransform->position;
+    const auto &right = targetTransform->position;
     float dx = left.x - right.x;
     float dy = left.y - right.y;
     float distance = dx * dx + dy * dy;
     int minDistance = (sourceCollision->radius + targetCollision->radius) * (sourceCollision->radius + targetCollision->radius);
-    return distance < float(minDistance);
+    const auto collided = distance < float(minDistance);
+    if (collided) {
+        Logger::info("Entity [%s]:[%s] and entity [%s]:[%s] collided", source->tag().c_str(), left.toString().c_str(),
+                     target->tag().c_str(), right.toString().c_str());
+    }
+    return collided;
 }
 
 void BallGame::lifecycleSystem() {
