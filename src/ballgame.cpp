@@ -93,8 +93,9 @@ void BallGame::collisionSystem() {
                 }
             }
         }
-
     }
+
+    // TODO: try to get rid of excessive memory copy
     const auto &enemyList = manager.getEntities(ENTITY_ENEMY_TAG);
     const auto enemyVector = std::vector(enemyList.begin(), enemyList.end());
     for (int i = 0; i < enemyVector.size(); ++i) {
@@ -194,6 +195,9 @@ void BallGame::renderSystem() {
         if (lifecycle && shape) {
             const auto step = SDL_ALPHA_OPAQUE / lifecycle->framesToLive;
             const auto opacity = lifecycle->framesLeft * step;
+
+            // NB! Since SDL2 doesn't support alpha channel on screen rendering
+            // Imitate it by blending with background
             const auto &fade = Pixel(opacity, opacity, opacity);
             shape->circle.setFillColor(fade);
             shape->circle.setOutlineColor(fade);
