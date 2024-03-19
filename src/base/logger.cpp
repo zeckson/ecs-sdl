@@ -21,3 +21,10 @@ void Logger::log(ApplicationLog category, SDL_LogPriority priority, const char *
 void Logger::logv(ApplicationLog category, SDL_LogPriority priority, const char *format, va_list ap) {
     SDL_LogMessageV(category, priority, format, ap);
 }
+
+void Logger::debug(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    Logger::logv(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_DEBUG, format, args);
+    va_end(args);
+}

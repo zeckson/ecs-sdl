@@ -45,11 +45,9 @@ void BallGame::spawnBullet(const Vec2 &target) {
     const auto playerPosition = player->transform->position;
     auto distance = target - playerPosition;
     auto velocity = distance.normalize();
-    Logger::info("source %s target %s distance %s normalized vector: %s", playerPosition.toString().c_str(),
-                 target.toString().c_str(), distance.toString().c_str(), velocity.toString().c_str());
     bullet->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
     bullet->lifecycle = std::make_shared<LifecycleComponent>(BULLET_LIFECYCLE);
-    Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), playerPosition.x, playerPosition.y,
+    Logger::info("Entity[%s] created at: %s with radius: %d", name.c_str(), playerPosition.toString().c_str(),
                  radius);
 }
 
@@ -87,7 +85,7 @@ void BallGame::collisionSystem() {
         if (transform && collision) {
             const bool collide = checkScreenCollision(transform, collision);
             if (collide) {
-                Logger::info("Collision detected on entity: %s", entity->tag().c_str());
+                Logger::debug("Wall collision: [%s]:%s", entity->tag().c_str(), transform->position.toString().c_str());
                 if (entity->tag() == ENTITY_BULLET_TAG) {
                     manager.removeEntity(entity);
                 }
@@ -148,7 +146,7 @@ bool BallGame::collides(const std::shared_ptr<Entity> &source, const std::shared
             (sourceCollision->radius + targetCollision->radius) * (sourceCollision->radius + targetCollision->radius);
     const auto collided = distance < float(minDistance);
     if (collided) {
-        Logger::info("Entity [%s]:[%s] and entity [%s]:[%s] collided", source->tag().c_str(), left.toString().c_str(),
+        Logger::debug("Entity collision: [%s]:%s and [%s]:%s", source->tag().c_str(), left.toString().c_str(),
                      target->tag().c_str(), right.toString().c_str());
     }
     return collided;
