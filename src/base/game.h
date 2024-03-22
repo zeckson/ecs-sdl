@@ -12,6 +12,7 @@
 #include "app.h"
 #include "../renderer/pixelrenderer.h"
 #include "../entity/entitymanager.h"
+#include "config.h"
 
 #define ONE_SECOND 1000
 #define FPS 60
@@ -39,7 +40,7 @@ public:
     const Uint16 width, height;
     void start();
 protected:
-    explicit Game(const char *title, Uint16 width, Uint16 height);
+    explicit Game(const char *title, const Config &config);
 
     std::shared_ptr<PixelRenderer> renderer;
     FrameRate frameRate;
@@ -51,6 +52,7 @@ protected:
     virtual void onMouseEvent(const SDL_Event &event) = 0;
 private:
     App app;
+    const Config config;
 
     bool input();
 

@@ -8,6 +8,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
+#include "config.h"
 
 #define FONT_PATH "gfx/glitchgoblin.ttf"
 #define DEFAULT_FONT_SIZE 24
@@ -15,7 +16,7 @@
 class Game;
 
 class App {
-    explicit App(const char *title, Uint16 width, Uint16 height);
+    explicit App(const char *title, const Config &config);
 
     void destroy();
 

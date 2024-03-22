@@ -5,7 +5,7 @@
 #include "app.h"
 #include "logger.h"
 
-App::App(const char *title, const Uint16 width, const Uint16 height) {
+App::App(const char *title, const Config &config) {
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN);
     SDL_LogSetPriority(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_INFO);
 
@@ -18,19 +18,24 @@ App::App(const char *title, const Uint16 width, const Uint16 height) {
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
     // Create an application window with the following settings:
+    auto flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+    const auto gameConfig = config.gameConfig;
+    if (gameConfig.fullscreen) {
+        flags |= SDL_WINDOW_FULLSCREEN;
+    }
     window = SDL_CreateWindow(
             title,        // window title
             SDL_WINDOWPOS_CENTERED, // initial x position
             SDL_WINDOWPOS_CENTERED, // initial y position
-            width,                     // width, in pixels
-            height,                     // height, in pixels
-            SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
+            gameConfig.width,                     // width, in pixels
+            gameConfig.height,                     // height, in pixels
+            flags
     );
 
     // Check that the window was successfully created
     if (!window) {
         // In the case that the window could not be made...
-        printf("Failed to open %d x %d window: %s\n", width, height, SDL_GetError());
+        printf("Failed to open %d x %d window: %s\n", gameConfig.width, gameConfig.height, SDL_GetError());
         exit(1);
     }
 

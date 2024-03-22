@@ -1,18 +1,19 @@
-#include <SDL2/SDL.h>
 #include <iostream>
 
 #include "base/game.h"
+#include "base/config.h"
 #include "ballgame.h"
-
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
+#include "base/logger.h"
 
 #ifndef PROJECT_NAME
 #define PROJECT_NAME "SDL Window"
 #endif
 
 int main() {
-    BallGame game(PROJECT_NAME, SCREEN_WIDTH, SCREEN_HEIGHT);
+    const auto config = Config::loadFromFile("conf/game.conf");
+    printf("Loaded config %ux%u\n", config.gameConfig.width, config.gameConfig.height);
+
+    BallGame game(PROJECT_NAME, config);
 
     game.start();
 

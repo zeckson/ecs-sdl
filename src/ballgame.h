@@ -7,6 +7,7 @@
 
 #include "base/game.h"
 #include "randomizer.h"
+#include "base/config.h"
 
 #define PLAYER_SPEED 1.0
 #define ENEMY_SPEED 2.0
@@ -26,7 +27,7 @@
 
 class BallGame : public Game {
 public:
-    explicit BallGame(const char *title, Uint16 width, Uint16 height) : Game(title, width, height) {}
+    explicit BallGame(const char *title, const Config &config) : Game(title, config) {}
 
 protected:
     bool onGameCreate() override;
