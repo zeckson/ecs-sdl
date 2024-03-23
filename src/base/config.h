@@ -14,6 +14,7 @@
 
 #define WIDTH 1280
 #define HEIGHT 1024
+#define FPS 60
 #define FULLSCREEN 0
 
 #define FONT_PATH "gfx/glitchgoblin.ttf"
@@ -22,6 +23,8 @@
 struct Window {
     int width = WIDTH;
     int height = HEIGHT;
+
+    int fps = FPS;
 
     bool fullscreen = FULLSCREEN;
 };

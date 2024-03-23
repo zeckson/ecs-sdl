@@ -25,7 +25,7 @@ COMPILER_FLAGS := -std=c++17 -Wall -O0 -g -mmacosx-version-min=14.0 $(SDL_LIBRAR
 
 CXXFLAGS = $(COMPILER_FLAGS)
 
-.PHONY: clean run all echo
+.PHONY: clean run all echo compile recompile
 
 # Debugging echo rule
 echo:
@@ -48,6 +48,8 @@ compile: $(OBJS)
 
 clean:
 	rm -rf $(BUILD_DIR)
+
+recompile: clean compile
 
 run: compile
 	$(BUILD_DIR)/${PROJECT_NAME}

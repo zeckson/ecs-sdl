@@ -16,14 +16,18 @@
 
 #define ONE_SECOND 1000
 #define FPS 60
-#define DELAY_TIME (ONE_SECOND / FPS) // Delay time in milliseconds
 
 struct FrameRate {
+    explicit FrameRate(const int fps): maxFrameTime(double(double(ONE_SECOND) / double(fps))), fps(double(fps)) {};
+
+    double const maxFrameTime;
+    double fps = FPS;
+
     Uint64 totalFrame = 0;
     Uint16 frameCount = 0;
     Uint32 startTime = SDL_GetTicks();
+    Uint32 frameStartTime = startTime;
     Uint32 currentFrameTime = startTime - 0;
-    double fps = FPS;
 
     void frameStart();
     void frameEnd();
@@ -31,8 +35,6 @@ struct FrameRate {
     void render(const std::shared_ptr<PixelRenderer> &renderer) const;
 
     [[nodiscard]] float elapsedTime() const;
-
-    Uint32 frameStartTime;
 };
 
 class Game {
@@ -42,8 +44,10 @@ public:
 protected:
     explicit Game(const char *title, const Config &config);
 
+    const Config config;
+
+    FrameRate frameRate = FrameRate(config.window.fps);
     std::shared_ptr<PixelRenderer> renderer;
-    FrameRate frameRate;
 
     virtual bool onGameCreate() = 0;
     virtual bool onGameUpdate(float elapsedTime) = 0;
@@ -52,7 +56,6 @@ protected:
     virtual void onMouseEvent(const SDL_Event &event) = 0;
 private:
     App app;
-    const Config config;
 
     bool input();
 
