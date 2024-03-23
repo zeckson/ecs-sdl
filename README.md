@@ -16,5 +16,6 @@ Assignment 1:
 - [x] Spawn subsystem
 - [x] Input subsystem
 - [ ] Super Weapon Implementation
+- [ ] Spawn Small Enemies
 
 Based on Dave Churchill course [video lections](https://www.youtube.com/watch?v=hngvIDUMD88&list=PL_xRyXins849E1WPuutEApdyTa0Bfxhzq) 
