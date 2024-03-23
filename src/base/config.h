@@ -51,7 +51,12 @@ struct Player {
 };
 
 class Config {
-    explicit Config(const Window &window, const Font &font) : window(window), font(font) {};
+    explicit Config(const Window &window, const Font &font, const Player &player) :
+    window(window),
+    font(font),
+    player(player)
+    {};
+
 public:
     const Window window;
     const Font font;

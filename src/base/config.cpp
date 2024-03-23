@@ -34,7 +34,7 @@ Config Config::loadFromFile(const std::string &filename) {
 
     fin.close();
 
-    return Config(win, font);
+    return Config(win, font, player);
 }
 
 std::ifstream &operator>>(std::ifstream &fin, Window &gameConfig) {
