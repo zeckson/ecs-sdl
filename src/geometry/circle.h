@@ -18,7 +18,7 @@ class Circle {
 public:
     explicit Circle(int radius, const Pixel &outlineColor, const Pixel &fillColor, int thickness);
 
-    void draw(const std::shared_ptr<PixelRenderer> &renderer, const Vec2 &position) const;
+    void draw(const std::unique_ptr<PixelRenderer> &renderer, const Vec2 &position) const;
     void setOutlineColor(const Pixel &color);
     void setFillColor(const Pixel &color);
 

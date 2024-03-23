@@ -7,7 +7,7 @@
 Circle::Circle(int radius, const Pixel &outlineColor, const Pixel &fillColor, int thickness)
         : radius(radius), outlineColor(outlineColor), fillColor(fillColor), thickness(thickness) {}
 
-void Circle::draw(const std::shared_ptr<PixelRenderer> &renderer, const Vec2 &position) const {
+void Circle::draw(const std::unique_ptr<PixelRenderer> &renderer, const Vec2 &position) const {
     int centerX = (int) position.x;
     int centerY = (int) position.y;
 

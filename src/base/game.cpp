@@ -14,7 +14,7 @@ void FrameRate::limit() const {
     }
 }
 
-void FrameRate::render(const std::shared_ptr<PixelRenderer> &renderer) const {
+void FrameRate::render(const std::unique_ptr<PixelRenderer> &renderer) const {
     renderer->renderText("FPS: " + std::to_string(int(std::ceil(fps))), 5, 5);
     renderer->renderText("Delay Time: " + std::to_string(maxFrameTime), 5, 30);
     renderer->renderText("Current Frame Time: " + std::to_string(currentFrameTime), 5, 55);
@@ -46,7 +46,7 @@ void FrameRate::frameEnd() {
 
 Game::Game(const char *title, const Config &config) :
         width(config.window.width), height(config.window.height), config(config), app(App(title, config)) {
-    renderer = std::make_shared<PixelRenderer>(app.pSDLRenderer, app.font, width, height);
+    renderer = std::make_unique<PixelRenderer>(app.pSDLRenderer, app.font, width, height);
 }
 
 void Game::start() {

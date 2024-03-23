@@ -32,7 +32,7 @@ struct FrameRate {
     void frameStart();
     void frameEnd();
     void limit() const;
-    void render(const std::shared_ptr<PixelRenderer> &renderer) const;
+    void render(const std::unique_ptr<PixelRenderer> &renderer) const;
 
     [[nodiscard]] float elapsedTime() const;
 };
@@ -47,7 +47,7 @@ protected:
     const Config config;
 
     FrameRate frameRate = FrameRate(config.window.fps);
-    std::shared_ptr<PixelRenderer> renderer;
+    std::unique_ptr<PixelRenderer> renderer;
 
     virtual bool onGameCreate() = 0;
     virtual bool onGameUpdate(float elapsedTime) = 0;
