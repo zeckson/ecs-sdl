@@ -27,7 +27,7 @@
 
 class BallGame : public Game {
 public:
-    explicit BallGame(const char *title, const Config &config) : Game(title, config) {}
+    explicit BallGame(const char *title) : Game(title, Config::loadFromFile("conf/game.conf")) {}
 
 protected:
     bool onGameCreate() override;

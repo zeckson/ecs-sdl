@@ -5,15 +5,8 @@
 #include "ballgame.h"
 #include "base/logger.h"
 
-#ifndef PROJECT_NAME
-#define PROJECT_NAME "SDL Window"
-#endif
-
 int main() {
-    const auto config = Config::loadFromFile("conf/game.conf");
-    printf("Loaded config %ux%u\n", config.window.width, config.window.height);
-
-    BallGame game(PROJECT_NAME, config);
+    BallGame game("The Game Of Balls");
 
     game.start();
 

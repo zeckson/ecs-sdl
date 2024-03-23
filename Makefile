@@ -40,7 +40,7 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	@echo "Compiling: " $< " into: " $@
 	mkdir -p $(dir $@)
-	$(CC) $(CXXFLAGS) -DPROJECT_NAME='"$(PROJECT_NAME)"' -c $< -o $@
+	$(CC) $(CXXFLAGS) -c $< -o $@
 
 # Build rule for the executable
 compile: $(OBJS)
