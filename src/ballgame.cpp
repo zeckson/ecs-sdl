@@ -12,9 +12,12 @@
 
 bool BallGame::onGameCreate() {
     player = manager.createEntity(ENTITY_PLAYER_TAG);
-    const auto radius = 60;
-    player->collision = std::make_shared<CollisionComponent>(radius);
-    player->shape = std::make_shared<ShapeComponent>(radius, GREEN, BLUE, 8);
+    const auto playerConfig = config.player;
+    player->shape = std::make_shared<ShapeComponent>(playerConfig.shapeRadius,
+                                                     playerConfig.outlineColor,
+                                                     playerConfig.fillColor,
+                                                     playerConfig.thickness);
+    player->collision = std::make_shared<CollisionComponent>(playerConfig.collisionRadius);
     auto center = Vec2(width / 2, height / 2);
     player->transform = std::make_shared<TransformComponent>(center, 0, 0);
     player->input = std::make_shared<InputComponent>();
@@ -251,7 +254,7 @@ void BallGame::updatePlayerPosition() {
             if (input->isset(Direction::LEFT)) xAxisMove -= 1;
             if (input->isset(Direction::RIGHT)) xAxisMove += 1;
 
-            const Vec2 &velocity = Vec2{xAxisMove, yAxisMove}.normalize() * PLAYER_SPEED;
+            const Vec2 &velocity = Vec2{xAxisMove, yAxisMove}.normalize() * config.player.speed;
             transform->position += velocity;
         }
     }
