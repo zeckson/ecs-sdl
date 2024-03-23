@@ -6,12 +6,13 @@
 #define RAYCASTING_PIXEL_H
 
 #include "SDL2/SDL.h"
+#include <fstream>
 
 struct Pixel {
     Uint32 data;
 
     Pixel(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
-        data = (r | g << 8 | b << 16 | a << 24); // ABGR
+        data = Pixel::pack(r, g, b, a); // ABGR
     }
 
     Pixel(Uint8 r, Uint8 g, Uint8 b) : Pixel(r, g, b, 255) {}
@@ -41,6 +42,10 @@ struct Pixel {
     }
 
     void setAlpha(const Uint8 alpha);
+
+    static Uint32 pack(Uint8 r, Uint8 g, Uint8 b, Uint8 a) { return (r | g << 8 | b << 16 | a << 24); }
+
+    friend std::ifstream &operator>>(std::ifstream &infile, Pixel &pixel);
 };
 
 static const Pixel
