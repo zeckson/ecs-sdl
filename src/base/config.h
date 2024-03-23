@@ -7,23 +7,22 @@
 
 #include <string>
 
-#define GAMECONFIG_NAME "Game"
+// Define a macro to store the name of the struct as a string literal
+#define CONFIG_NAME(Struct) #Struct
 
-struct GameConfig {
+struct Window {
     int width;
     int height;
 
     bool fullscreen;
-
-    // Declare the friend method inside the class
-    friend std::ifstream& operator>>(std::ifstream& infile, GameConfig& config);
 };
 
 class Config {
+    explicit Config(const Window &window): window(window) {};
 public:
-    GameConfig gameConfig;
-    static const Config &loadFromFile(const std::string &filename);
+    const Window window;
 
+    static Config loadFromFile(const std::string &filename);
 };
 
 

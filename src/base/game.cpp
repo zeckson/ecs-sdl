@@ -45,7 +45,7 @@ void FrameRate::frameEnd() {
 
 
 Game::Game(const char *title, const Config &config) :
-        width(config.gameConfig.width), height(config.gameConfig.height), app(App(title, config)), config(config) {
+        width(config.window.width), height(config.window.height), app(App(title, config)), config(config) {
     renderer = std::make_shared<PixelRenderer>(app.pSDLRenderer, app.font, width, height);
 }
 

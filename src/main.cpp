@@ -11,7 +11,7 @@
 
 int main() {
     const auto config = Config::loadFromFile("conf/game.conf");
-    printf("Loaded config %ux%u\n", config.gameConfig.width, config.gameConfig.height);
+    printf("Loaded config %ux%u\n", config.window.width, config.window.height);
 
     BallGame game(PROJECT_NAME, config);
 

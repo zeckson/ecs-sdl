@@ -6,29 +6,31 @@
 #include "config.h"
 
 
-const Config &Config::loadFromFile(const std::string &filename) {
+Config Config::loadFromFile(const std::string &filename) {
     std::ifstream fin(filename);
 
     if (!fin) {
         throw std::runtime_error("Failed to open file: " + filename);
     }
 
-    Config config{};
     std::string name;
+    Window win = {};
     while (fin.good() && !fin.eof()) {
         fin >> name;
         // TODO: rewrite to switch/case
-        if (name == GAMECONFIG_NAME) {
-            fin >> config.gameConfig;
+        if (name == CONFIG_NAME(Window)) {
+            fin >> win.width >> win.height >> win.fullscreen;
+        } else {
+            throw std::runtime_error("Unknown config type: " + name);
         }
     }
 
     fin.close();
 
-    return config;
+    return Config(win);
 }
 
-std::ifstream &operator>>(std::ifstream &fin, GameConfig &gameConfig) {
+std::ifstream &operator>>(std::ifstream &fin, Window &gameConfig) {
     if (!(fin >> gameConfig.width >> gameConfig.height >> gameConfig.fullscreen)) {
         fin.setstate(std::ios::failbit);
     }

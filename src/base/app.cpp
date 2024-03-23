@@ -19,7 +19,7 @@ App::App(const char *title, const Config &config) {
 
     // Create an application window with the following settings:
     auto flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
-    const auto gameConfig = config.gameConfig;
+    const auto gameConfig = config.window;
     if (gameConfig.fullscreen) {
         flags |= SDL_WINDOW_FULLSCREEN;
     }
