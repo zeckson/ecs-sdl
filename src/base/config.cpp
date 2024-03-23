@@ -14,12 +14,15 @@ Config Config::loadFromFile(const std::string &filename) {
     }
 
     std::string name;
-    Window win = {};
+    Window win{};
+    Font font{};
     while (fin.good() && !fin.eof()) {
         fin >> name;
         // TODO: rewrite to switch/case
         if (name == CONFIG_NAME(Window)) {
             fin >> win.width >> win.height >> win.fullscreen;
+        } else if (name == CONFIG_NAME(Font)) {
+            fin >> font.path >> font.size;
         } else {
             throw std::runtime_error("Unknown config type: " + name);
         }
@@ -27,7 +30,7 @@ Config Config::loadFromFile(const std::string &filename) {
 
     fin.close();
 
-    return Config(win);
+    return Config(win, font);
 }
 
 std::ifstream &operator>>(std::ifstream &fin, Window &gameConfig) {

@@ -60,7 +60,7 @@ App::App(const char *title, const Config &config) {
         exit(1);
     }
 
-    font = TTF_OpenFont(FONT_PATH, DEFAULT_FONT_SIZE);
+    font = TTF_OpenFont(config.font.path.c_str(), config.font.size);
     if (font == nullptr) {
         printf("Couldn't load %d pt font from %s: %s\n",
                DEFAULT_FONT_SIZE, FONT_PATH, SDL_GetError());

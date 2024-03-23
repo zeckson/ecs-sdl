@@ -10,9 +10,6 @@
 #include "SDL2/SDL_ttf.h"
 #include "config.h"
 
-#define FONT_PATH "gfx/glitchgoblin.ttf"
-#define DEFAULT_FONT_SIZE 24
-
 class Game;
 
 class App {
