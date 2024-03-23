@@ -11,12 +11,13 @@
 class Pixel {
     Uint32 data;
 
-public:
-    Pixel(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
-        data = Pixel::pack(r, g, b, a); // ABGR
-    }
+    // ABGR
+    static Uint32 pack(Uint8 r, Uint8 g, Uint8 b, Uint8 a) { return (r | g << 8 | b << 16 | a << 24); }
 
-    Pixel(Uint8 r, Uint8 g, Uint8 b) : Pixel(r, g, b, 255) {}
+public:
+    Pixel(const Uint8 r, const Uint8 g, const Uint8 b, const Uint8 a): data(Pixel::pack(r, g, b, a)) {}
+
+    Pixel(const Uint8 r, const Uint8 g, const Uint8 b) : Pixel(r, g, b, 255) {}
 
     [[nodiscard]] Uint8 r() const {
         return data & 0xFF;
@@ -42,9 +43,7 @@ public:
         return {Uint8(r() * value), Uint8(g() * value), Uint8(b() * value), Uint8(a() * value)};
     }
 
-    void setAlpha(const Uint8 alpha);
-
-    static Uint32 pack(Uint8 r, Uint8 g, Uint8 b, Uint8 a) { return (r | g << 8 | b << 16 | a << 24); }
+    void a(const Uint8 alpha);
 
     friend std::ifstream &operator>>(std::ifstream &infile, Pixel &pixel);
 };

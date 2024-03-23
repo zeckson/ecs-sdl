@@ -4,7 +4,7 @@
 
 #include "pixel.h"
 
-void Pixel::setAlpha(const Uint8 alpha) {
+void Pixel::a(const Uint8 alpha) {
     data = (data & 0x00FFFFFF) | (alpha << 24);
 }
 
