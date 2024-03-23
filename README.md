@@ -4,7 +4,7 @@ ECS pattern implementation for SDL2 library
 
 ## Game Of Balls
 
-Implemented:
+Assignment 1:
 - [ ] Loading config from files [hint](https://youtu.be/b-zZXFObb2o?si=rioryb1QRjwuIIjv&t=5602)
 - [ ] Polygonal circles
 - [x] EntityManager
@@ -15,5 +15,6 @@ Implemented:
 - [x] Render subsystem
 - [x] Spawn subsystem
 - [x] Input subsystem
+- [ ] Super Weapon Implementation
 
 Based on Dave Churchill course [video lections](https://www.youtube.com/watch?v=hngvIDUMD88&list=PL_xRyXins849E1WPuutEApdyTa0Bfxhzq) 
