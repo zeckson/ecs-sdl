@@ -8,9 +8,10 @@
 #include "SDL2/SDL.h"
 #include <fstream>
 
-struct Pixel {
+class Pixel {
     Uint32 data;
 
+public:
     Pixel(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
         data = Pixel::pack(r, g, b, a); // ABGR
     }
