@@ -25,6 +25,7 @@
 #define PLAYER_FILL_COLOR {0, 0, 255}
 #define PLAYER_OUTLINE_COLOR {0, 255, 0}
 #define PLAYER_OUTLINE_THICKNESS 8
+
 struct Window {
     int width = WIDTH;
     int height = HEIGHT;
@@ -52,10 +53,9 @@ struct Player {
 
 class Config {
     explicit Config(const Window &window, const Font &font, const Player &player) :
-    window(window),
-    font(font),
-    player(player)
-    {};
+            window(window),
+            font(font),
+            player(player) {};
 
 public:
     const Window window;
