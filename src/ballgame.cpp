@@ -25,16 +25,20 @@ bool BallGame::onGameCreate() {
 }
 
 void BallGame::spawnEnemySystem() {
-    if (frameRate.totalFrame % SPAWN_ENEMY_FRAME == 0 && manager.getAllEntities().size() < MAX_ENEMIES) {
+    const auto &enemyConfig = config.enemy;
+    if (frameRate.totalFrame % enemyConfig.spawnInterval == 0 && manager.getAllEntities().size() < MAX_ENEMIES) {
         const std::string name = ENTITY_ENEMY_TAG;
         auto enemy = manager.createEntity(name);
-        int radius = random.between(1, 4) * 10;
-        enemy->collision = std::make_shared<CollisionComponent>(radius);
-        enemy->shape = std::make_shared<ShapeComponent>(radius, BLUE, RED, 4);
+        const int radius = random.between(enemyConfig.shapeRadius.first, enemyConfig.shapeRadius.second) * 10;
+        const int collisionRadius = radius - enemyConfig.thickness;
+        enemy->collision = std::make_shared<CollisionComponent>(collisionRadius);
+        enemy->shape = std::make_shared<ShapeComponent>(radius, enemyConfig.outlineColor, BLACK, enemyConfig.thickness);
         int startX = random.between(radius, width - radius);
         int startY = random.between(radius, height - radius);
         auto center = Vec2(startX, startY);
-        double direction = random.get() * M_2_PI;
+        double direction = random.get(1.0f) * M_2_PI;
+        // TODO: random speed
+//        const auto speed = random.between(enemyConfig.speed.first, enemyConfig.speed.second);
         enemy->transform = std::make_shared<TransformComponent>(center, ENEMY_SPEED, direction);
         Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
     }
