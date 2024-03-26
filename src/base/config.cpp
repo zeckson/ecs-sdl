@@ -28,6 +28,11 @@ Config Config::loadFromFile(const std::string &filename) {
         } else if (name == CONFIG_NAME(Player)) {
             fin >> player.shapeRadius >> player.collisionRadius >> player.speed;
             fin >> player.fillColor >> player.outlineColor >> player.thickness;
+        } else if (name == CONFIG_NAME(Enemy)) {
+            fin >> enemy.shapeRadius.first >> enemy.shapeRadius.second;
+            fin >> enemy.speed.first >> enemy.speed.second;
+            fin >> enemy.outlineColor >> enemy.thickness;
+            fin >> enemy.fragmentLifespan >> enemy.spawnInterval;
         } else {
             throw std::runtime_error("Unknown config type: " + name);
         }
