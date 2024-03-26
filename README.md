@@ -5,7 +5,7 @@ ECS pattern implementation for SDL2 library
 ## Game Of Balls
 
 Assignment 1:
-- [ ] Loading config from files [hint](https://youtu.be/b-zZXFObb2o?si=rioryb1QRjwuIIjv&t=5602)
+- [x] Loading config from files [hint](https://youtu.be/b-zZXFObb2o?si=rioryb1QRjwuIIjv&t=5602)
 - [ ] Polygonal circles
 - [x] EntityManager
 - [x] Entity with components
