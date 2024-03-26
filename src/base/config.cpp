@@ -34,6 +34,10 @@ Config Config::loadFromFile(const std::string &filename) {
             fin >> enemy.speed.first >> enemy.speed.second;
             fin >> enemy.outlineColor >> enemy.thickness;
             fin >> enemy.fragmentLifespan >> enemy.spawnInterval;
+        } else if (name == CONFIG_NAME(Bullet)) {
+            fin >> bullet.shapeRadius >> bullet.collisionRadius >> bullet.speed;
+            fin >> bullet.fillColor >> bullet.outlineColor >> bullet.thickness;
+            fin >> bullet.lifespan;
         } else {
             throw std::runtime_error("Unknown config type: " + name);
         }
