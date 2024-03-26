@@ -18,6 +18,7 @@ Config Config::loadFromFile(const std::string &filename) {
     Font font{};
     Player player{};
     Enemy enemy{};
+    Bullet bullet{};
     while (fin.good() && !fin.eof()) {
         fin >> name;
         // TODO: rewrite to switch/case
@@ -40,7 +41,7 @@ Config Config::loadFromFile(const std::string &filename) {
 
     fin.close();
 
-    return Config(win, font, player, enemy);
+    return Config(win, font, player, enemy, bullet);
 }
 
 std::ifstream &operator>>(std::ifstream &fin, Window &gameConfig) {

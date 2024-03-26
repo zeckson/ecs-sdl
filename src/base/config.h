@@ -34,6 +34,13 @@
 #define ENEMY_THICKNESS 4
 #define ENEMY_SPAWN_INTERVAL 1000 // Frames
 #define ENEMY_FRAGMENTS_LIFESPAN 800 // Frames
+
+#define BULLET_SHAPE_RADIUS 5
+#define BULLET_SPEED 4.0 // Units / frame
+#define BULLET_FILL_COLOR {255, 255, 255}
+#define BULLET_OUTLINE_COLOR {0, 0, 0}
+#define BULLET_OUTLINE_THICKNESS 0
+
 struct Window {
     int width = WIDTH;
     int height = HEIGHT;
@@ -70,18 +77,35 @@ struct Enemy {
     int spawnInterval = ENEMY_SPAWN_INTERVAL;
 };
 
+struct Bullet {
+    int shapeRadius = BULLET_SHAPE_RADIUS;
+    int collisionRadius = BULLET_SHAPE_RADIUS;
+    float speed = BULLET_SPEED;
+
+    Pixel fillColor = BULLET_FILL_COLOR;
+    Pixel outlineColor = BULLET_OUTLINE_COLOR;
+
+    int thickness = BULLET_OUTLINE_THICKNESS;
+};
+
 class Config {
-    explicit Config(const Window &window, const Font &font, const Player &player, const Enemy &enemy) :
+    explicit Config(const Window &window,
+                    const Font &font,
+                    const Player &player,
+                    const Enemy &enemy,
+                    const Bullet &bullet) :
             window(window),
             font(font),
             player(player),
-            enemy(enemy) {};
+            enemy(enemy),
+            bullet(bullet) {};
 
 public:
     const Window window;
     const Font font;
     const Player player;
     const Enemy enemy;
+    const Bullet bullet;
 
     static Config loadFromFile(const std::string &filename);
 };
