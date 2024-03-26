@@ -46,14 +46,16 @@ void BallGame::spawnEnemySystem() {
 void BallGame::spawnBullet(const Vec2 &target) {
     const std::string name = ENTITY_BULLET_TAG;
     auto bullet = manager.createEntity(name);
+    const auto &bulletConfig = config.bullet;
     int radius = 5;
-    bullet->collision = std::make_shared<CollisionComponent>(radius);
-    bullet->shape = std::make_shared<ShapeComponent>(radius, WHITE, WHITE);
+    bullet->collision = std::make_shared<CollisionComponent>(bulletConfig.collisionRadius);
+    bullet->shape = std::make_shared<ShapeComponent>(bulletConfig.shapeRadius, bulletConfig.outlineColor,
+                                                     bulletConfig.fillColor, bulletConfig.thickness);
     const auto playerPosition = player->transform->position;
     auto distance = target - playerPosition;
     auto velocity = distance.normalize();
-    bullet->transform = std::make_shared<TransformComponent>(playerPosition, velocity * BULLET_SPEED);
-    bullet->lifecycle = std::make_shared<LifecycleComponent>(BULLET_LIFECYCLE);
+    bullet->transform = std::make_shared<TransformComponent>(playerPosition, velocity * bulletConfig.speed);
+    bullet->lifecycle = std::make_shared<LifecycleComponent>(bulletConfig.lifespan);
     Logger::info("Entity[%s] created at: %s with radius: %d", name.c_str(), playerPosition.toString().c_str(),
                  radius);
 }
@@ -233,6 +235,7 @@ void BallGame::renderSystem() {
 
             // NB! Since SDL2 doesn't support alpha channel on screen rendering
             // Imitate it by blending with background
+            // TODO: use correct color from config
             const auto &fade = Pixel(opacity, opacity, opacity);
             shape->circle.setFillColor(fade);
             shape->circle.setOutlineColor(fade);

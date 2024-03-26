@@ -40,6 +40,7 @@
 #define BULLET_FILL_COLOR {255, 255, 255}
 #define BULLET_OUTLINE_COLOR {0, 0, 0}
 #define BULLET_OUTLINE_THICKNESS 0
+#define BULLET_LIFESPAN 100 // frames
 
 struct Window {
     int width = WIDTH;
@@ -86,6 +87,7 @@ struct Bullet {
     Pixel outlineColor = BULLET_OUTLINE_COLOR;
 
     int thickness = BULLET_OUTLINE_THICKNESS;
+    int lifespan = BULLET_LIFESPAN;
 };
 
 class Config {
