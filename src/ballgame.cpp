@@ -37,9 +37,8 @@ void BallGame::spawnEnemySystem() {
         int startY = random.between(radius, height - radius);
         auto center = Vec2(startX, startY);
         double direction = random.get(1.0f) * M_2_PI;
-        // TODO: random speed
-//        const auto speed = random.between(enemyConfig.speed.first, enemyConfig.speed.second);
-        enemy->transform = std::make_shared<TransformComponent>(center, ENEMY_SPEED, direction);
+        const auto speed = random.betweenf(enemyConfig.speed.first, enemyConfig.speed.second);
+        enemy->transform = std::make_shared<TransformComponent>(center, speed, direction);
         Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
     }
 }

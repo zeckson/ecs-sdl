@@ -9,7 +9,6 @@
 #include "randomizer.h"
 #include "base/config.h"
 
-#define ENEMY_SPEED 2.0
 #define BULLET_SPEED 4.0
 
 #define ENTITY_BULLET_TAG "bullet"
@@ -17,8 +16,6 @@
 #define ENTITY_PLAYER_TAG "player"
 
 #define BULLET_LIFECYCLE 100
-
-#define SPAWN_ENEMY_FRAME 1000
 
 #define MAX_ENEMIES 10
 
