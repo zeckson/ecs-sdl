@@ -9,14 +9,20 @@
 #include <cstdlib> // for rand() and srand()
 #include <ctime>   // for time()
 
+#define FLOAT_FRACTION 1000
+
 class Randomizer {
 public:
     explicit Randomizer() {
         std::srand(std::time(nullptr)); // NOLINT(*-msc51-cpp)
     };
 
-    int between(const int min = 0, const int max = INT_MAX) {
-        return min + (std::rand() % (1 + max - min)); // NOLINT(*-msc50-cpp)
+    int between(const int min, const int max) {
+        return min + get(max - min);
+    }
+
+    float betweenf(const float min, const float max) {
+        return min + getf(max - min);
     }
 
     int get(const int max) {
@@ -24,8 +30,8 @@ public:
     }
 
     // from 0..1
-    float get() {
-        return float(get(100)) / 100; // NOLINT(*-msc50-cpp)
+    float getf(const float max = 1) {
+        return (float(get(FLOAT_FRACTION)) / FLOAT_FRACTION) * max;
     }
 
 };
