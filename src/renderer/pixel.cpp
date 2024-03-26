@@ -3,6 +3,7 @@
 //
 
 #include "pixel.h"
+#include <string>
 
 Uint8 Pixel::r() const {
     return data & 0xFF;
@@ -35,11 +36,13 @@ void Pixel::a(const Uint8 alpha) {
 // BC! It ignores alpha channel
 std::ifstream &operator>>(std::ifstream &in, Pixel &pixel) {
     int r, g, b;
-    if (!(in >> r >> g >> b)) {
+    in >> r >> g >> b;
+    if (!(in.fail())) {
         pixel.data = Pixel::pack(r, g, b, 255);
     } else {
         // If reading fails, set the failbit of the input file stream
         in.setstate(std::ios::failbit);
+        throw std::runtime_error("Reading (R,G,B) failed at: " + in.tellg());
     }
     return in;
 }
