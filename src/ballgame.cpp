@@ -26,7 +26,7 @@ bool BallGame::onGameCreate() {
 
 void BallGame::spawnEnemySystem() {
     const auto &enemyConfig = config.enemy;
-    if (frameRate.totalFrame % enemyConfig.spawnInterval == 0 && manager.getAllEntities().size() < MAX_ENEMIES) {
+    if (frameRate.currentFrame() % enemyConfig.spawnInterval == 0 && manager.getAllEntities().size() < MAX_ENEMIES) {
         const std::string name = ENTITY_ENEMY_TAG;
         auto enemy = manager.createEntity(name);
         const int radius = random.between(enemyConfig.shapeRadius.first, enemyConfig.shapeRadius.second) * 10;
