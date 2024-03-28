@@ -269,8 +269,6 @@ void BallGame::updatePlayerPosition() {
 void BallGame::onKeyEvent(const SDL_Event &event) {
     const auto key = event.key.keysym;
 
-    Logger::info("Keyevent[%u] code: %u", event.type, key.scancode);
-
     for (const auto &entity: manager.getAllEntities()) {
         const auto input = entity->input;
         if (input) {

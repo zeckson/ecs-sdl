@@ -19,7 +19,9 @@
 class Game {
 public:
     const Uint16 width, height;
+
     void start();
+    void quit() { running = false; }
 protected:
     explicit Game(const char *title, const Config &config);
 
@@ -35,6 +37,9 @@ protected:
     virtual void onMouseEvent(const SDL_Event &event) = 0;
 private:
     App app;
+    Assets assets;
+
+    bool running = true;
 
     bool input();
 

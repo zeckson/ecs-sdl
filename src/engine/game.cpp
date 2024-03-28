@@ -14,10 +14,9 @@ Game::Game(const char *title, const Config &config) :
 
 void Game::start() {
 
-    onGameCreate();
+    running = onGameCreate();
 
-    bool quit = false;
-    while (!quit) {
+    while (running) {
         frameRate.frameStart();
 
         renderer->setColor(BLACK);
@@ -25,7 +24,7 @@ void Game::start() {
 
         onGameUpdate(frameRate.elapsedTime());
 
-        quit = input();
+        running = input();
 
         frameRate.render(renderer);
 
@@ -45,17 +44,19 @@ bool Game::input() {
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) {
             // Just exit
-            return true;
+            return false;
         }
 
+        const auto &scancode = e.key.keysym.scancode;
         switch (e.type) {
             case SDL_KEYDOWN:
                 // TODO: Show menu on escape
-                if (e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+                if (scancode == SDL_SCANCODE_ESCAPE) {
                     // Just exit
-                    return true;
+                    return false;
                 }
             case SDL_KEYUP:
+                Logger::debug("Keyevent[%s] code: %u", e.type == SDL_KEYDOWN ? "keydown" : "keyup", scancode);
                 onKeyEvent(e);
                 break;
 
@@ -67,5 +68,5 @@ bool Game::input() {
         }
     }
 
-    return false;
+    return true;
 }
