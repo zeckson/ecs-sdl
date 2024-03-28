@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "base/game.h"
-#include "base/config.h"
+#include "engine/game.h"
+#include "resource/config.h"
 #include "ballgame.h"
-#include "base/logger.h"
+#include "resource/logger.h"
 
 int main() {
     BallGame game("The Game Of Balls");

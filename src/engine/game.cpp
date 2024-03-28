@@ -6,7 +6,7 @@
 #include <utility>
 
 #include "game.h"
-#include "logger.h"
+#include "../resource/logger.h"
 
 void FrameRate::limit() const {
     if (currentFrameTime <= maxFrameTime) {

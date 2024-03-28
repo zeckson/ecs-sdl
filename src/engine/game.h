@@ -12,7 +12,7 @@
 #include "app.h"
 #include "../renderer/pixelrenderer.h"
 #include "../entity/entitymanager.h"
-#include "config.h"
+#include "../resource/config.h"
 
 #define ONE_SECOND 1000
 #define FPS 60

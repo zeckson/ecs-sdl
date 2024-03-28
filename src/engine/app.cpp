@@ -3,7 +3,7 @@
 //
 
 #include "app.h"
-#include "logger.h"
+#include "../resource/logger.h"
 
 App::App(const char *title, const Config &config) {
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN);
@@ -60,10 +60,12 @@ App::App(const char *title, const Config &config) {
         exit(1);
     }
 
-    font = TTF_OpenFont(config.font.path.c_str(), config.font.size);
+    const char* path = config.font.path.c_str();
+    const int size = config.font.size;
+    font = TTF_OpenFont(path, size);
     if (font == nullptr) {
         printf("Couldn't load %d pt font from %s: %s\n",
-               DEFAULT_FONT_SIZE, FONT_PATH, SDL_GetError());
+               size, path, SDL_GetError());
         // Handle font loading error
         exit(1);
     }
