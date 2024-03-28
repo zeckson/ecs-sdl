@@ -47,10 +47,3 @@ Config Config::loadFromFile(const std::string &filename) {
 
     return Config(win, font, player, enemy, bullet);
 }
-
-std::ifstream &operator>>(std::ifstream &fin, Window &gameConfig) {
-    if (!(fin >> gameConfig.width >> gameConfig.height >> gameConfig.fullscreen)) {
-        fin.setstate(std::ios::failbit);
-    }
-    return fin;
-}
