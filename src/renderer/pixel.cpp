@@ -41,8 +41,7 @@ std::ifstream &operator>>(std::ifstream &in, Pixel &pixel) {
         pixel.data = Pixel::pack(r, g, b, 255);
     } else {
         // If reading fails, set the failbit of the input file stream
-        in.setstate(std::ios::failbit);
-        throw std::runtime_error("Reading (R,G,B) failed at: " + in.tellg());
+        throw std::runtime_error("Reading (R,G,B) failed");
     }
     return in;
 }
