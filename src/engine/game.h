@@ -25,7 +25,8 @@ public:
     const Uint16 width, height;
 
     void start();
-    [[nodiscard("Used to quit application")]] void quit() { running = false; }
+    void changeScene(const std::string &name, const std::shared_ptr<Scene> scene);
+    void quit() { running = false; }
 protected:
     explicit Game(const char *title, const Config &config);
 
