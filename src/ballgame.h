@@ -24,7 +24,7 @@ public:
 protected:
     bool onGameCreate() override;
 
-    bool onGameUpdate(float elapsedTime) override;
+    void onGameUpdate() override;
 
     void onKeyEvent(const SDL_Event &event) override;
 

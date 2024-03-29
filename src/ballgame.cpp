@@ -61,7 +61,7 @@ void BallGame::spawnBullet(const Vec2 &target) {
 }
 
 
-bool BallGame::onGameUpdate(float elapsedTime) {
+void BallGame::onGameUpdate() {
     manager.update();
 
     spawnEnemySystem();
@@ -69,8 +69,6 @@ bool BallGame::onGameUpdate(float elapsedTime) {
     collisionSystem();
     renderSystem();
     lifecycleSystem();
-
-    return true;
 }
 
 void BallGame::movementSystem() {

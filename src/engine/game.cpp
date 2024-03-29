@@ -19,12 +19,13 @@ void Game::start() {
     while (running) {
         frameRate.frameStart();
 
+        running = input();
+
         renderer->setColor(BLACK);
         renderer->clear();
 
-        onGameUpdate(frameRate.elapsedTime());
+        onGameUpdate();
 
-        running = input();
 
         frameRate.render(renderer);
 
