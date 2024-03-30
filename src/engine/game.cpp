@@ -71,22 +71,3 @@ bool Game::input() {
 
     return true;
 }
-
-void Game::changeScene(const std::string &name, const std::shared_ptr<Scene> scene) {
-    if (currentScene == name) {
-        return;
-    }
-
-    std::shared_ptr<Scene> &cScene = scenes[currentScene];
-    if (cScene) {
-        // TODO: exit action
-    }
-    if (scene) {
-        scenes[name] = scene;
-    }
-    std::shared_ptr<Scene> &newScene = scenes[name];
-    if (!newScene) {
-        throw std::runtime_error("Scene not found: " + name);
-    }
-    currentScene = name;
-}
