@@ -2,7 +2,7 @@
 
 #include "engine/game.h"
 #include "resource/config.h"
-#include "ballgame.h"
+#include "gameofballs/ballgame.h"
 #include "resource/logger.h"
 
 int main() {

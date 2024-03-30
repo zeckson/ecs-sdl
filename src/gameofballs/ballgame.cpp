@@ -6,9 +6,9 @@
 #include <cmath>
 
 #include "ballgame.h"
-#include "component/transformcomponent.h"
-#include "component/shapecomponent.h"
-#include "resource/logger.h"
+#include "../component/transformcomponent.h"
+#include "../component/shapecomponent.h"
+#include "../resource/logger.h"
 
 bool BallGame::onGameCreate() {
     player = manager.createEntity(ENTITY_PLAYER_TAG);
