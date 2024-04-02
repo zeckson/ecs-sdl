@@ -1,6 +1,8 @@
 # ecs-sdl
 
-ECS pattern implementation for SDL2 library
+ECS pattern implementation for SDL2 library. 
+
+With a set of games:
 
 ## Game Of Balls
 
@@ -18,4 +20,18 @@ Features:
 - [ ] Super Weapon Implementation
 - [ ] Spawn Small Enemies
 
-Based on Dave Churchill course [video lections](https://www.youtube.com/watch?v=hngvIDUMD88&list=PL_xRyXins849E1WPuutEApdyTa0Bfxhzq) 
+## AABB Sprite Game
+
+Features:
+- [ ] Assets loading
+- [ ] Scenes management
+- [ ] Actions instead of events
+- [ ] AABB collision detection
+
+### Resources:
+
+- For sprite rendering: [Piskelapp](https://www.piskelapp.com/p/create/sprite)
+
+## Links:
+
+- Dave Churchill GameDev course [video lections](https://www.youtube.com/watch?v=hngvIDUMD88&list=PL_xRyXins849E1WPuutEApdyTa0Bfxhzq) 
