@@ -4,9 +4,9 @@ ECS pattern implementation for SDL2 library
 
 ## Game Of Balls
 
-Assignment 1:
+Features:
 - [x] Loading config from files [hint](https://youtu.be/b-zZXFObb2o?si=rioryb1QRjwuIIjv&t=5602)
-- [ ] Polygonal circles
+- [ ] Polygonal circles with rotation
 - [x] EntityManager
 - [x] Entity with components
 - [x] Collision subsystem
