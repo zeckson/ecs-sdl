@@ -8,6 +8,7 @@
 #include "../engine/game.h"
 #include "../randomizer.h"
 #include "../resource/config.h"
+#include "entityconfig.h"
 
 #define ENTITY_BULLET_TAG "bullet"
 #define ENTITY_ENEMY_TAG "enemy"
@@ -52,7 +53,7 @@ private:
     std::shared_ptr<Entity> player;
     EntityManager manager;
     Randomizer random;
-
+    EntityConfig config = EntityConfig::loadFromFile("conf/entity.conf");
 
     bool collides(const std::shared_ptr<Entity> &source, const std::shared_ptr<Entity> &target);
 

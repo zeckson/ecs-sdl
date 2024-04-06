@@ -19,13 +19,13 @@
 class Game {
 public:
     const Uint16 width, height;
+    const Config config;
 
     void start();
     void quit() { running = false; }
 protected:
     explicit Game(const char *title, const Config &config);
 
-    const Config config;
 
     FrameRate frameRate = FrameRate(config.window.fps);
     std::unique_ptr<PixelRenderer> renderer;
