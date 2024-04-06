@@ -23,7 +23,7 @@ Features:
 ## AABB Sprite Game
 
 Features:
-- [ ] Assets loading
+- [ ] Assets loading [assets file spec](https://youtu.be/k7z_ABPeCag?list=PL_xRyXins849E1WPuutEApdyTa0Bfxhzq&t=2630)
 - [ ] Scenes management
 - [ ] Actions instead of events
 - [ ] AABB collision detection

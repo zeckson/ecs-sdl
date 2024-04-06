@@ -12,7 +12,7 @@
 #include "../renderer/pixelrenderer.h"
 #include "../entity/entitymanager.h"
 #include "../resource/config.h"
-#include "../resource/assets.h"
+#include "../assets/assets.h"
 #include "framerate.h"
 #include "scene.h"
 
