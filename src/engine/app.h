@@ -9,6 +9,7 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include "../resource/config.h"
+#include "../assets/assetsmanager.h"
 
 class Game;
 
@@ -20,8 +21,13 @@ class App {
     SDL_Renderer *pSDLRenderer;
     TTF_Font *font;
     SDL_Window *window;
+    AssetsManager assetsManager();
 
     friend class Game;
+
+    SDL_Surface *loadSurface(const char *filename);
+
+    SDL_Texture &loadTexture(const char *filename);
 };
 
 

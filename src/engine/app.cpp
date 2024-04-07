@@ -73,6 +73,33 @@ App::App(const char *title, const Config &config) {
     pSDLRenderer = sdlRenderer;
 }
 
+SDL_Surface *App::loadSurface(const char *filename) {
+    Logger::info("Loading surface %s", filename);
+
+    SDL_Surface *pSurface = IMG_Load(filename);
+
+    if (!pSurface) {
+        Logger::error("Failed to load surface [%s] renderer: %s", filename, SDL_GetError());
+    }
+
+    return pSurface;
+}
+
+SDL_Texture &App::loadTexture(const char *filename) {
+    SDL_Surface *pSurface = loadSurface(filename);
+
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(pSDLRenderer, pSurface);
+
+    SDL_FreeSurface(pSurface); // why surface wasn't allocated?
+
+    if (!texture) {
+        Logger::error("Failed to load texture [%s] renderer: %s", filename, SDL_GetError());
+    }
+
+    return *texture;
+}
+
+
 void App::destroy() {
     TTF_CloseFont(font);
     TTF_Quit();

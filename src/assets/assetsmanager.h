@@ -11,14 +11,17 @@
 
 #define TEXTURE_TYPE "Texture"
 
-class Assets {
+class AssetsManager {
     std::map<std::string, Animation> assetMap;
+    std::map<std::string, SDL_Texture*> assets;
 
     void loadTexture(std::ifstream &in);
 public:
-    explicit Assets() {}
+    explicit AssetsManager() {}
 
-    static const Assets load(const std::string &filename);
+    void save(const std::string &name, SDL_Texture* sdlTexture);
+
+    static const AssetsManager load(const std::string &filename);
 };
 
 

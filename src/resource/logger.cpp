@@ -28,3 +28,11 @@ void Logger::debug(const char *format, ...) {
     Logger::logv(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_DEBUG, format, args);
     va_end(args);
 }
+
+
+void Logger::error(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    Logger::logv(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_ERROR, format, args);
+    va_end(args);
+}

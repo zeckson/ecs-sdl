@@ -15,9 +15,9 @@ class Logger {
 public:
     static void info(const char* format, ...);
     static void debug(const char* format, ...);
+    static void error(const char* format, ...);
 
     static void log(ApplicationLog category, SDL_LogPriority priority, const char *format, ...);
-
 private:
     static void logv(ApplicationLog category, SDL_LogPriority priority, const char *format, va_list ap);
 };

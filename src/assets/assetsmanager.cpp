@@ -2,17 +2,18 @@
 // Created by Evgenii Shchepotev on 28.03.2024.
 //
 
-#include "assets.h"
+#include "assetsmanager.h"
 
 #include "SDL2/SDL_image.h"
 #include "../resource/logger.h"
 
 #include <fstream>
 #include <format>
+#include <cassert>
 
 
-const Assets Assets::load(const std::string &filename) {
-    Assets assets;
+const AssetsManager AssetsManager::load(const std::string &filename) {
+    AssetsManager assets;
     std::ifstream fin(filename);
 
     if (!fin) {
@@ -31,7 +32,7 @@ const Assets Assets::load(const std::string &filename) {
     return assets;
 }
 
-void Assets::loadTexture(std::ifstream &in) {
+void AssetsManager::loadTexture(std::ifstream &in) {
     std::string name;
     std::string path;
     in >> name >> path;
@@ -43,5 +44,11 @@ void Assets::loadTexture(std::ifstream &in) {
         throw std::runtime_error(std::format("Failed to load texture[{}]: {}", name, path));
     }
 
+}
+
+void AssetsManager::save(const std::string &name, SDL_Texture *sdlTexture) {
+    assert(!assets[name]);
+
+    assets[name] = sdlTexture;
 }
 

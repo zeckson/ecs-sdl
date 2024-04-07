@@ -12,7 +12,7 @@
 #include "../renderer/pixelrenderer.h"
 #include "../entity/entitymanager.h"
 #include "../resource/config.h"
-#include "../assets/assets.h"
+#include "../assets/assetsmanager.h"
 #include "framerate.h"
 #include "scene.h"
 
@@ -37,7 +37,7 @@ protected:
     virtual void onMouseEvent(const SDL_Event &event) = 0;
 private:
     App app;
-    Assets assets;
+    AssetsManager assets;
 
     bool running = true;
 
