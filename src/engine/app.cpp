@@ -2,6 +2,7 @@
 // Created by Evgenii Shchepotev on 14.03.2024.
 //
 
+#include <SDL_ttf.h>
 #include "app.h"
 #include "../resource/logger.h"
 
@@ -60,17 +61,25 @@ App::App(const char *title, const Config &config) {
         exit(1);
     }
 
-    const char* path = config.font.path.c_str();
-    const int size = config.font.size;
-    font = TTF_OpenFont(path, size);
-    if (font == nullptr) {
-        printf("Couldn't load %d pt font from %s: %s\n",
-               size, path, SDL_GetError());
-        // Handle font loading error
-        exit(1);
-    }
+    loadFonts(config);
 
     pSDLRenderer = sdlRenderer;
+}
+
+void App::loadFonts(const Config &config) {
+    for (const auto &it: config.assets.fonts) {
+        const auto &font = it.second;
+        const char *path = font.path.c_str();
+        const int size = font.size;
+        TTF_Font* fnt = TTF_OpenFont(path, size);
+        if (!fnt) {
+            Logger::error("Couldn't load %d pt font from %s: %s",
+                   size, path, SDL_GetError());
+            // Handle font loading error
+            exit(1);
+        }
+        assetsManager.addFont(it.first, fnt);
+    }
 }
 
 SDL_Surface *App::loadSurface(const char *filename) {
@@ -101,6 +110,7 @@ SDL_Texture &App::loadTexture(const char *filename) {
 
 
 void App::destroy() {
+    assetsManager.quit();
     TTF_CloseFont(font);
     TTF_Quit();
 

@@ -12,13 +12,14 @@
 
 #include "pixel.h"
 #include "../geometry/vec2.h"
+#include "../assets/assetsmanager.h"
 
 class PixelRenderer {
 public:
     const Uint16 width, height;
 
-    explicit PixelRenderer(SDL_Renderer *renderer, TTF_Font *font, const Uint16 width, const Uint16 height)
-            : width(width), height(height), font(font), pSDLRenderer(renderer) {
+    explicit PixelRenderer(SDL_Renderer *renderer, const AssetsManager &manager, const Uint16 width, const Uint16 height)
+            : width(width), height(height), manager(manager), pSDLRenderer(renderer) {
     }
 
     ~PixelRenderer() {
@@ -47,7 +48,7 @@ public:
     void renderTexture(SDL_Texture *texture, const Vec2 &size, const Vec2 &dest);
 
 private:
-    TTF_Font *font;
+    const AssetsManager &manager;
     SDL_Renderer *pSDLRenderer;
 };
 

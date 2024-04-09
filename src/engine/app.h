@@ -21,13 +21,15 @@ class App {
     SDL_Renderer *pSDLRenderer;
     TTF_Font *font;
     SDL_Window *window;
-    AssetsManager assetsManager();
+    AssetsManager assetsManager;
 
     friend class Game;
 
     SDL_Surface *loadSurface(const char *filename);
 
     SDL_Texture &loadTexture(const char *filename);
+
+    void loadFonts(const Config &config);
 };
 
 

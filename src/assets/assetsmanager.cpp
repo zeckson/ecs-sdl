@@ -46,9 +46,16 @@ void AssetsManager::loadTexture(std::ifstream &in) {
 
 }
 
-void AssetsManager::save(const std::string &name, SDL_Texture *sdlTexture) {
-    assert(!assets[name]);
+void AssetsManager::quit() {
+    Logger::info("Closing assets manager");
 
-    assets[name] = sdlTexture;
+    for (const auto &it: fonts) {
+        TTF_CloseFont(it.second);
+    }
+
+}
+
+TTF_Font *AssetsManager::getFont(const std::string &name) const {
+    return fonts.at(name);
 }
 

@@ -9,7 +9,7 @@
 
 Game::Game(const char *title, const Config &config) :
         width(config.window.width), height(config.window.height), config(config), app(App(title, config)) {
-    renderer = std::make_unique<PixelRenderer>(app.pSDLRenderer, app.font, width, height);
+    renderer = std::make_unique<PixelRenderer>(app.pSDLRenderer, app.assetsManager, width, height);
 }
 
 void Game::start() {
