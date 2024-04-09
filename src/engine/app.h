@@ -16,19 +16,18 @@ class Game;
 class App {
     explicit App(const char *title, const Config &config);
 
-    void destroy();
-
     SDL_Renderer *pSDLRenderer;
     SDL_Window *window;
-    AssetsManager assetsManager;
+    AssetsManager assetsManager = AssetsManager();
 
-    friend class Game;
 
     SDL_Surface *loadSurface(const char *filename);
 
     SDL_Texture &loadTexture(const char *filename);
 
+    void destroy();
     void loadFonts(const Config &config);
+    friend class Game;
 };
 
 
