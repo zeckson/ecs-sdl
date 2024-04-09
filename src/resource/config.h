@@ -36,11 +36,14 @@ struct Font {
 };
 
 struct AnimationConfig {
-    std::string name;
     std::string textureName;
 
     int frames = 1;
-    int lifetime = 0; // 0 for static, otherwise frames to repeat
+    /*
+     * 0 -- not animated
+     * >0 -- how long to show each frame in animation
+     */
+    int lifetime = 0;
 };
 
 struct Assets {
@@ -60,6 +63,7 @@ class Config {
             assets(assets) {};
     Config(const Window &window, const Font &font) : Config(window, font, Assets()) {};
 
+    static Assets loadAssetsConfig(const std::string &path);
 public:
     const Window window;
     const Font font;
