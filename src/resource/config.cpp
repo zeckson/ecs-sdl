@@ -16,6 +16,7 @@ Config Config::loadFromFile(const std::string &filename) {
     std::string name;
     Window win{};
     Font font{};
+    Assets assets{};
     while (fin.good() && !fin.eof()) {
         fin >> name;
         // TODO: rewrite to switch/case
@@ -23,6 +24,10 @@ Config Config::loadFromFile(const std::string &filename) {
             fin >> win.width >> win.height >> win.fps >> win.fullscreen;
         } else if (name == CONFIG_NAME(Font)) {
             fin >> font.path >> font.size;
+        } else if (name == CONFIG_NAME(Assets)) {
+            std::string assetsPath;
+            fin >> assetsPath;
+            // TODO: parse assets
         } else {
             throw std::runtime_error("Unknown config type: " + name);
         }
@@ -30,5 +35,5 @@ Config Config::loadFromFile(const std::string &filename) {
 
     fin.close();
 
-    return Config(win, font);
+    return Config(win, font, assets);
 }
