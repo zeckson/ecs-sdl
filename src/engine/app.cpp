@@ -111,7 +111,6 @@ SDL_Texture &App::loadTexture(const char *filename) {
 
 void App::destroy() {
     assetsManager.quit();
-    TTF_CloseFont(font);
     TTF_Quit();
 
     SDL_DestroyRenderer(pSDLRenderer);

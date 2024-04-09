@@ -19,7 +19,6 @@ class App {
     void destroy();
 
     SDL_Renderer *pSDLRenderer;
-    TTF_Font *font;
     SDL_Window *window;
     AssetsManager assetsManager;
 
