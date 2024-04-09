@@ -26,7 +26,6 @@ public:
 protected:
     explicit Game(const char *title, const Config &config);
 
-
     FrameRate frameRate = FrameRate(config.window.fps);
     std::unique_ptr<PixelRenderer> renderer;
 
@@ -35,9 +34,10 @@ protected:
 
     virtual void onKeyEvent(const SDL_Event &event) = 0;
     virtual void onMouseEvent(const SDL_Event &event) = 0;
+
+    const AssetsManager &getAssetsManager() const { return app.assetsManager; }
 private:
     App app;
-    AssetsManager assets;
 
     bool running = true;
 
