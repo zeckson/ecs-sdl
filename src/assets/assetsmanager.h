@@ -30,7 +30,7 @@ public:
 
     static const AssetsManager load(const std::string &filename);
 
-    void addFont(const std::string name, TTF_Font *pFont) {
+    void addFont(const std::string &name, TTF_Font *pFont) {
         fonts[name] = pFont;
     };
 
