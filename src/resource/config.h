@@ -18,7 +18,7 @@
 #define FULLSCREEN 0
 
 #define FONT_NAME "glitchgoblin"
-#define FONT_PATH "gfx/glitchgoblin.ttf"
+#define FONT_PATH "gfx/font/glitchgoblin.ttf"
 #define DEFAULT_FONT_SIZE 24
 
 struct Window {
