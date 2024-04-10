@@ -59,3 +59,7 @@ TTF_Font *AssetsManager::getFont(const std::string &name) const {
     return fonts.at(name);
 }
 
+const std::unique_ptr<Texture> &AssetsManager::getTexture(const std::string &name) const {
+    return textures.at(name);
+}
+

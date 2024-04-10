@@ -29,6 +29,7 @@ protected:
     FrameRate frameRate = FrameRate(config.window.fps);
     std::unique_ptr<PixelRenderer> renderer;
 
+    // Return true -- if created successfully, false -- otherwise
     virtual bool onGameCreate() = 0;
     virtual void onGameUpdate() = 0;
 

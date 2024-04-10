@@ -28,6 +28,8 @@ class App {
     void destroy();
     void loadFonts(const Config &config);
     friend class Game;
+
+    void loadTextures(const Config &config);
 };
 
 

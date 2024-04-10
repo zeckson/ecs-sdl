@@ -36,6 +36,8 @@ public:
     void quit();
 
     static const AssetsManager load(const std::string &filename);
+
+    const std::unique_ptr<Texture> &getTexture(const std::string &string) const;
 };
 
 

@@ -19,7 +19,7 @@ App::App(const char *title, const Config &config) {
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
     // Create an application window with the following settings:
-    auto flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+    int flags = SDL_WINDOW_SHOWN;
     const auto gameConfig = config.window;
     if (gameConfig.fullscreen) {
         flags |= SDL_WINDOW_FULLSCREEN;
@@ -61,9 +61,11 @@ App::App(const char *title, const Config &config) {
         exit(1);
     }
 
+    pSDLRenderer = sdlRenderer;
+
     loadFonts(config);
 
-    pSDLRenderer = sdlRenderer;
+    loadTextures(config);
 }
 
 void App::loadFonts(const Config &config) {
@@ -116,4 +118,25 @@ void App::destroy() {
     SDL_DestroyRenderer(pSDLRenderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+void App::loadTextures(const Config &config) {
+    for (const auto &it: config.assets.textures) {
+        const auto &name = it.first;
+        const auto &path = it.second;
+
+        const char *filename = path.c_str();
+
+        SDL_Surface *pSurface = loadSurface(filename);
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(pSDLRenderer, pSurface);
+
+        if (!texture) {
+            Logger::error("Failed to load texture [%s] renderer: %s", path.c_str(), SDL_GetError());
+        }
+
+        assetsManager.addTexture(name, texture, pSurface);
+
+        SDL_FreeSurface(pSurface); // why surface wasn't allocated?
+    }
+
 }
