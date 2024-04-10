@@ -56,17 +56,14 @@ struct Assets {
 
 class Config {
     explicit Config(const Window &window,
-                    const Font &font,
                     const Assets &assets) :
             window(window),
-            font(font),
             assets(assets) {};
-    Config(const Window &window, const Font &font) : Config(window, font, Assets()) {};
+    Config(const Window &window, const Font &font) : Config(window, Assets()) {};
 
     static Assets loadAssetsConfig(const std::string &path);
 public:
     const Window window;
-    const Font font;
     const Assets assets;
 
     static Config loadFromFile(const std::string &filename);
