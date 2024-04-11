@@ -11,9 +11,10 @@
 class Texture {
     const std::string name;
     const SDL_Texture *sdlTexture;
+public:
     const int height;
     const int width;
-public:
+
     explicit Texture(const std::string &name, SDL_Texture *sdlTexture, SDL_Surface *surface);
 
     // Delete copy constructor

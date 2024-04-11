@@ -13,7 +13,7 @@ bool SpaceshipGame::onGameCreate() {
 void SpaceshipGame::onGameUpdate() {
 
     const std::unique_ptr<Texture> &texture = getAssetsManager().getTexture("spaceship");
-    renderer->renderTexture(texture->texture(), {100, 100}, {100, 100});
+    renderer->renderTexture(texture->texture(), {texture->width, texture->height}, {100, 100});
 }
 
 void SpaceshipGame::onKeyEvent(const SDL_Event &event) {
