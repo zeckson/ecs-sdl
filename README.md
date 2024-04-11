@@ -18,7 +18,8 @@ Features:
 - [x] Spawn subsystem
 - [x] Input subsystem
 - [ ] Super Weapon Implementation
-- [ ] Spawn Small Enemies
+- [ ] Spawn Small Particles on destroy
+- [ ] Balls collision physics (mass + angle)
 
 ## AABB Sprite Game
 
@@ -35,3 +36,5 @@ Features:
 ## Links:
 
 - Dave Churchill GameDev course [video lections](https://www.youtube.com/watch?v=hngvIDUMD88&list=PL_xRyXins849E1WPuutEApdyTa0Bfxhzq) 
+- Sight and light [raycasting tutorial](https://ncase.me/sight-and-light/)
+- Visibility and shows [algirithm](https://www.redblobgames.com/articles/visibility/)
