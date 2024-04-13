@@ -6,7 +6,7 @@
 #define ECS_SDL_TRANSFORMCOMPONENT_H
 
 #include <cmath>
-#include "SDL2/SDL.h"
+#include <SDL.h>
 
 #include "../geometry/vec2.h"
 #include "component.h"

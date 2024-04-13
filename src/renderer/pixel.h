@@ -5,7 +5,7 @@
 #ifndef RAYCASTING_PIXEL_H
 #define RAYCASTING_PIXEL_H
 
-#include "SDL2/SDL.h"
+#include <SDL.h>
 #include <fstream>
 
 class Pixel {

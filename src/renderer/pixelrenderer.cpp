@@ -1,7 +1,7 @@
 //
 // Created by Evgenii Shchepotev on 28.01.2024.
 //
-#include "SDL2/SDL.h"
+#include <SDL.h>
 
 #include "pixelrenderer.h"
 

@@ -5,7 +5,7 @@
 #ifndef ECS_ANIMATION_H
 #define ECS_ANIMATION_H
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 
 class Animation {

@@ -5,7 +5,7 @@
 #ifndef ECS_SDL_COLLISIONCOMPONENT_H
 #define ECS_SDL_COLLISIONCOMPONENT_H
 
-#include "SDL2/SDL.h"
+#include <SDL.h>
 
 #include "component.h"
 

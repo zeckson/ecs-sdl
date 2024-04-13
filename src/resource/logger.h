@@ -5,7 +5,7 @@
 #ifndef ECS_SDL_LOGGER_H
 #define ECS_SDL_LOGGER_H
 
-#include "SDL2/SDL.h"
+#include <SDL.h>
 
 enum ApplicationLog {
     GAME_ENGINE = SDL_LOG_CATEGORY_CUSTOM,

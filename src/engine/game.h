@@ -5,8 +5,8 @@
 #ifndef RAYCASTING_GAME_H
 #define RAYCASTING_GAME_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 
 #include "app.h"
 #include "../renderer/pixelrenderer.h"

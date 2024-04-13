@@ -5,7 +5,7 @@
 #ifndef ECS_SDL_FRAMERATE_H
 #define ECS_SDL_FRAMERATE_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "../renderer/pixelrenderer.h"
 

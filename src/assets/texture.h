@@ -5,7 +5,7 @@
 #ifndef ECS_TEXTURE_H
 #define ECS_TEXTURE_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <string>
 
 class Texture {
