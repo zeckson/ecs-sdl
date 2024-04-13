@@ -8,29 +8,28 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "../resource/config.h"
+
 #include "../assets/assetsmanager.h"
+#include "../resource/config.h"
 
 class Game;
 
 class App {
-    explicit App(const char *title, const Config &config);
+  explicit App(const char* title, const Config& config);
 
-    SDL_Renderer *pSDLRenderer;
-    SDL_Window *window;
-    AssetsManager assetsManager = AssetsManager();
+  SDL_Renderer* pSDLRenderer;
+  SDL_Window* window;
+  AssetsManager assetsManager = AssetsManager();
 
+  SDL_Surface* loadSurface(const char* filename);
 
-    SDL_Surface *loadSurface(const char *filename);
+  SDL_Texture& loadTexture(const char* filename);
 
-    SDL_Texture &loadTexture(const char *filename);
+  void destroy();
+  void loadFonts(const Config& config);
+  friend class Game;
 
-    void destroy();
-    void loadFonts(const Config &config);
-    friend class Game;
-
-    void loadTextures(const Config &config);
+  void loadTextures(const Config& config);
 };
 
-
-#endif //ECS_SDL_APP_H
+#endif  // ECS_SDL_APP_H

@@ -7,50 +7,47 @@
 
 #include <memory>
 #include <string>
+
+#include "../assets/assetsmanager.h"
+#include "../geometry/vec2.h"
 #include "SDL.h"
 #include "SDL_ttf.h"
-
 #include "pixel.h"
-#include "../geometry/vec2.h"
-#include "../assets/assetsmanager.h"
 
 class PixelRenderer {
-public:
-    const Uint16 width, height;
+ public:
+  const Uint16 width, height;
 
-    explicit PixelRenderer(SDL_Renderer *renderer, const AssetsManager &manager, const Uint16 width, const Uint16 height)
-            : width(width), height(height), manager(manager), pSDLRenderer(renderer) {
-    }
+  explicit PixelRenderer(SDL_Renderer* renderer, const AssetsManager& manager, const Uint16 width, const Uint16 height)
+      : width(width), height(height), manager(manager), pSDLRenderer(renderer) {}
 
-    ~PixelRenderer() {
-    }
+  ~PixelRenderer() {}
 
-    PixelRenderer *setColor(const Pixel &pixel);
+  PixelRenderer* setColor(const Pixel& pixel);
 
-    PixelRenderer *clear();
+  PixelRenderer* clear();
 
-    PixelRenderer *present();
+  PixelRenderer* present();
 
-    void drawLine(Uint32 startX, Uint32 startY, Uint32 endX, Uint32 endY);
+  void drawLine(Uint32 startX, Uint32 startY, Uint32 endX, Uint32 endY);
 
-    void drawLine(const Vec2 &from, const Vec2 &to);
+  void drawLine(const Vec2& from, const Vec2& to);
 
-    void drawPoint(const Vec2 &point);
+  void drawPoint(const Vec2& point);
 
-    void drawPoint(const int x, const int y);
+  void drawPoint(const int x, const int y);
 
-    void drawRect(const SDL_Rect *pRect);
+  void drawRect(const SDL_Rect* pRect);
 
-    void drawCircle(const Vec2 &center, int radius);
+  void drawCircle(const Vec2& center, int radius);
 
-    void renderText(const std::string &text, const Uint32 x, const Uint32 y);
+  void renderText(const std::string& text, const Uint32 x, const Uint32 y);
 
-    void renderTexture(SDL_Texture *texture, const Vec2 &size, const Vec2 &dest);
+  void renderTexture(SDL_Texture* texture, const Vec2& size, const Vec2& dest);
 
-private:
-    const AssetsManager &manager;
-    SDL_Renderer *pSDLRenderer;
+ private:
+  const AssetsManager& manager;
+  SDL_Renderer* pSDLRenderer;
 };
 
-
-#endif //RAYCASTING_PIXELRENDERER_H
+#endif  // RAYCASTING_PIXELRENDERER_H

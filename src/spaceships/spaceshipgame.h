@@ -5,24 +5,22 @@
 #ifndef ECS_SPACESHIPGAME_H
 #define ECS_SPACESHIPGAME_H
 
-
 #include "../engine/game.h"
 
-class SpaceshipGame: public Game {
-public:
-private:
-    bool onGameCreate() override;
+class SpaceshipGame : public Game {
+ public:
+ private:
+  bool onGameCreate() override;
 
-    void onGameUpdate() override;
+  void onGameUpdate() override;
 
-protected:
-    void onKeyEvent(const SDL_Event &event) override;
+ protected:
+  void onKeyEvent(const SDL_Event& event) override;
 
-    void onMouseEvent(const SDL_Event &event) override;
+  void onMouseEvent(const SDL_Event& event) override;
 
-public:
-    SpaceshipGame(const char *title, const Config &config);
+ public:
+  SpaceshipGame(const char* title, const Config& config);
 };
 
-
-#endif //ECS_SPACESHIPGAME_H
+#endif  // ECS_SPACESHIPGAME_H

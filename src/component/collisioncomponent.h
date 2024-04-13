@@ -12,12 +12,10 @@
 #define COLLISION_COMPONENT_NAME "collision"
 
 class CollisionComponent : public Component {
-public:
-    CollisionComponent(const int radius) :
-            Component(COLLISION_COMPONENT_NAME), radius(radius) {}
+ public:
+  CollisionComponent(const int radius) : Component(COLLISION_COMPONENT_NAME), radius(radius) {}
 
-    const int radius;
+  const int radius;
 };
 
-
-#endif //ECS_SDL_COLLISIONCOMPONENT_H
+#endif  // ECS_SDL_COLLISIONCOMPONENT_H

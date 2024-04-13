@@ -5,24 +5,21 @@
 #ifndef ECS_SDL_CIRCLE_H
 #define ECS_SDL_CIRCLE_H
 
-
 #include "../renderer/pixel.h"
 #include "../renderer/pixelrenderer.h"
 
 class Circle {
-    int radius;
-    Pixel outlineColor;
-    Pixel fillColor;
-    int thickness;
+  int radius;
+  Pixel outlineColor;
+  Pixel fillColor;
+  int thickness;
 
-public:
-    explicit Circle(int radius, const Pixel &outlineColor, const Pixel &fillColor, int thickness);
+ public:
+  explicit Circle(int radius, const Pixel& outlineColor, const Pixel& fillColor, int thickness);
 
-    void draw(const std::unique_ptr<PixelRenderer> &renderer, const Vec2 &position) const;
-    void setOutlineColor(const Pixel &color);
-    void setFillColor(const Pixel &color);
-
+  void draw(const std::unique_ptr<PixelRenderer>& renderer, const Vec2& position) const;
+  void setOutlineColor(const Pixel& color);
+  void setFillColor(const Pixel& color);
 };
 
-
-#endif //ECS_SDL_CIRCLE_H
+#endif  // ECS_SDL_CIRCLE_H

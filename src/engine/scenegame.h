@@ -5,26 +5,26 @@
 #ifndef ECS_SDL_SCENEGAME_H
 #define ECS_SDL_SCENEGAME_H
 
-#include <memory>
 #include <map>
+#include <memory>
 
 #include "game.h"
 
 typedef std::map<std::string, std::shared_ptr<Scene>> SceneMap;
 
-class SceneGame: public Game {
-protected:
-    void onGameUpdate() override;
+class SceneGame : public Game {
+ protected:
+  void onGameUpdate() override;
 
-    void onKeyEvent(const SDL_Event &event) override;
+  void onKeyEvent(const SDL_Event& event) override;
 
-    void onMouseEvent(const SDL_Event &event) override;
+  void onMouseEvent(const SDL_Event& event) override;
 
-    void changeScene(const std::string &name, const std::shared_ptr<Scene> scene);
-private:
-    std::string currentScene;
-    SceneMap scenes;
+  void changeScene(const std::string& name, const std::shared_ptr<Scene> scene);
+
+ private:
+  std::string currentScene;
+  SceneMap scenes;
 };
 
-
-#endif //ECS_SDL_SCENEGAME_H
+#endif  // ECS_SDL_SCENEGAME_H

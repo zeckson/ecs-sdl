@@ -13,27 +13,25 @@
 #define FPS 60
 
 class FrameRate {
+  double const maxFrameTime;
+  double fps = FPS;
 
-    double const maxFrameTime;
-    double fps = FPS;
+  Uint64 totalFrame = 0;
+  Uint16 frameCount = 0;
+  Uint32 startTime = SDL_GetTicks();
+  Uint32 frameStartTime = startTime;
+  Uint32 currentFrameTime = startTime - 0;
 
-    Uint64 totalFrame = 0;
-    Uint16 frameCount = 0;
-    Uint32 startTime = SDL_GetTicks();
-    Uint32 frameStartTime = startTime;
-    Uint32 currentFrameTime = startTime - 0;
+ public:
+  explicit FrameRate(const int fps) : maxFrameTime(double(double(ONE_SECOND) / double(fps))), fps(double(fps)){};
 
-public:
-    explicit FrameRate(const int fps): maxFrameTime(double(double(ONE_SECOND) / double(fps))), fps(double(fps)) {};
+  void frameStart();
+  void frameEnd();
+  void limit() const;
+  void render(const std::unique_ptr<PixelRenderer>& renderer) const;
 
-    void frameStart();
-    void frameEnd();
-    void limit() const;
-    void render(const std::unique_ptr<PixelRenderer> &renderer) const;
-
-    [[nodiscard]] float elapsedTime() const;
-    [[nodiscard]] Uint64 currentFrame() const;
+  [[nodiscard]] float elapsedTime() const;
+  [[nodiscard]] Uint64 currentFrame() const;
 };
 
-
-#endif //ECS_SDL_FRAMERATE_H
+#endif  // ECS_SDL_FRAMERATE_H

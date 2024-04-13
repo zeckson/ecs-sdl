@@ -6,35 +6,34 @@
 #define ECS_TEXTURE_H
 
 #include <SDL.h>
+
 #include <string>
 
 class Texture {
-    const std::string name;
-    const SDL_Texture *sdlTexture;
-public:
-    const int height;
-    const int width;
+  const std::string name;
+  const SDL_Texture* sdlTexture;
 
-    explicit Texture(const std::string &name, SDL_Texture *sdlTexture, SDL_Surface *surface);
+ public:
+  const int height;
+  const int width;
 
-    // Delete copy constructor
-    Texture(const Texture &) = delete;
+  explicit Texture(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* surface);
 
-    // Delete move constructor
-    Texture(Texture &&) = delete;
+  // Delete copy constructor
+  Texture(const Texture&) = delete;
 
-    // Delete copy assignment operator
-    Texture &operator=(const Texture &) = delete;
+  // Delete move constructor
+  Texture(Texture&&) = delete;
 
-    // Delete move assignment operator
-    Texture &operator=(Texture &&) = delete;
+  // Delete copy assignment operator
+  Texture& operator=(const Texture&) = delete;
 
-    virtual ~Texture();
+  // Delete move assignment operator
+  Texture& operator=(Texture&&) = delete;
 
-    SDL_Texture *texture() {
-        return const_cast<SDL_Texture *>(sdlTexture);
-    }
+  virtual ~Texture();
+
+  SDL_Texture* texture() { return const_cast<SDL_Texture*>(sdlTexture); }
 };
 
-
-#endif //ECS_TEXTURE_H
+#endif  // ECS_TEXTURE_H

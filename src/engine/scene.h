@@ -5,10 +5,6 @@
 #ifndef ECS_SDL_SCENE_H
 #define ECS_SDL_SCENE_H
 
+class Scene {};
 
-class Scene {
-
-};
-
-
-#endif //ECS_SDL_SCENE_H
+#endif  // ECS_SDL_SCENE_H

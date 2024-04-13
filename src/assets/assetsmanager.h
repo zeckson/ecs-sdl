@@ -5,32 +5,32 @@
 #ifndef ECS_SDL_ASSETS_H
 #define ECS_SDL_ASSETS_H
 
-#include <string>
+#include <SDL_ttf.h>
+
 #include <map>
 #include <memory>
-#include <SDL_ttf.h>
+#include <string>
+
 #include "animation.h"
 #include "texture.h"
 
 class AssetsManager {
-    std::map<std::string, std::unique_ptr<Animation>> animations;
-    std::map<std::string, std::unique_ptr<Texture>> textures;
-    std::map<std::string, TTF_Font*> fonts;
-public:
-    explicit AssetsManager() {}
+  std::map<std::string, std::unique_ptr<Animation>> animations;
+  std::map<std::string, std::unique_ptr<Texture>> textures;
+  std::map<std::string, TTF_Font*> fonts;
 
-    void addTexture(const std::string &name, SDL_Texture *texture, SDL_Surface *surface) {
-        textures[name] = std::make_unique<Texture>(name, texture, surface);
-    };
-    void addFont(const std::string &name, TTF_Font *pFont) {
-        fonts[name] = pFont;
-    };
+ public:
+  explicit AssetsManager() {}
 
-    const std::unique_ptr<Texture> &getTexture(const std::string &string) const;
-    TTF_Font *getFont(const std::string &string) const;
+  void addTexture(const std::string& name, SDL_Texture* texture, SDL_Surface* surface) {
+    textures[name] = std::make_unique<Texture>(name, texture, surface);
+  };
+  void addFont(const std::string& name, TTF_Font* pFont) { fonts[name] = pFont; };
 
-    void quit();
+  const std::unique_ptr<Texture>& getTexture(const std::string& string) const;
+  TTF_Font* getFont(const std::string& string) const;
+
+  void quit();
 };
 
-
-#endif //ECS_SDL_ASSETS_H
+#endif  // ECS_SDL_ASSETS_H

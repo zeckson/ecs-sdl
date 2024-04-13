@@ -7,14 +7,13 @@
 
 #include "SDL.h"
 
-
 class Animation {
-    const SDL_Texture* texturePointer;
-public:
-    explicit Animation(const SDL_Texture *texturePointer);
+  const SDL_Texture* texturePointer;
 
-    virtual ~Animation();
+ public:
+  explicit Animation(const SDL_Texture* texturePointer);
+
+  virtual ~Animation();
 };
 
-
-#endif //ECS_ANIMATION_H
+#endif  // ECS_ANIMATION_H

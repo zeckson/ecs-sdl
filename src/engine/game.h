@@ -8,42 +8,43 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "app.h"
-#include "../renderer/pixelrenderer.h"
-#include "../entity/entitymanager.h"
-#include "../resource/config.h"
 #include "../assets/assetsmanager.h"
+#include "../entity/entitymanager.h"
+#include "../renderer/pixelrenderer.h"
+#include "../resource/config.h"
+#include "app.h"
 #include "framerate.h"
 #include "scene.h"
 
 class Game {
-public:
-    const Uint16 width, height;
-    const Config config;
+ public:
+  const Uint16 width, height;
+  const Config config;
 
-    void start();
-    void quit() { running = false; }
-protected:
-    explicit Game(const char *title, const Config &config);
+  void start();
+  void quit() { running = false; }
 
-    FrameRate frameRate = FrameRate(config.window.fps);
-    std::unique_ptr<PixelRenderer> renderer;
+ protected:
+  explicit Game(const char* title, const Config& config);
 
-    // Return true -- if created successfully, false -- otherwise
-    virtual bool onGameCreate() = 0;
-    virtual void onGameUpdate() = 0;
+  FrameRate frameRate = FrameRate(config.window.fps);
+  std::unique_ptr<PixelRenderer> renderer;
 
-    virtual void onKeyEvent(const SDL_Event &event) = 0;
-    virtual void onMouseEvent(const SDL_Event &event) = 0;
+  // Return true -- if created successfully, false -- otherwise
+  virtual bool onGameCreate() = 0;
+  virtual void onGameUpdate() = 0;
 
-    const AssetsManager &getAssetsManager() const { return app.assetsManager; }
-private:
-    App app;
+  virtual void onKeyEvent(const SDL_Event& event) = 0;
+  virtual void onMouseEvent(const SDL_Event& event) = 0;
 
-    bool running = true;
+  const AssetsManager& getAssetsManager() const { return app.assetsManager; }
 
-    bool input();
+ private:
+  App app;
+
+  bool running = true;
+
+  bool input();
 };
 
-
-#endif //RAYCASTING_GAME_H
+#endif  // RAYCASTING_GAME_H

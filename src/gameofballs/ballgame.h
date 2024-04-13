@@ -19,46 +19,42 @@
 #define BULLET_MINIMUM_FADE 100
 
 class BallGame : public Game {
-public:
-    explicit BallGame(const char *title) : Game(title, Config::loadFromFile("conf/game.conf")) {}
+ public:
+  explicit BallGame(const char* title) : Game(title, Config::loadFromFile("conf/game.conf")) {}
 
-protected:
-    bool onGameCreate() override;
+ protected:
+  bool onGameCreate() override;
 
-    void onGameUpdate() override;
+  void onGameUpdate() override;
 
-    void onKeyEvent(const SDL_Event &event) override;
+  void onKeyEvent(const SDL_Event& event) override;
 
-    void onMouseEvent(const SDL_Event &event) override;
+  void onMouseEvent(const SDL_Event& event) override;
 
-private:
+ private:
+  void spawnEnemySystem();
 
-    void spawnEnemySystem();
+  void spawnBullet(const Vec2& target);
 
-    void spawnBullet(const Vec2 &target);
+  void movementSystem();
 
-    void movementSystem();
+  void collisionSystem();
 
-    void collisionSystem();
+  void renderSystem();
 
-    void renderSystem();
+  void lifecycleSystem();
 
-    void lifecycleSystem();
+  void updatePlayerPosition();
 
-    void updatePlayerPosition();
+  bool checkScreenCollision(const std::shared_ptr<TransformComponent>& transform,
+                            const std::shared_ptr<CollisionComponent>& collision) const;
 
-    bool checkScreenCollision(const std::shared_ptr<TransformComponent> &transform,
-                              const std::shared_ptr<CollisionComponent> &collision) const;
+  std::shared_ptr<Entity> player;
+  EntityManager manager;
+  Randomizer random;
+  EntityConfig config = EntityConfig::loadFromFile("conf/entity.conf");
 
-    std::shared_ptr<Entity> player;
-    EntityManager manager;
-    Randomizer random;
-    EntityConfig config = EntityConfig::loadFromFile("conf/entity.conf");
-
-    bool collides(const std::shared_ptr<Entity> &source, const std::shared_ptr<Entity> &target);
-
-
+  bool collides(const std::shared_ptr<Entity>& source, const std::shared_ptr<Entity>& target);
 };
 
-
-#endif //ECS_SDL_BALLGAME_H
+#endif  // ECS_SDL_BALLGAME_H

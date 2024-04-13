@@ -8,14 +8,12 @@
 #include <string>
 
 class Component {
-public:
-    const std::string name;
-    virtual ~Component() {}
-protected:
-    explicit Component(const std::string &name): name(name) {}
+ public:
+  const std::string name;
+  virtual ~Component() {}
+
+ protected:
+  explicit Component(const std::string& name) : name(name) {}
 };
 
-
-
-
-#endif //ECS_SDL_COMPONENT_H
+#endif  // ECS_SDL_COMPONENT_H

@@ -12,13 +12,11 @@
 #define LIFECYCLE_COMPONENT_NAME "lifecycle"
 
 class LifecycleComponent : public Component {
-public:
-    LifecycleComponent(const int framesToLive) :
-            Component(LIFECYCLE_COMPONENT_NAME), framesToLive(framesToLive) {}
+ public:
+  LifecycleComponent(const int framesToLive) : Component(LIFECYCLE_COMPONENT_NAME), framesToLive(framesToLive) {}
 
-    const int framesToLive;
-    int framesLeft = framesToLive;
+  const int framesToLive;
+  int framesLeft = framesToLive;
 };
 
-
-#endif //ECS_SDL_LIFECYCLECOMPONENT_H
+#endif  // ECS_SDL_LIFECYCLECOMPONENT_H
