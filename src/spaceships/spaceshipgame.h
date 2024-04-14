@@ -5,7 +5,7 @@
 #ifndef ECS_SPACESHIPGAME_H
 #define ECS_SPACESHIPGAME_H
 
-#include "../engine/game.h"
+#include "engine/game.h"
 
 class SpaceshipGame : public Game {
  public:

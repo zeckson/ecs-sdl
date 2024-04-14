@@ -1,8 +1,9 @@
 //
 // Created by Evgenii Shchepotev on 28.01.2024.
 //
-
 #include "game.h"
+
+#include <SDL_ttf.h>
 
 #include <iostream>
 

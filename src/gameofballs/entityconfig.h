@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "../renderer/pixel.h"
-#include "../resource/config.h"
+#include "renderer/pixel.h"
+#include "resource/config.h"
 
 #define PLAYER_SHAPE_RADIUS 60
 #define PLAYER_SPEED 1.0  // Units / frame

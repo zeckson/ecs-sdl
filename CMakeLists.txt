@@ -19,8 +19,23 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-# Create an imported target for SDL2
-add_library(SDL2 INTERFACE IMPORTED)
+# Add ECS Engine library
+add_library(ZECSEngine STATIC)
+target_include_directories(ZECSEngine PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}/engine)
+
+file(GLOB_RECURSE ENGINE_HEADERS "engine/*.h")
+file(GLOB_RECURSE ENGINE_SOURCES "engine/*.cpp")
+target_sources(ZECSEngine PUBLIC ${ENGINE_HEADERS})
+target_sources(ZECSEngine PRIVATE ${ENGINE_SOURCES})
+
+target_include_directories(ZECSEngine PRIVATE ${SDL2_INCLUDE_DIRS})
+target_include_directories(ZECSEngine PRIVATE ${SDL2_ttf_INCLUDE_DIRS})
+target_include_directories(ZECSEngine PRIVATE ${SDL2_image_INCLUDE_DIRS})
+
+target_link_libraries(ZECSEngine PRIVATE SDL2::SDL2)
+target_link_libraries(ZECSEngine PRIVATE SDL2_ttf::SDL2_ttf)
+target_link_libraries(ZECSEngine PRIVATE SDL2_image::SDL2_image)
 
 # Create a variable to hold the list of source files
 file(GLOB SOURCES "src/**/*.cpp")
@@ -30,6 +45,7 @@ file(GLOB MAIN "src/*.cpp")
 add_executable(ECSSDL2 ${MAIN} ${SOURCES})
 
 # Include SDL2 directories
+target_link_libraries(ECSSDL2 PRIVATE ZECSEngine)
 target_include_directories(ECSSDL2 PRIVATE ${SDL2_INCLUDE_DIRS})
 target_include_directories(ECSSDL2 PRIVATE ${SDL2_ttf_INCLUDE_DIRS})
 target_include_directories(ECSSDL2 PRIVATE ${SDL2_image_INCLUDE_DIRS})

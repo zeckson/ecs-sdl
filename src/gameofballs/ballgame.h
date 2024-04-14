@@ -5,9 +5,9 @@
 #ifndef ECS_SDL_BALLGAME_H
 #define ECS_SDL_BALLGAME_H
 
-#include "../engine/game.h"
-#include "../randomizer.h"
-#include "../resource/config.h"
+#include "../../engine/randomizer.h"
+#include "engine/game.h"
+#include "resource/config.h"
 #include "entityconfig.h"
 
 #define ENTITY_BULLET_TAG "bullet"

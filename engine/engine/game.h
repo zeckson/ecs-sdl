@@ -6,7 +6,6 @@
 #define RAYCASTING_GAME_H
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 
 #include "../assets/assetsmanager.h"
 #include "../entity/entitymanager.h"
