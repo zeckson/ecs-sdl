@@ -3,9 +3,14 @@ cmake_minimum_required(VERSION 3.27.8)
 project(ECS)
 
 # Set up C/C++ compilers
-set(CMAKE_C_COMPILER   gcc)
+set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
 set(CMAKE_CXX_STANDARD 20)
+
+if (APPLE)
+    add_compile_options(-mmacosx-version-min=14.0)
+    # Add macOS-specific configuration here
+endif ()
 
 # Set compiler flags
 
@@ -28,8 +33,6 @@ add_executable(ECSSDL2 ${MAIN} ${SOURCES})
 target_include_directories(ECSSDL2 PRIVATE ${SDL2_INCLUDE_DIRS})
 target_include_directories(ECSSDL2 PRIVATE ${SDL2_ttf_INCLUDE_DIRS})
 target_include_directories(ECSSDL2 PRIVATE ${SDL2_image_INCLUDE_DIRS})
-target_compile_options(ECSSDL2 PRIVATE -mmacosx-version-min=14.0)
-
 
 # Link SDL2 libraries
 target_link_libraries(ECSSDL2 PRIVATE SDL2::SDL2)
