@@ -2,7 +2,7 @@ PROJECT_NAME := ECSSDL2
 PROFILE_DEBUG := debug
 PROFILE_RELEASE := release
 
-PROFILE_CURRENT = $(PROFILE_RELEASE)
+PROFILE_CURRENT = $(PROFILE_DEBUG)
 
 BUILD_ROOT = build
 BUILD_DIR = $(BUILD_ROOT)/$(PROFILE_CURRENT)
@@ -11,7 +11,7 @@ BUILD_DIR = $(BUILD_ROOT)/$(PROFILE_CURRENT)
 
 # Debugging echo rule
 echo:
-	@echo "Building project: $(PROJECT_NAME) with profile $(PROFILE_CURRENT)"
+	@echo "Run \`make all\` to build project $(PROJECT_NAME) with profile $(PROFILE_CURRENT)"
 
 # Create the build directory if it does not exist
 $(BUILD_DIR):
