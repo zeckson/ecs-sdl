@@ -42,3 +42,4 @@ Features:
 - Sight and light [raycasting tutorial](https://ncase.me/sight-and-light/)
 - Visibility and shows [algirithm](https://www.redblobgames.com/articles/visibility/)
 - [The Challenge of Cameras](https://www.youtube.com/watch?v=bHdi5Ar8GXw)
+- [Vector Field Pathfinding](https://code.tutsplus.com/understanding-goal-based-vector-field-pathfinding--gamedev-9007t)
