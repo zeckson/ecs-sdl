@@ -2,8 +2,8 @@
 // Created by Evgenii Shchepotev on 28.03.2024.
 //
 
-#ifndef ECS_SDL_ASSETS_H
-#define ECS_SDL_ASSETS_H
+#ifndef ECS_SDL_ASSETSMANAGER_H
+#define ECS_SDL_ASSETSMANAGER_H
 
 #include <SDL_ttf.h>
 
@@ -33,4 +33,4 @@ class AssetsManager {
   void quit();
 };
 
-#endif  // ECS_SDL_ASSETS_H
+#endif  // ECS_SDL_ASSETSMANAGER_H

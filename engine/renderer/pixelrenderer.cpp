@@ -53,8 +53,11 @@ void PixelRenderer::renderText(const std::string& text, const Uint32 x, const Ui
 }
 
 void PixelRenderer::renderTexture(SDL_Texture* texture, const Vec2& size, const Vec2& dest) {
-  SDL_Rect rect = {(int)dest.x, (int)dest.y, (int)size.x, (int)size.y};
-  SDL_RenderCopy(pSDLRenderer, texture, nullptr, &rect);
+  SDL_Rect rect = {int(dest.x), (int)dest.y, int(size.y), int(size.x)};
+  const SDL_Point center = SDL_Point{int(size.x / 2), int(size.y / 2)};
+  SDL_RenderCopyEx(renderer(), texture, nullptr,                   //
+                   &rect,  //
+                   90, &center, SDL_FLIP_NONE);
 }
 
 void PixelRenderer::drawPoint(const Vec2& point) { drawPoint(int(point.x), int(point.y)); }

@@ -4,8 +4,6 @@
 
 #include "texture.h"
 
-#include <utility>
-
 Texture::Texture(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* surface)
     : name(name), sdlTexture(sdlTexture), width(surface->w), height(surface->h) {}
 
