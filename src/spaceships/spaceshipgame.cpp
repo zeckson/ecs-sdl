@@ -9,8 +9,8 @@ SpaceshipGame::SpaceshipGame(const char* title, const Config& config) : Game(tit
 bool SpaceshipGame::onGameCreate() { return true; }
 
 void SpaceshipGame::onGameUpdate() {
-  const std::unique_ptr<Sprite>& texture = getAssetsManager().getTexture("spaceship");
-  renderer->renderTexture(texture->texture(), {texture->width, texture->height}, {100, 100});
+  const std::unique_ptr<Sprite>& sprite = getAssetsManager().getTexture("spaceship");
+  renderer->renderSprite(sprite, {100, 100});
 }
 
 void SpaceshipGame::onKeyEvent(const SDL_Event& event) {}

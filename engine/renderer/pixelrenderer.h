@@ -45,6 +45,8 @@ class PixelRenderer {
 
   void renderTexture(SDL_Texture* texture, const Vec2& size, const Vec2& dest);
 
+  void renderSprite(const std::unique_ptr<Sprite>& sprite, const Vec2& dest);
+
   SDL_Renderer* renderer() { return pSDLRenderer; }
 
  private:
