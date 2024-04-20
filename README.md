@@ -43,3 +43,4 @@ Features:
 - Visibility and shows [algirithm](https://www.redblobgames.com/articles/visibility/)
 - [The Challenge of Cameras](https://www.youtube.com/watch?v=bHdi5Ar8GXw)
 - [Vector Field Pathfinding](https://code.tutsplus.com/understanding-goal-based-vector-field-pathfinding--gamedev-9007t)
+- [Coin Falling Through Floor](https://www.youtube.com/watch?v=oQ7dXvMfr30)
