@@ -9,13 +9,18 @@
 
 #include <string>
 
+#include "geometry/vec2.h"
+
 class Sprite {
-  const std::string name;
+  const std::string& name;
   const SDL_Texture* sdlTexture;
 
  public:
   const int height;
   const int width;
+
+  double angle = 0;
+
 
   explicit Sprite(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* surface);
 
@@ -32,6 +37,10 @@ class Sprite {
   Sprite& operator=(Sprite&&) = delete;
 
   virtual ~Sprite();
+
+  Vec2&& getBBox() const;
+
+  void rotate(double angleDeg);
 
   SDL_Texture* texture() { return const_cast<SDL_Texture*>(sdlTexture); }
 };

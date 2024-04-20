@@ -8,3 +8,7 @@ Sprite::Sprite(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* su
     : name(name), sdlTexture(sdlTexture), width(surface->w), height(surface->h) {}
 
 Sprite::~Sprite() { SDL_DestroyTexture(const_cast<SDL_Texture*>(sdlTexture)); }
+
+Vec2&& Sprite::getBBox() const { return {width, height}; }
+
+void Sprite::rotate(const double angleDeg) { Sprite::angle = angleDeg; }
