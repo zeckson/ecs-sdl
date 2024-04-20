@@ -2,14 +2,14 @@
 // Created by Evgenii Shchepotev on 06.04.2024.
 //
 
-#ifndef ECS_TEXTURE_H
-#define ECS_TEXTURE_H
+#ifndef ECS_SPRITE_H
+#define ECS_SPRITE_H
 
 #include <SDL.h>
 
 #include <string>
 
-class Texture {
+class Sprite {
   const std::string name;
   const SDL_Texture* sdlTexture;
 
@@ -17,23 +17,23 @@ class Texture {
   const int height;
   const int width;
 
-  explicit Texture(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* surface);
+  explicit Sprite(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* surface);
 
   // Delete copy constructor
-  Texture(const Texture&) = delete;
+  Sprite(const Sprite&) = delete;
 
   // Delete move constructor
-  Texture(Texture&&) = delete;
+  Sprite(Sprite&&) = delete;
 
   // Delete copy assignment operator
-  Texture& operator=(const Texture&) = delete;
+  Sprite& operator=(const Sprite&) = delete;
 
   // Delete move assignment operator
-  Texture& operator=(Texture&&) = delete;
+  Sprite& operator=(Sprite&&) = delete;
 
-  virtual ~Texture();
+  virtual ~Sprite();
 
   SDL_Texture* texture() { return const_cast<SDL_Texture*>(sdlTexture); }
 };
 
-#endif  // ECS_TEXTURE_H
+#endif  // ECS_SPRITE_H

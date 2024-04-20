@@ -9,7 +9,7 @@ SpaceshipGame::SpaceshipGame(const char* title, const Config& config) : Game(tit
 bool SpaceshipGame::onGameCreate() { return true; }
 
 void SpaceshipGame::onGameUpdate() {
-  const std::unique_ptr<Texture>& texture = getAssetsManager().getTexture("spaceship");
+  const std::unique_ptr<Sprite>& texture = getAssetsManager().getTexture("spaceship");
   renderer->renderTexture(texture->texture(), {texture->width, texture->height}, {100, 100});
 }
 
