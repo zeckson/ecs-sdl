@@ -18,12 +18,14 @@ find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 
 # Add ECS Engine library
-add_library(ZECSEngine STATIC)
+file(GLOB_RECURSE ENGINE_HEADERS "engine/*.h")
+file(GLOB_RECURSE ENGINE_SOURCES "engine/*.cpp")
+add_library(ZECSEngine STATIC
+        ${ENGINE_HEADERS}
+        ${ENGINE_SOURCES})
 target_include_directories(ZECSEngine PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/engine)
 
-file(GLOB_RECURSE ENGINE_HEADERS "engine/*.h")
-file(GLOB_RECURSE ENGINE_SOURCES "engine/*.cpp")
 target_sources(ZECSEngine PUBLIC ${ENGINE_HEADERS})
 target_sources(ZECSEngine PRIVATE ${ENGINE_SOURCES})
 
