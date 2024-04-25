@@ -131,8 +131,7 @@ void App::loadTextures(const Config& config) {
       Logger::error("Failed to load texture [%s] renderer: %s", path.c_str(), SDL_GetError());
     }
 
+    // BC! Free all allocated resources inside assetsManager
     assetsManager.addTexture(name, texture, pSurface);
-
-    SDL_FreeSurface(pSurface);  // why surface wasn't allocated?
   }
 }

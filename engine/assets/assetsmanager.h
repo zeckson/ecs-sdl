@@ -17,12 +17,16 @@
 class AssetsManager {
   std::map<std::string, std::unique_ptr<Animation>> animations;
   std::map<std::string, std::unique_ptr<Sprite>> sprites;
+  std::map<std::string, SDL_Texture*> textures;
+  std::map<std::string, SDL_Surface*> surfaces;
   std::map<std::string, TTF_Font*> fonts;
 
  public:
   explicit AssetsManager() {}
 
   void addTexture(const std::string& name, SDL_Texture* texture, SDL_Surface* surface) {
+    surfaces[name] = surface;
+    textures[name] = texture;
     sprites[name] = std::make_unique<Sprite>(name, texture, surface);
   };
   void addFont(const std::string& name, TTF_Font* pFont) { fonts[name] = pFont; };

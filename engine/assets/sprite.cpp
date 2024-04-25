@@ -4,11 +4,15 @@
 
 #include "sprite.h"
 
+Sprite::Sprite(const std::string& name, SDL_Texture* sdlTexture, int width, int height)
+    : name(name), sdlTexture(sdlTexture), width(width), height(height) {}
+
 Sprite::Sprite(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* surface)
-    : name(name), sdlTexture(sdlTexture), width(surface->w), height(surface->h) {}
+    : Sprite(name, sdlTexture, surface->w, surface->h) {}
 
-Sprite::~Sprite() { SDL_DestroyTexture(const_cast<SDL_Texture*>(sdlTexture)); }
+Sprite::~Sprite() {
+}
 
-Vec2&& Sprite::getBBox() const { return {width, height}; }
+const Vec2 Sprite::getBBox() const { return {width, height}; }
 
 void Sprite::rotate(const double angleDeg) { Sprite::angle = angleDeg; }

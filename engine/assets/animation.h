@@ -6,12 +6,13 @@
 #define ECS_ANIMATION_H
 
 #include "SDL.h"
+#include "sprite.h"
 
 class Animation {
-  const SDL_Texture* texturePointer;
+  const Sprite& origin;
 
  public:
-  explicit Animation(const SDL_Texture* texturePointer);
+  explicit Animation(const Sprite& originalSprite);;
 
   virtual ~Animation();
 };

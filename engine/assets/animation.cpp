@@ -4,6 +4,6 @@
 
 #include "animation.h"
 
-Animation::Animation(const SDL_Texture* texturePointer) : texturePointer(texturePointer) {}
 
-Animation::~Animation() { SDL_DestroyTexture(const_cast<SDL_Texture*>(texturePointer)); }
+Animation::Animation(const Sprite& originalSprite) : origin(originalSprite) {}
+Animation::~Animation() {  }

@@ -21,8 +21,8 @@ class Sprite {
 
   double angle = 0;
 
-
   explicit Sprite(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* surface);
+  explicit Sprite(const std::string& name, SDL_Texture* sdlTexture, int width, int height);
 
   // Delete copy constructor
   Sprite(const Sprite&) = delete;
@@ -38,7 +38,8 @@ class Sprite {
 
   virtual ~Sprite();
 
-  Vec2&& getBBox() const;
+  // TODO: fix bounding box on rotation
+  const Vec2 getBBox() const;
 
   void rotate(double angleDeg);
 
