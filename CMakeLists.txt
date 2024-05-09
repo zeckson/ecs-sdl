@@ -39,14 +39,14 @@ target_link_libraries(ZECSEngine PUBLIC SDL2::SDL2)
 target_link_libraries(ZECSEngine PUBLIC SDL2_ttf::SDL2_ttf)
 target_link_libraries(ZECSEngine PUBLIC SDL2_image::SDL2_image)
 
-# Create a variable to hold the list of source files
-file(GLOB SOURCES "src/**/*.cpp")
-file(GLOB MAIN "src/*.cpp")
+# Add an executable target named "SpaceShips"
+add_executable(SpaceShips
+        spaceships/src/spaceshipgame.cpp
+        spaceships/src/main.cpp
+)
+target_link_libraries(SpaceShips PRIVATE ZECSEngine)
 
-# Add an executable target named "myExecutable" from the globbed source files
-add_executable(ECSSDL2 ${MAIN} ${SOURCES})
-target_link_libraries(ECSSDL2 PRIVATE ZECSEngine)
-
+# Add an executable target named "GameOfBalls"
 add_executable(GameOfBalls
         gameofballs/src/ballgame.cpp
         gameofballs/src/entityconfig.cpp
