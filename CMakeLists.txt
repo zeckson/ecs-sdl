@@ -45,5 +45,12 @@ file(GLOB MAIN "src/*.cpp")
 
 # Add an executable target named "myExecutable" from the globbed source files
 add_executable(ECSSDL2 ${MAIN} ${SOURCES})
-
 target_link_libraries(ECSSDL2 PRIVATE ZECSEngine)
+
+add_executable(GameOfBalls
+        gameofballs/src/ballgame.cpp
+        gameofballs/src/entityconfig.cpp
+        gameofballs/src/main.cpp
+)
+target_link_libraries(GameOfBalls PRIVATE ZECSEngine)
+

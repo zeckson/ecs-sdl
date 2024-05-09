@@ -6,7 +6,7 @@
 #include "spaceships/spaceshipgame.h"
 
 int main() {
-  //    BallGame game("The Game Of Balls");
+//      BallGame game("The Game Of Balls");
   SpaceshipGame game("Spaceships", Config::loadFromFile("conf/game.conf"));
 
   game.start();
