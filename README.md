@@ -32,6 +32,10 @@ Features:
 - [ ] Actions handling
 - [ ] AABB collision detection
 
+# TODO:
+
+- [ ] Fix relative paths is conf files
+
 ### Resources:
 
 - For sprite rendering: [Piskelapp](https://www.piskelapp.com/p/create/sprite)

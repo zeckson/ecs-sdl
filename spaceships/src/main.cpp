@@ -2,7 +2,7 @@
 #include "spaceshipgame.h"
 
 int main() {
-  SpaceshipGame game("Spaceships", Config::loadFromFile("conf/game.conf"));
+  SpaceshipGame game("Spaceships", Config::loadFromFile("spaceships/conf/game.conf"));
 
   game.start();
 

@@ -20,7 +20,7 @@
 
 class BallGame : public Game {
  public:
-  explicit BallGame(const char* title) : Game(title, Config::loadFromFile("conf/game.conf")) {}
+  explicit BallGame(const char* title) : Game(title, Config::loadFromFile("gameofballs/conf/game.conf")) {}
 
  protected:
   bool onGameCreate() override;
@@ -52,7 +52,7 @@ class BallGame : public Game {
   std::shared_ptr<Entity> player;
   EntityManager manager;
   Randomizer random;
-  EntityConfig config = EntityConfig::loadFromFile("conf/entity.conf");
+  EntityConfig config = EntityConfig::loadFromFile("gameofballs/conf/entity.conf");
 
   bool collides(const std::shared_ptr<Entity>& source, const std::shared_ptr<Entity>& target);
 };
