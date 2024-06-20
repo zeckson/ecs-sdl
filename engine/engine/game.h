@@ -13,7 +13,6 @@
 #include "../resource/config.h"
 #include "app.h"
 #include "framerate.h"
-#include "scene.h"
 
 class Game {
  public:
