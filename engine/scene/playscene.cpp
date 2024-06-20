@@ -19,11 +19,6 @@ void PlayScene::onAction(const Action& action) {
 
 void PlayScene::renderSystem() {
   for (const auto& entity : manager.getAllEntities()) {
-    const auto& sprite = entity->sprite;
-
-    const auto& transform = entity->transform;
-    if (sprite && transform) {
-    }
   }
 
 }
