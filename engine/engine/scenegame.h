@@ -9,7 +9,7 @@
 #include <memory>
 
 #include "game.h"
-#include "scene/scene.h"
+#include "../scene/scene.h"
 
 typedef std::map<std::string, std::shared_ptr<Scene>> SceneMap;
 

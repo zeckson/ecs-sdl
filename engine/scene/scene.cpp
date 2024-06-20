@@ -4,7 +4,7 @@
 
 #include "scene.h"
 
-#include "resource/logger.h"
+#include "../resource/logger.h"
 
 void Scene::registerAction(const SDL_Scancode code, const std::string& actionName) {
   actionMap[code] = actionName;
