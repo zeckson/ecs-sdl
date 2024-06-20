@@ -8,7 +8,7 @@
 #include <string>
 
 enum ActionType {
-  UNKNOWN = 0, PRESS, RELEASE
+  UNKNOWN = 0, START, END
 };
 
 class Action {

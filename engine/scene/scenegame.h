@@ -8,12 +8,15 @@
 #include <map>
 #include <memory>
 
-#include "game.h"
-#include "../scene/scene.h"
+#include "../engine/game.h"
+#include "scene.h"
 
 typedef std::map<std::string, std::shared_ptr<Scene>> SceneMap;
 
 class SceneGame : public Game {
+  std::string currentScene;
+  SceneMap scenes;
+
  protected:
   void onGameUpdate() override;
 
@@ -24,9 +27,6 @@ class SceneGame : public Game {
   void changeScene(const std::string& name, const std::shared_ptr<Scene> scene);
 
  private:
-  std::string currentScene;
-  SceneMap scenes;
-
   std::shared_ptr<Scene> getCurrentScene() { return scenes[currentScene]; }
 };
 

@@ -3,3 +3,31 @@
 //
 
 #include "playscene.h"
+void PlayScene::update() {
+  manager.update();
+
+  spawnEnemySystem();
+  movementSystem();
+  collisionSystem();
+  renderSystem();
+  lifecycleSystem();
+}
+
+void PlayScene::onAction(const Action& action) {
+
+}
+
+void PlayScene::renderSystem() {
+  for (const auto& entity : manager.getAllEntities()) {
+    const auto& sprite = entity->sprite;
+
+    const auto& transform = entity->transform;
+    if (sprite && transform) {
+    }
+  }
+
+}
+void PlayScene::spawnEnemySystem() {}
+void PlayScene::movementSystem() {}
+void PlayScene::collisionSystem() {}
+void PlayScene::lifecycleSystem() {}

@@ -23,10 +23,10 @@ void Scene::handleEvent(const SDL_Event& event) {
   const auto actionName = it->second;
 
   if (event.type == SDL_KEYDOWN) {
-    onAction(Action(actionName, ActionType::PRESS));
+    onAction(Action(actionName, ActionType::START));
   }
 
   if (event.type == SDL_KEYUP) {
-    onAction(Action(actionName, ActionType::RELEASE));
+    onAction(Action(actionName, ActionType::END));
   }
 }

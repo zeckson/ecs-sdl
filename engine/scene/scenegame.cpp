@@ -28,9 +28,11 @@ void SceneGame::changeScene(const std::string& name, const std::shared_ptr<Scene
   if (scene) {
     scenes[name] = scene;
   }
-  std::shared_ptr<Scene>& newScene = scenes[name];
+  const std::shared_ptr<Scene>& newScene = scenes[name];
   if (!newScene) {
     throw std::runtime_error("Scene not found: " + name);
   }
+
+  newScene->init();
   currentScene = name;
 }

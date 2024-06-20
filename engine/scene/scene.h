@@ -8,21 +8,26 @@
 #include <SDL.h>
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "../action/action.h"
 
 class Scene {
+  std::map<SDL_Scancode, std::string> actionMap;
+
  public:
   explicit Scene() {};
+
   void handleEvent(const SDL_Event& event);
-  void virtual update() = 0;
+
+  virtual void update() = 0;
+  virtual void init() = 0;
+
  protected:
   void registerAction(const SDL_Scancode code, const std::string& actionName);
-  void virtual init() = 0;
-  void virtual onAction(const Action& action) = 0;
- private:
-  std::map<SDL_Scancode, std::string> actionMap;
+
+  virtual void onAction(const Action& action) = 0;
 };
 
 #endif  // ECS_SDL_SCENE_H
