@@ -25,7 +25,9 @@ void AssetsManager::quit() {
   }
 }
 
-TTF_Font* AssetsManager::getFont(const std::string& name) const { return fonts.at(name); }
+TTF_Font* AssetsManager::getFont(const std::string& name) const {
+  assert(fonts.find(name) != fonts.end());
+  return fonts.at(name); }
 
 const std::unique_ptr<Sprite>& AssetsManager::getTexture(const std::string& name) const {
   assert(sprites.find(name) != sprites.end());
