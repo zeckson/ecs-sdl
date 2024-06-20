@@ -31,8 +31,8 @@ class AssetsManager {
   };
   void addFont(const std::string& name, TTF_Font* pFont) { fonts[name] = pFont; };
 
-  const std::unique_ptr<Sprite>& getTexture(const std::string& string) const;
-  TTF_Font* getFont(const std::string& string) const;
+  const std::unique_ptr<Sprite>& getTexture(const std::string& name) const;
+  TTF_Font* getFont(const std::string& name) const;
 
   void quit();
 };
