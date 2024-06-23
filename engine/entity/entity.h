@@ -32,6 +32,7 @@ class Entity {
 
   explicit Entity(const std::string& name, const Uint8& id) : name(std::string(name)), id(id){};
 
+  // NB! Templates are compilable only with inplace methods it's not possible to split
   template <typename T>
   [[nodiscard]] bool has() const {
     auto component = getOptional<T>();
