@@ -46,8 +46,8 @@ class BallGame : public Game {
 
   void updatePlayerPosition();
 
-  bool checkScreenCollision(const std::shared_ptr<TransformComponent>& transform,
-                            const std::shared_ptr<CollisionComponent>& collision) const;
+  bool checkScreenCollision(TransformComponent& transform,
+                            CollisionComponent& collision) const;
 
   std::shared_ptr<Entity> player;
   EntityManager manager;

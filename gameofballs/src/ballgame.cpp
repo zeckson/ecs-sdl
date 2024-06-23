@@ -7,19 +7,17 @@
 #include <cmath>
 #include <memory>
 
-#include "component/shapecomponent.h"
-#include "component/transformcomponent.h"
 #include "resource/logger.h"
 
 bool BallGame::onGameCreate() {
   player = manager.createEntity(ENTITY_PLAYER_TAG);
   const auto playerConfig = config.player;
-  player->shape = std::make_shared<ShapeComponent>(playerConfig.shapeRadius, playerConfig.outlineColor,
-                                                   playerConfig.fillColor, playerConfig.thickness);
-  player->collision = std::make_shared<CollisionComponent>(playerConfig.collisionRadius);
+  player->addComponent<ShapeComponent>(playerConfig.shapeRadius, playerConfig.outlineColor, playerConfig.fillColor,
+                                       playerConfig.thickness);
+  player->addComponent<CollisionComponent>(playerConfig.collisionRadius);
   auto center = Vec2(width / 2, height / 2);
-  player->transform = std::make_shared<TransformComponent>(center, 0, 0);
-  player->input = std::make_shared<InputComponent>();
+  player->addComponent<TransformComponent>(center, 0, 0);
+  player->addComponent<InputComponent>();
   return true;
 }
 
@@ -30,14 +28,14 @@ void BallGame::spawnEnemySystem() {
     auto enemy = manager.createEntity(name);
     const int radius = random.between(enemyConfig.shapeRadius.first, enemyConfig.shapeRadius.second) * 10;
     const int collisionRadius = radius - enemyConfig.thickness;
-    enemy->collision = std::make_shared<CollisionComponent>(collisionRadius);
-    enemy->shape = std::make_shared<ShapeComponent>(radius, enemyConfig.outlineColor, BLACK, enemyConfig.thickness);
+    enemy->addComponent<CollisionComponent>(collisionRadius);
+    enemy->addComponent<ShapeComponent>(radius, enemyConfig.outlineColor, BLACK, enemyConfig.thickness);
     int startX = random.between(radius, width - radius);
     int startY = random.between(radius, height - radius);
     auto center = Vec2(startX, startY);
     double direction = random.get(1.0f) * M_2_PI;
     const auto speed = random.betweenf(enemyConfig.speed.first, enemyConfig.speed.second);
-    enemy->transform = std::make_shared<TransformComponent>(center, speed, direction);
+    enemy->addComponent<TransformComponent>(center, speed, direction);
     Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
   }
 }
@@ -47,14 +45,14 @@ void BallGame::spawnBullet(const Vec2& target) {
   auto bullet = manager.createEntity(name);
   const auto& bulletConfig = config.bullet;
   int radius = 5;
-  bullet->collision = std::make_shared<CollisionComponent>(bulletConfig.collisionRadius);
-  bullet->shape = std::make_shared<ShapeComponent>(bulletConfig.shapeRadius, bulletConfig.outlineColor,
-                                                   bulletConfig.fillColor, bulletConfig.thickness);
-  const auto playerPosition = player->transform->position;
+  bullet->addComponent<CollisionComponent>(bulletConfig.collisionRadius);
+  bullet->addComponent<ShapeComponent>(bulletConfig.shapeRadius, bulletConfig.outlineColor, bulletConfig.fillColor,
+                                       bulletConfig.thickness);
+  const auto playerPosition = player->getComponent<TransformComponent>().position;
   auto distance = target - playerPosition;
   auto velocity = distance.normalize();
-  bullet->transform = std::make_shared<TransformComponent>(playerPosition, velocity * bulletConfig.speed);
-  bullet->lifecycle = std::make_shared<LifecycleComponent>(bulletConfig.lifespan);
+  bullet->addComponent<TransformComponent>(playerPosition, velocity * bulletConfig.speed);
+  bullet->addComponent<LifecycleComponent>(bulletConfig.lifespan);
   Logger::info("Entity[%s] created at: %s with radius: %d", name.c_str(), playerPosition.toString().c_str(), radius);
 }
 
@@ -70,10 +68,10 @@ void BallGame::onGameUpdate() {
 
 void BallGame::movementSystem() {
   for (const auto& entity : manager.getAllEntities()) {
-    auto& component = entity->transform;
-    if (component) {
-      component->position.x += std::round(component->velocity.x);
-      component->position.y += std::round(component->velocity.y);
+    if (entity->has<TransformComponent>()) {
+      auto& transform = entity->getComponent<TransformComponent>();
+      transform.position.x += std::round(transform.velocity.x);
+      transform.position.y += std::round(transform.velocity.y);
     }
     if (entity == player) {
       updatePlayerPosition();
@@ -83,12 +81,12 @@ void BallGame::movementSystem() {
 
 void BallGame::collisionSystem() {
   for (const auto& entity : manager.getAllEntities()) {
-    auto& transform = entity->transform;
-    auto& collision = entity->collision;
-    if (transform && collision) {
+    if (entity->has<TransformComponent>() && entity->has<CollisionComponent>()) {
+      auto& transform = entity->getComponent<TransformComponent>();
+      auto& collision = entity->getComponent<CollisionComponent>();
       const bool collide = checkScreenCollision(transform, collision);
       if (collide) {
-        Logger::debug("Wall collision: [%s]:%s", entity->tag().c_str(), transform->position.toString().c_str());
+        Logger::debug("Wall collision: [%s]:%s", entity->tag().c_str(), transform.position.toString().c_str());
         if (entity->tag() == ENTITY_BULLET_TAG) {
           manager.removeEntity(entity);
         }
@@ -107,7 +105,7 @@ void BallGame::collisionSystem() {
     // enemy - player collision
     if (collides(player, enemy)) {
       manager.removeEntity(enemy);
-      player->transform->position = Vec2(width / 2, height / 2);
+      player->getComponent<TransformComponent>().position = Vec2(width / 2, height / 2);
 
       goto endloop;  // we don't care about collision enemy is dead
     }
@@ -128,12 +126,11 @@ void BallGame::collisionSystem() {
 
       if (collides(enemy, otherEnemy)) {
         // Circles collide, reverse velocities
-        Vec2 enemyVelocity = enemy->transform->velocity;
-        enemy->transform->velocity = otherEnemy->transform->velocity;
-        otherEnemy->transform->velocity = enemyVelocity;
+        Vec2 enemyVelocity = enemy->getComponent<TransformComponent>().velocity;
+        enemy->getComponent<TransformComponent>().velocity = otherEnemy->getComponent<TransformComponent>().velocity;
+        otherEnemy->getComponent<TransformComponent>().velocity = enemyVelocity;
 
-        // TODO: resolve collision overlapping (circles can attach or stick
-        // together)
+        // TODO: resolve collision overlapping (circles can attach or stick together)
       }
     }
   endloop:;
@@ -141,25 +138,27 @@ void BallGame::collisionSystem() {
 }
 
 bool BallGame::collides(const std::shared_ptr<Entity>& source, const std::shared_ptr<Entity>& target) {
-  const auto& sourceCollision = source->collision;
-  const auto& targetCollision = target->collision;
-  if (!(sourceCollision && targetCollision)) {
+  if (!(source->has<CollisionComponent>() && target->has<CollisionComponent>())) {
     return false;
   }
 
-  const auto& sourceTransform = source->transform;
-  const auto& targetTransform = target->transform;
-  if (!(sourceTransform && targetTransform)) {
+  if (!(source->has<TransformComponent>() && target->has<TransformComponent>())) {
     return false;
   }
+  const auto& sourceTransform = source->getComponent<TransformComponent>();
+  const auto& targetTransform = target->getComponent<TransformComponent>();
 
-  const auto& left = sourceTransform->position;
-  const auto& right = targetTransform->position;
+  const auto& sourceCollision = source->getComponent<CollisionComponent>();
+  const auto& targetCollision = target->getComponent<CollisionComponent>();
+
+  const auto& left = sourceTransform.position;
+  const auto& right = targetTransform.position;
   float dx = left.x - right.x;
   float dy = left.y - right.y;
   float distance = dx * dx + dy * dy;
+
   int minDistance =
-      (sourceCollision->radius + targetCollision->radius) * (sourceCollision->radius + targetCollision->radius);
+      (sourceCollision.radius + targetCollision.radius) * (sourceCollision.radius + targetCollision.radius);
   const auto collided = distance < float(minDistance);
   if (collided) {
     Logger::debug("Entity collision: [%s]:%s and [%s]:%s", source->tag().c_str(), left.toString().c_str(),
@@ -170,26 +169,25 @@ bool BallGame::collides(const std::shared_ptr<Entity>& source, const std::shared
 
 void BallGame::lifecycleSystem() {
   for (const auto& entity : manager.getAllEntities()) {
-    const auto& lifecycle = entity->lifecycle;
-    if (lifecycle) {
-      lifecycle->framesLeft--;
-      if (lifecycle->framesLeft < 0) {
+    if (entity->has<LifecycleComponent>()) {
+      auto& lifecycle = entity->getComponent<LifecycleComponent>();
+      lifecycle.framesLeft--;
+      if (lifecycle.framesLeft < 0) {
         manager.removeEntity(entity);
       }
     }
   }
 }
 
-bool BallGame::checkScreenCollision(const std::shared_ptr<TransformComponent>& transform,
-                                    const std::shared_ptr<CollisionComponent>& collision) const {
-  Vec2& velocity = transform->velocity;
-  Vec2& position = transform->position;
+bool BallGame::checkScreenCollision(TransformComponent& transform, CollisionComponent& collision) const {
+  Vec2& velocity = transform.velocity;
+  Vec2& position = transform.position;
   float x = position.x;
   float y = position.y;
 
   bool collide = false;
 
-  Uint32 radius = collision->radius;
+  Uint32 radius = collision.radius;
   float right = width - radius;
   float left = 0 + radius;
   if (x > right) {
@@ -219,64 +217,65 @@ bool BallGame::checkScreenCollision(const std::shared_ptr<TransformComponent>& t
 
 void BallGame::renderSystem() {
   for (const auto& entity : manager.getAllEntities()) {
-    const auto& shape = entity->shape;
-    const auto& lifecycle = entity->lifecycle;
-    if (lifecycle && shape) {
-      const auto step = (SDL_ALPHA_OPAQUE - BULLET_MINIMUM_FADE) / lifecycle->framesToLive;
-      const auto opacity = lifecycle->framesLeft * step + BULLET_MINIMUM_FADE;
+    if (entity->has<ShapeComponent>()) {
+      auto& shape = entity->getComponent<ShapeComponent>();
 
-      // NB! Since SDL2 doesn't support alpha channel on screen rendering
-      // Imitate it by blending with background
-      // TODO: use correct color from config
-      const auto& fade = Pixel(opacity, opacity, opacity);
-      shape->circle.setFillColor(fade);
-      shape->circle.setOutlineColor(fade);
-    }
-    const auto& transform = entity->transform;
-    if (shape && transform) {
-      shape->circle.draw(renderer, transform->position);
+      if (entity->has<LifecycleComponent>()) {
+        const auto& lifecycle = entity->getComponent<LifecycleComponent>();
+        const auto step = (SDL_ALPHA_OPAQUE - BULLET_MINIMUM_FADE) / lifecycle.framesToLive;
+        const auto opacity = lifecycle.framesLeft * step + BULLET_MINIMUM_FADE;
+
+        // NB! Since SDL2 doesn't support alpha channel on screen rendering
+        // Imitate it by blending with background
+        // TODO: use correct color from config
+        const auto& fade = Pixel(opacity, opacity, opacity);
+        shape.circle.setFillColor(fade);
+        shape.circle.setOutlineColor(fade);
+      }
+
+      if (entity->has<TransformComponent>()) {
+        const auto& transform = entity->getComponent<TransformComponent>();
+        shape.circle.draw(renderer, transform.position);
+      }
     }
   }
 }
 
 void BallGame::updatePlayerPosition() {
-  const auto& input = player->input;
-  if (input) {
-    const auto& transform = player->transform;
-    if (transform) {
-      float yAxisMove = 0;
-      if (input->isset(Direction::UP)) yAxisMove -= 1;
-      if (input->isset(Direction::DOWN)) yAxisMove += 1;
+  const auto& input = player->getComponent<InputComponent>();
+  auto& transform = player->getComponent<TransformComponent>();
 
-      float xAxisMove = 0;
-      if (input->isset(Direction::LEFT)) xAxisMove -= 1;
-      if (input->isset(Direction::RIGHT)) xAxisMove += 1;
+  float yAxisMove = 0;
+  if (input.isset(Direction::UP)) yAxisMove -= 1;
+  if (input.isset(Direction::DOWN)) yAxisMove += 1;
 
-      const Vec2& velocity = Vec2{xAxisMove, yAxisMove}.normalize() * config.player.speed;
-      transform->position += velocity;
-    }
-  }
+  float xAxisMove = 0;
+  if (input.isset(Direction::LEFT)) xAxisMove -= 1;
+  if (input.isset(Direction::RIGHT)) xAxisMove += 1;
+
+  const Vec2& velocity = Vec2{xAxisMove, yAxisMove}.normalize() * config.player.speed;
+  transform.position += velocity;
 }
 
 void BallGame::onKeyEvent(const SDL_Event& event) {
   const auto key = event.key.keysym;
 
   for (const auto& entity : manager.getAllEntities()) {
-    const auto input = entity->input;
-    if (input) {
+    if (entity->has<InputComponent>()) {
+      auto& input = entity->getComponent<InputComponent>();
       if (event.type == SDL_KEYDOWN) {
         switch (key.scancode) {
           case SDL_SCANCODE_UP:
-            input->set(Direction::UP);
+            input.set(Direction::UP);
             break;
           case SDL_SCANCODE_DOWN:
-            input->set(Direction::DOWN);
+            input.set(Direction::DOWN);
             break;
           case SDL_SCANCODE_LEFT:
-            input->set(Direction::LEFT);
+            input.set(Direction::LEFT);
             break;
           case SDL_SCANCODE_RIGHT:
-            input->set(Direction::RIGHT);
+            input.set(Direction::RIGHT);
             break;
           default:
             // do nothing
@@ -286,16 +285,16 @@ void BallGame::onKeyEvent(const SDL_Event& event) {
       if (event.type == SDL_KEYUP) {
         switch (key.scancode) {
           case SDL_SCANCODE_UP:
-            input->unset(Direction::UP);
+            input.unset(Direction::UP);
             break;
           case SDL_SCANCODE_DOWN:
-            input->unset(Direction::DOWN);
+            input.unset(Direction::DOWN);
             break;
           case SDL_SCANCODE_LEFT:
-            input->unset(Direction::LEFT);
+            input.unset(Direction::LEFT);
             break;
           case SDL_SCANCODE_RIGHT:
-            input->unset(Direction::RIGHT);
+            input.unset(Direction::RIGHT);
             break;
           default:
             // do nothing

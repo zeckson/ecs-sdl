@@ -13,7 +13,7 @@
 
 class LifecycleComponent : public Component {
  public:
-  LifecycleComponent(const int framesToLive) : Component(LIFECYCLE_COMPONENT_NAME), framesToLive(framesToLive) {}
+  LifecycleComponent(int framesToLive) : Component(LIFECYCLE_COMPONENT_NAME), framesToLive(framesToLive) {}
 
   const int framesToLive;
   int framesLeft = framesToLive;
