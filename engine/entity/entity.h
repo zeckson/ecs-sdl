@@ -45,7 +45,7 @@ class Entity {
     // What to do with previous component?
     T component = T(std::forward<TArgs>(args)...);
     value.emplace(component);
-    return component;
+    return getComponent<T>();
   }
 
   template <typename T>
