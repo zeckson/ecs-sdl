@@ -18,13 +18,15 @@ class SceneGame : public Game {
   SceneMap scenes;
 
  protected:
+  explicit SceneGame(const char* title, const Config& config): Game(title, config) {}
+
   void onGameUpdate() override;
 
   void onKeyEvent(const SDL_Event& event) override;
 
   void onMouseEvent(const SDL_Event& event) override;
 
-  void changeScene(const std::string& name, const std::shared_ptr<Scene> scene);
+  void changeScene(const std::string& name, std::shared_ptr<Scene> scene);
 
  private:
   std::shared_ptr<Scene> getCurrentScene() { return scenes[currentScene]; }
