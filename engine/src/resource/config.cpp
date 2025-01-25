@@ -23,7 +23,7 @@ Config Config::loadFromFile(const std::string& filename) {
     } else if (name == CONFIG_NAME(Assets)) {
       std::string assetsPath;
       fin >> assetsPath;
-      assets = loadAssetsConfig(assetsPath);
+      assets = Assets::load(assetsPath);
     } else {
       throw std::runtime_error("Unknown config type: " + name);
     }
@@ -32,38 +32,4 @@ Config Config::loadFromFile(const std::string& filename) {
   fin.close();
 
   return Config(win, assets);
-}
-
-Assets Config::loadAssetsConfig(const std::string& path) {
-  std::ifstream fin(path);
-
-  if (!fin) {
-    throw std::runtime_error("Failed to open file: " + path);
-  }
-
-  std::string name;
-  Assets loaded = Assets();
-  while (fin.good() && !fin.eof()) {
-    fin >> name;
-    if (name == "Texture") {
-      std::string vPath;
-
-      fin >> name >> vPath;
-      loaded.textures[name] = vPath;
-    } else if (name == "Font") {
-      Font font;
-
-      fin >> name >> font.path >> font.size;
-      loaded.fonts[name] = font;
-    } else if (name == "Animation") {
-      AnimationConfig animationConfig;
-      fin >> name >> animationConfig.textureName >> animationConfig.frames >> animationConfig.lifetime;
-    } else {
-      throw std::runtime_error("Unknown config type: " + name);
-    }
-  }
-
-  fin.close();
-
-  return loaded;
 }

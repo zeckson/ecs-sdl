@@ -9,6 +9,7 @@
 #include <string>
 
 #include "../renderer/pixel.h"
+#include "assets.h"
 
 // Define a macro to store the name of the struct as a string literal
 #define CONFIG_NAME(Struct) #Struct
@@ -47,17 +48,9 @@ struct AnimationConfig {
   int lifetime = 0;
 };
 
-struct Assets {
-  std::map<std::string, Font> fonts = {{FONT_NAME, Font{FONT_PATH, DEFAULT_FONT_SIZE}}};
-  std::map<std::string, std::string> textures;
-  std::map<std::string, AnimationConfig> animations;
-};
-
 class Config {
   explicit Config(const Window& window, const Assets& assets) : window(window), assets(assets){};
   Config(const Window& window, const Font& font) : Config(window, Assets()){};
-
-  static Assets loadAssetsConfig(const std::string& path);
 
  public:
   const Window window;

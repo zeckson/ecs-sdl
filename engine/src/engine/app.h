@@ -26,10 +26,9 @@ class App {
   SDL_Texture& loadTexture(const char* filename);
 
   void destroy();
-  void loadFonts(const Config& config);
+  void loadAssets(const Assets& assets);
+  
   friend class Game;
-
-  void loadTextures(const Config& config);
 };
 
 #endif  // ECS_SDL_APP_H

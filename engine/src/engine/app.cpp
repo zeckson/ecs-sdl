@@ -62,24 +62,7 @@ App::App(const char* title, const Config& config) {
 
   pSDLRenderer = sdlRenderer;
 
-  loadFonts(config);
-
-  loadTextures(config);
-}
-
-void App::loadFonts(const Config& config) {
-  for (const auto& it : config.assets.fonts) {
-    const auto& font = it.second;
-    const char* path = font.path.c_str();
-    const int size = font.size;
-    TTF_Font* fnt = TTF_OpenFont(path, size);
-    if (!fnt) {
-      Logger::error("Couldn't load %d pt font from %s: %s", size, path, SDL_GetError());
-      // Handle font loading error
-      exit(1);
-    }
-    assetsManager.addFont(it.first, fnt);
-  }
+  loadAssets(config.assets);
 }
 
 SDL_Surface* App::loadSurface(const char* filename) {
@@ -117,21 +100,38 @@ void App::destroy() {
   SDL_Quit();
 }
 
-void App::loadTextures(const Config& config) {
-  for (const auto& it : config.assets.textures) {
-    const auto& name = it.first;
-    const auto& path = it.second;
-
-    const char* filename = path.c_str();
-
-    SDL_Surface* pSurface = loadSurface(filename);
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(pSDLRenderer, pSurface);
-
-    if (!texture) {
-      Logger::error("Failed to load texture [%s] renderer: %s", path.c_str(), SDL_GetError());
+void App::loadAssets(const Assets& assets) {
+    for (const auto& it : assets.resources) {
+    const auto resource = it.second.get();
+    if (typeid(*resource) == typeid(Asset::Font))
+    {
+      const auto font = *dynamic_cast<Asset::Font*>(resource);
+      const char* path = font.path.c_str();
+      const int size = font.size;
+      TTF_Font* fnt = TTF_OpenFont(path, size);
+      if (!fnt) {
+        Logger::error("Couldn't load %d pt font from %s: %s", size, path, SDL_GetError());
+        // Handle font loading error
+        exit(1);
+      }
+      assetsManager.addFont(it.first, fnt);
     }
+    else if(typeid(*resource) == typeid(Asset::Sprite)) {
+      const auto sprite = *dynamic_cast<Asset::Sprite*>(resource);
+      const auto& name = sprite.name;
+      const auto& path = sprite.path;
 
-    // BC! Free all allocated resources inside assetsManager
-    assetsManager.addTexture(name, texture, pSurface);
+      const char* filename = path.c_str();
+
+      SDL_Surface* pSurface = loadSurface(filename);
+      SDL_Texture* texture = SDL_CreateTextureFromSurface(pSDLRenderer, pSurface);
+
+      if (!texture) {
+        Logger::error("Failed to load texture [%s] renderer: %s", path.c_str(), SDL_GetError());
+      }
+
+      // BC! Free all allocated resources inside assetsManager
+      assetsManager.addTexture(name, texture, pSurface);
+    }
   }
 }

@@ -36,9 +36,11 @@ void Animation::load(std::ifstream& in) {
 Assets::Assets() {
     // Register loaders for different resource types
     loaders["Font"] = []() { return std::make_shared<Asset::Font>(); };
-    loaders["Sprite"] = []() { return std::make_shared<Asset::Sprite>(); };
+    loaders["Texture"] = []() { return std::make_shared<Asset::Sprite>(); };
     loaders["Animation"] = []() { return std::make_shared<Asset::Animation>(); };
 }
+
+Assets Assets::instance = Assets();
 
 template <typename T>
 const T& Assets::getResource(const std::string& name) {
@@ -49,9 +51,8 @@ const T& Assets::getResource(const std::string& name) {
   return resource->second;
 }
 
-template <typename T>
-Assets Assets::load(const std::string& path) {
-
+// Static load method to load assets from file and return an instance of Assets
+const Assets& Assets::load(const std::string& path) {
   std::ifstream fin(path);
 
   if (!fin) {
@@ -59,22 +60,21 @@ Assets Assets::load(const std::string& path) {
   }
 
   std::string name;
-  Assets loaded = Assets();
+
   while (fin.good() && !fin.eof()) {
     fin >> name;
-    auto loader = loaders.find(name);
-    if (loader == loaders.end()) {
+    auto loader = instance.loaders.find(name);
+    if (loader == instance.loaders.end()) {
         throw std::runtime_error("No loader registered for type: " + name);
     }
     auto resource = loader->second();
 
     resource->load(fin);
-    resources[resource->name] = resource;
+    instance.resources[resource->name] = resource;
   }
 
   fin.close();
 
-  return loaded;
-
+  return instance;
 }
 

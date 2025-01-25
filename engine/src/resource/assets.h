@@ -25,7 +25,7 @@ namespace Asset {
 // Abstract base class for all resources
 struct Resource {
   std::string name;
-
+  
   virtual ~Resource() = default;
   virtual void load(std::ifstream& in) = 0;
 };
@@ -50,7 +50,6 @@ struct Sprite : Resource {
 
 // Font resource
 struct Font : Resource {
-  std::string name = FONT_NAME;
   std::string path = FONT_PATH;
   int size = DEFAULT_FONT_SIZE;
 
@@ -68,24 +67,23 @@ struct Animation : Sprite {
 }  // namespace Asset
 
 // Asset manager to handle loading and caching
-struct Assets {
-  // Asset collections
-  std::map<std::string, std::shared_ptr<Asset::Resource>> resources;
-
+class Assets {
+ private:
   // Factory for creating resources
   std::map<std::string, std::function<std::shared_ptr<Asset::Resource>()>> loaders;
 
+  static Assets instance;
+
+ public:
+  // Asset collections
+  std::map<std::string, std::shared_ptr<Asset::Resource>> resources;
   // Constructor
   Assets();
 
   template <typename T>
   const T& getResource(const std::string& name);
 
-  // Load a resource by type and name
-  template <typename T>
-  Assets load(const std::string& path);
+  static const Assets& load(const std::string& path);
 };
 
 #endif
-
-
