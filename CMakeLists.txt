@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27.8)
+cmake_minimum_required(VERSION 3.28)
 
 project(ECS)
 
@@ -24,6 +24,8 @@ add_subdirectory(engine)
 add_executable(SpaceShips
         spaceships/src/spaceshipgame.cpp
         spaceships/src/main.cpp
+        spaceships/src/spacescene.cpp
+        spaceships/src/spacescene.h
 )
 target_link_libraries(SpaceShips PRIVATE ZECSEngine)
 
