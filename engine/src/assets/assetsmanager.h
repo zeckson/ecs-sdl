@@ -15,8 +15,8 @@
 #include "sprite.h"
 
 class AssetsManager {
-  std::map<std::string, std::unique_ptr<Animation>> animations;
-  std::map<std::string, std::unique_ptr<Sprite>> sprites;
+  std::map<std::string, std::shared_ptr<Animation>> animations;
+  std::map<std::string, std::shared_ptr<Sprite>> sprites;
   std::map<std::string, SDL_Texture*> textures;
   std::map<std::string, SDL_Surface*> surfaces;
   std::map<std::string, TTF_Font*> fonts;
@@ -27,11 +27,11 @@ class AssetsManager {
   void addTexture(const std::string& name, SDL_Texture* texture, SDL_Surface* surface) {
     surfaces[name] = surface;
     textures[name] = texture;
-    sprites[name] = std::make_unique<Sprite>(name, texture, surface);
+    sprites[name] = std::make_shared<Sprite>(name, texture, surface);
   };
   void addFont(const std::string& name, TTF_Font* pFont) { fonts[name] = pFont; };
 
-  const std::unique_ptr<Sprite>& getTexture(const std::string& name) const;
+  const std::shared_ptr<Sprite>& getTexture(const std::string& name) const;
   TTF_Font* getFont(const std::string& name) const;
 
   void quit();

@@ -10,7 +10,8 @@
 
 class SpaceScene: public Scene {
   private:
-    Game& game;  // Reference to Game object
+    Game& game;
+    std::shared_ptr<Sprite> player;
 
   public:
     SpaceScene(Game& gameObj): game(gameObj) {} 
