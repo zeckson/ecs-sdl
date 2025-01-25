@@ -1,6 +1,9 @@
 # CLion files
 .idea
 
+# VSCode files
+.vscode
+
 # Build folder
 build
 
