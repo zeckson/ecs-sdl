@@ -7,12 +7,31 @@
 #include <assets/sprite.h>
 #include <resource/logger.h>
 
+int SPEED = 10;
+
 void SpaceScene::update() {
+  checkBounds();
+
   game.renderer->renderSprite(player, playerPos);
   currentFrame++;
 
   if (currentFrame > 120) {
     currentFrame = 0;
+  }
+
+}
+void SpaceScene::checkBounds() {
+  if (playerPos.x > game.width) {
+    playerPos.x -= game.width;
+  }
+  if (playerPos.x <= 0) {
+    playerPos.x += game.width;
+  }
+  if (playerPos.y > game.height) {
+    playerPos.y -= game.height;
+  }
+  if (playerPos.y <= 0) {
+    playerPos.y += game.height;
   }
 }
 void SpaceScene::init() {
@@ -29,5 +48,28 @@ void SpaceScene::onAction(const Action& action) {
   if (action.name == "MOVE_LEFT") {
     player->angle -= 15;
   }
+  if (player->angle > 360)
+  {
+    player->angle -= 360;
+  }
+  if (player->angle < 0)
+  {
+    player->angle += 360;
+  }
+  
+
+  int speed = 0;
+  if (action.name == "MOVE_UP")
+  {
+    speed += SPEED;
+  }
+  if (action.name == "MOVE_DOWN")
+  {
+    speed -= SPEED;
+  }
+  playerPos += Util::toVelocity(speed, player->angle);
+  
   Logger::info("Action[%s] type: %s", action.name.c_str(), action.type == ActionType::START ? "start" : "end");
+
+  Logger::info("Angle: %f, speed: %d", player->angle, speed);
 }

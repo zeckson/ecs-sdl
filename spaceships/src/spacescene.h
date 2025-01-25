@@ -16,9 +16,10 @@ class SpaceScene: public Scene {
     int currentFrame = 0;
 
   public:
-    SpaceScene(Game& gameObj): game(gameObj) {} 
+    SpaceScene(Game& gameObj): game(gameObj) {}
 
     void update() override;
+    void checkBounds();
     void init() override;
     void onAction(const Action& action) override;
 };

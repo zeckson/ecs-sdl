@@ -43,10 +43,9 @@ class Vec2 {
 };
 
 namespace Util {
-inline const Vec2 toVelocity(const float speed, const float angle) {
-  return {std::cosf(angle) * speed, std::sinf(angle) * speed};
-}
-
+  inline const Vec2 toVelocity(const float speed, const float angle) {
+    return {std::cosf(angle) * speed, std::sinf(angle) * speed};
+  }
 }  // namespace Util
 
 #endif  // ECS_SDL_VEC2_H
