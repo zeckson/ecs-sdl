@@ -6,8 +6,9 @@
 #define ECS_SPACESHIPGAME_H
 
 #include "engine/game.h"
+#include "scene/scenegame.h"
 
-class SpaceshipGame : public Game {
+class SpaceshipGame : public SceneGame {
  public:
  private:
   bool onGameCreate() override;

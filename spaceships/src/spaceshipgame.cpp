@@ -4,7 +4,12 @@
 
 #include "spaceshipgame.h"
 
-SpaceshipGame::SpaceshipGame(const char* title, const Config& config) : Game(title, config) {}
+#include "spacescene.h"
+
+SpaceshipGame::SpaceshipGame(const char* title, const Config& config) : SceneGame(title, config) {
+  auto scene = std::make_shared<SpaceScene>();
+  this->changeScene("space", scene);
+}
 
 bool SpaceshipGame::onGameCreate() { return true; }
 
