@@ -15,4 +15,4 @@ Sprite::~Sprite() {
 
 const Vec2 Sprite::getBBox() const { return {width, height}; }
 
-void Sprite::rotate(const double angleDeg) { Sprite::angle = angleDeg; }
+void Sprite::rotate(const double angleDeg) { angle = angleDeg; }

@@ -69,5 +69,5 @@ void PixelRenderer::renderSprite(const std::shared_ptr<Sprite>& sprite, const Ve
   const SDL_Point center = SDL_Point{int(rect.w / 2), int(rect.h / 2)};
   SDL_RenderCopyEx(renderer(), sprite->texture(), nullptr,                   //
                    &rect,  //
-                   90, &center, SDL_FLIP_NONE);
+                   sprite->angle, &center, SDL_FLIP_NONE);
 }

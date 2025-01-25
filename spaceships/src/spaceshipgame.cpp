@@ -13,7 +13,3 @@ bool SpaceshipGame::onGameCreate() {
   this->changeScene("space", scene);
   return true;
 }
-
-void SpaceshipGame::onKeyEvent(const SDL_Event& event) {}
-
-void SpaceshipGame::onMouseEvent(const SDL_Event& event) {}

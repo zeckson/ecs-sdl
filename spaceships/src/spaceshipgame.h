@@ -12,10 +12,6 @@ class SpaceshipGame : public SceneGame {
  protected:
   bool onGameCreate() override;
 
-  void onKeyEvent(const SDL_Event& event) override;
-
-  void onMouseEvent(const SDL_Event& event) override;
-
  public:
   SpaceshipGame(const char* title, const Config& config);
 };
