@@ -19,14 +19,17 @@ class Game {
   const Uint16 width, height;
   const Config config;
 
+  std::unique_ptr<PixelRenderer> renderer;
+
   void start();
   void quit() { running = false; }
+  
+  const AssetsManager& getAssetsManager() const { return app.assetsManager; }
 
  protected:
   explicit Game(const char* title, const Config& config);
 
   FrameRate frameRate = FrameRate(config.window.fps);
-  std::unique_ptr<PixelRenderer> renderer;
 
   // Return true -- if created successfully, false -- otherwise
   virtual bool onGameCreate() = 0;
@@ -35,7 +38,6 @@ class Game {
   virtual void onKeyEvent(const SDL_Event& event) = 0;
   virtual void onMouseEvent(const SDL_Event& event) = 0;
 
-  const AssetsManager& getAssetsManager() const { return app.assetsManager; }
 
  private:
   App app;
