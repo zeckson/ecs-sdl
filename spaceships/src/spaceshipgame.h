@@ -9,13 +9,9 @@
 #include "scene/scenegame.h"
 
 class SpaceshipGame : public SceneGame {
- public:
- private:
+ protected:
   bool onGameCreate() override;
 
-  void onGameUpdate() override;
-
- protected:
   void onKeyEvent(const SDL_Event& event) override;
 
   void onMouseEvent(const SDL_Event& event) override;

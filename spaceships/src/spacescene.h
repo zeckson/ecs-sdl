@@ -6,11 +6,18 @@
 #define ECS_SPACESCENE_H
 
 #include "scene/scene.h"
+#include <engine/game.h>
 
 class SpaceScene: public Scene {
-  void update() override;
-  void init() override;
-  void onAction(const Action& action) override;
+  private:
+    Game& game;  // Reference to Game object
+
+  public:
+    SpaceScene(Game& gameObj): game(gameObj) {} 
+
+    void update() override;
+    void init() override;
+    void onAction(const Action& action) override;
 };
 
 #endif  // ECS_SPACESCENE_H

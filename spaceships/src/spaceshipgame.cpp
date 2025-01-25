@@ -6,16 +6,12 @@
 
 #include "spacescene.h"
 
-SpaceshipGame::SpaceshipGame(const char* title, const Config& config) : SceneGame(title, config) {
-  auto scene = std::make_shared<SpaceScene>();
+SpaceshipGame::SpaceshipGame(const char* title, const Config& config) : SceneGame(title, config) {}
+
+bool SpaceshipGame::onGameCreate() {
+  auto scene = std::make_shared<SpaceScene>(*this);
   this->changeScene("space", scene);
-}
-
-bool SpaceshipGame::onGameCreate() { return true; }
-
-void SpaceshipGame::onGameUpdate() {
-  const std::unique_ptr<Sprite>& sprite = getAssetsManager().getTexture("spaceship");
-  renderer->renderSprite(sprite, {100, 100});
+  return true;
 }
 
 void SpaceshipGame::onKeyEvent(const SDL_Event& event) {}
