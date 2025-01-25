@@ -5,28 +5,19 @@
 #ifndef ECS_SDL_RANDOMIZER_H
 #define ECS_SDL_RANDOMIZER_H
 
-#include <climits>
-#include <cstdlib>  // for rand() and srand()
-#include <ctime>    // for time()
-
-#define FLOAT_FRACTION 1000
+#include "random/random.h"
 
 class Randomizer {
  public:
-  explicit Randomizer() {
-    std::srand(std::time(nullptr));  // NOLINT(*-msc51-cpp)
-  };
+  explicit Randomizer() { Random::initialize(); };
 
-  int between(const int min, const int max) { return min + get(max - min); }
+  int between(const int min, const int max) { return Random::getInt(min, max); }
 
-  float betweenf(const float min, const float max) { return min + getf(max - min); }
+  float betweenf(const float min, const float max) { return Random::getFloat(min, max); }
 
-  int get(const int max) {
-    return std::rand() % (1 + max);  // NOLINT(*-msc50-cpp)
-  }
+  int get(const int max) { return between(0, max); }
 
-  // from 0..1
-  float getf(const float max = 1) { return (float(get(FLOAT_FRACTION)) / FLOAT_FRACTION) * max; }
+  float getf(const float max = 1) { return betweenf(0, max); }
 };
 
 #endif  // ECS_SDL_RANDOMIZER_H
