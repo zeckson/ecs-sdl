@@ -13,8 +13,9 @@
 
 #include "../action/action.h"
 #include "../action/keyboardactionhandler.h"
+#include "../action/mouseactionhandler.h"
 
-class Scene: public KeyboardActionHandler {
+class Scene: public KeyboardActionHandler, public MouseActionHandler {
  public:
   explicit Scene() {};
 

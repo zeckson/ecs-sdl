@@ -13,7 +13,7 @@ void SceneGame::onKeyEvent(const SDL_Event& event) {
 }
 
 void SceneGame::onMouseEvent(const SDL_Event& event) {
-  getCurrentScene()->handleKeyboardEvent(event);
+  getCurrentScene()->handleMouseEvent(event);
 }
 
 void SceneGame::changeScene(const std::string& name, const std::shared_ptr<Scene> scene) {

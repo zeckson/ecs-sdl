@@ -16,7 +16,7 @@ class PlayScene : public Scene {
 
  protected:
   EntityManager manager;
-  void onAction(const Action& action) override;
+  void onKeyboardAction(const Action& action) override;
 
  private:
   void spawnEnemySystem();

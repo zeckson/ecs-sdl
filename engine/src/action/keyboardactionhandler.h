@@ -17,9 +17,9 @@ class KeyboardActionHandler {
     std::map<SDL_Scancode, std::string> actionMap;
 
 protected:
-    void registerAction(const SDL_Scancode code, const std::string& actionName);
+    void registerKeyboardAction(const SDL_Scancode code, const std::string& actionName);
 
-    virtual void onAction(const Action& action) = 0;
+    virtual void onKeyboardAction(const Action& action) = 0;
 };
 
 #endif  // KEYBOARDACTIONHANDLER_H

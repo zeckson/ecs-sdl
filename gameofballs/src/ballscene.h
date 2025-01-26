@@ -45,7 +45,8 @@ class BallScene : public PlayScene {
 
   void update() override;
   void init() override;
-  void onAction(const Action& action) override;
+  void onKeyboardAction(const Action& action) override;
+  void onMouseAction(const MouseAction& action) override;
 };
 
 #endif  // ECS_BallScene_H

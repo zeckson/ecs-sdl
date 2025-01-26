@@ -39,10 +39,12 @@ bool collides(const std::shared_ptr<Entity>& source, const std::shared_ptr<Entit
 BallScene::BallScene(Game& gameObj) : game(gameObj) {}
 
 void BallScene::init() {
-  registerAction(SDL_SCANCODE_RIGHT, "MOVE_RIGHT");
-  registerAction(SDL_SCANCODE_LEFT, "MOVE_LEFT");
-  registerAction(SDL_SCANCODE_UP, "MOVE_UP");
-  registerAction(SDL_SCANCODE_DOWN, "MOVE_DOWN");
+  registerKeyboardAction(SDL_SCANCODE_RIGHT, "MOVE_RIGHT");
+  registerKeyboardAction(SDL_SCANCODE_LEFT, "MOVE_LEFT");
+  registerKeyboardAction(SDL_SCANCODE_UP, "MOVE_UP");
+  registerKeyboardAction(SDL_SCANCODE_DOWN, "MOVE_DOWN");
+
+  registerMouseAction(MouseActionType::MOUSE_LEFT_CLICK, "SHOOT");
 
   player = manager.createEntity(ENTITY_PLAYER_TAG);
   const auto playerConfig = config.player;
@@ -64,7 +66,7 @@ void BallScene::update() {
   lifecycleSystem();
 }
 
-void BallScene::onAction(const Action& action) {
+void BallScene::onKeyboardAction(const Action& action) {
   const auto& entity = player;
 
   if (entity->has<InputComponent>()) {
@@ -82,15 +84,28 @@ void BallScene::onAction(const Action& action) {
       action.type == ActionType::START ? input.set(Direction::DOWN) : input.unset(Direction::DOWN);
     }
   }
+}
 
-  // if (event.type == SDL_MOUSEBUTTONDOWN) {
-  //   if (event.button.button == SDL_BUTTON_LEFT) {
-  //     int mouseX, mouseY;
-  //     SDL_GetMouseState(&mouseX, &mouseY);
-  //     Logger::info("Left mouse button clicked at: [%u, %u]", mouseX, mouseY);
-  //     spawnBullet(Vec2(mouseX, mouseY));
-  //   }
-  // }
+void BallScene::onMouseAction(const MouseAction& action) {
+  if (action.name == "SHOOT" && action.type == ActionType::END) {
+    spawnBullet(action.position);
+  }
+}
+
+void BallScene::spawnBullet(const Vec2& target) {
+  const std::string name = ENTITY_BULLET_TAG;
+  auto bullet = manager.createEntity(name);
+  const auto& bulletConfig = config.bullet;
+  int radius = 5;
+  bullet->addComponent<CollisionComponent>(bulletConfig.collisionRadius);
+  bullet->addComponent<ShapeComponent>(bulletConfig.shapeRadius, bulletConfig.outlineColor, bulletConfig.fillColor,
+                                       bulletConfig.thickness);
+  const auto playerPosition = player->getComponent<TransformComponent>().position;
+  auto distance = target - playerPosition;
+  auto velocity = distance.normalize();
+  bullet->addComponent<TransformComponent>(playerPosition, velocity * bulletConfig.speed);
+  bullet->addComponent<LifecycleComponent>(bulletConfig.lifespan);
+  Logger::info("Entity[%s] created at: %s with radius: %d", name.c_str(), playerPosition.toString().c_str(), radius);
 }
 
 void BallScene::spawnEnemySystem() {

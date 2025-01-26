@@ -13,7 +13,7 @@ void PlayScene::update() {
   lifecycleSystem();
 }
 
-void PlayScene::onAction(const Action& action) {
+void PlayScene::onKeyboardAction(const Action& action) {
 
 }
 

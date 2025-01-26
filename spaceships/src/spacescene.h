@@ -21,7 +21,8 @@ class SpaceScene: public Scene {
     void update() override;
     void checkBounds();
     void init() override;
-    void onAction(const Action& action) override;
+    void onKeyboardAction(const Action& action) override;
+    void onMouseAction(const MouseAction& action) override;
 };
 
 #endif  // ECS_SPACESCENE_H

@@ -26,14 +26,14 @@ void KeyboardActionHandler::handleKeyboardEvent(const SDL_Event& event) {
   const auto actionName = it->second;
 
   if (event.type == SDL_KEYDOWN) {
-    onAction(Action(actionName, ActionType::START));
+    onKeyboardAction(Action(actionName, ActionType::START));
   }
 
   if (event.type == SDL_KEYUP) {
-    onAction(Action(actionName, ActionType::END));
+    onKeyboardAction(Action(actionName, ActionType::END));
   }
 }
 
-void KeyboardActionHandler::registerAction(const SDL_Scancode code, const std::string& actionName) {
+void KeyboardActionHandler::registerKeyboardAction(const SDL_Scancode code, const std::string& actionName) {
     actionMap[code] = actionName;
 }

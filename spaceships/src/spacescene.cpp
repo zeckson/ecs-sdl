@@ -41,12 +41,12 @@ void SpaceScene::checkBounds() {
 }
 void SpaceScene::init() {
   player = game.getAssetsManager().getTexture("spaceship");
-  registerAction(SDL_SCANCODE_RIGHT, "MOVE_RIGHT");
-  registerAction(SDL_SCANCODE_LEFT, "MOVE_LEFT");
-  registerAction(SDL_SCANCODE_UP, "MOVE_UP");
-  registerAction(SDL_SCANCODE_DOWN, "MOVE_DOWN");
+  registerKeyboardAction(SDL_SCANCODE_RIGHT, "MOVE_RIGHT");
+  registerKeyboardAction(SDL_SCANCODE_LEFT, "MOVE_LEFT");
+  registerKeyboardAction(SDL_SCANCODE_UP, "MOVE_UP");
+  registerKeyboardAction(SDL_SCANCODE_DOWN, "MOVE_DOWN");
 }
-void SpaceScene::onAction(const Action& action) {
+void SpaceScene::onKeyboardAction(const Action& action) {
   if (action.name == "MOVE_RIGHT") {
     player->angle += 15;
   }
@@ -73,4 +73,8 @@ void SpaceScene::onAction(const Action& action) {
   Logger::info("Action[%s] type: %s", action.name.c_str(), action.type == ActionType::START ? "start" : "end");
 
   Logger::info("Angle: %f, speed: %d", player->angle, speed);
+}
+
+void SpaceScene::onMouseAction(const MouseAction& action) {
+  Logger::info("Mouse action[%s] type: %s", action.name.c_str(), action.type == ActionType::START ? "start" : "end");
 }
