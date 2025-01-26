@@ -25,7 +25,7 @@ namespace Asset {
 // Abstract base class for all resources
 struct Resource {
   std::string name;
-  
+
   virtual ~Resource() = default;
   virtual void load(std::ifstream& in) = 0;
 };
