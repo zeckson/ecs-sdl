@@ -40,7 +40,7 @@ void Scene::handleEvent(const SDL_Event& event) {
   if (event.type == SDL_MOUSEBUTTONDOWN) {
     onAction(Action(actionName, ActionType::START));
   }
-
+  
   if (event.type == SDL_MOUSEBUTTONUP) {
     onAction(Action(actionName, ActionType::END));
   }

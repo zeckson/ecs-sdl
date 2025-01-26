@@ -6,7 +6,7 @@
 #define ECS_SPACESHIPGAME_H
 
 #include "engine/game.h"
-#include "scene/scenegame.h"
+#include "engine/scenegame.h"
 
 class SpaceshipGame : public SceneGame {
  protected:

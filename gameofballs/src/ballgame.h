@@ -5,7 +5,7 @@
 #ifndef ECS_SDL_BALLGAME_H
 #define ECS_SDL_BALLGAME_H
 
-#include "scene/scenegame.h"
+#include "engine/scenegame.h"
 
 class BallGame : public SceneGame {
  public:

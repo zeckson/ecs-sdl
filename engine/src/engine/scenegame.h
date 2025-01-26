@@ -8,8 +8,8 @@
 #include <map>
 #include <memory>
 
-#include "../engine/game.h"
-#include "scene.h"
+#include "game.h"
+#include "../scene/scene.h"
 
 typedef std::map<std::string, std::shared_ptr<Scene>> SceneMap;
 
