@@ -9,11 +9,11 @@ void SceneGame::onGameUpdate() {
 }
 
 void SceneGame::onKeyEvent(const SDL_Event& event) {
-  getCurrentScene()->handleEvent(event);
+  getCurrentScene()->handleKeyboardEvent(event);
 }
 
 void SceneGame::onMouseEvent(const SDL_Event& event) {
-  getCurrentScene()->handleEvent(event);
+  getCurrentScene()->handleKeyboardEvent(event);
 }
 
 void SceneGame::changeScene(const std::string& name, const std::shared_ptr<Scene> scene) {

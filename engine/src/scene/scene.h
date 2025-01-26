@@ -12,22 +12,14 @@
 #include <string>
 
 #include "../action/action.h"
+#include "../action/keyboardactionhandler.h"
 
-class Scene {
-  std::map<SDL_Scancode, std::string> actionMap;
-
+class Scene: public KeyboardActionHandler {
  public:
   explicit Scene() {};
 
-  void handleEvent(const SDL_Event& event);
-
   virtual void update() = 0;
   virtual void init() = 0;
-
- protected:
-  void registerAction(const SDL_Scancode code, const std::string& actionName);
-
-  virtual void onAction(const Action& action) = 0;
 };
 
 #endif  // ECS_SDL_SCENE_H
