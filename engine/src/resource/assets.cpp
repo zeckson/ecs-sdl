@@ -33,9 +33,10 @@ void Animation::load(std::ifstream& in) {
 
 }  // namespace Asset
 
-Assets::Assets() {
+Assets::Assets(): resources({}) {
     // Register loaders for different resource types
-    loaders["Font"] = []() { return std::make_shared<Asset::Font>(); };
+    loaders["Window"] = []() { return std::make_shared<Asset::Window>(); };
+    loaders["Font"] = []() { return std::make_shared<Asset::Font>(FONT_NAME); };
     loaders["Texture"] = []() { return std::make_shared<Asset::Sprite>(); };
     loaders["Animation"] = []() { return std::make_shared<Asset::Animation>(); };
 }
@@ -59,13 +60,13 @@ const Assets& Assets::load(const std::string& path) {
     throw std::runtime_error("Failed to open file: " + path);
   }
 
-  std::string name;
+  std::string type;
 
   while (fin.good() && !fin.eof()) {
-    fin >> name;
-    auto loader = instance.loaders.find(name);
+    fin >> type;
+    auto loader = instance.loaders.find(type);
     if (loader == instance.loaders.end()) {
-        throw std::runtime_error("No loader registered for type: " + name);
+        throw std::runtime_error("No loader registered for type: " + type);
     }
     auto resource = loader->second();
 
