@@ -9,7 +9,7 @@
 
 #include "scene/playscene.h"
 #include "entityconfig.h"
-#include "randomizer.h"
+#include "random/randomizer.h"
 #include "resource/config.h"
 
 #define ENTITY_BULLET_TAG "bullet"
