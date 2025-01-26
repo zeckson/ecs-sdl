@@ -18,7 +18,6 @@ void SpaceScene::update() {
   if (currentFrame > 120) {
     currentFrame = 0;
   }
-
 }
 void SpaceScene::checkBounds() {
   if (playerPos.x > game.width) {
@@ -48,27 +47,22 @@ void SpaceScene::onAction(const Action& action) {
   if (action.name == "MOVE_LEFT") {
     player->angle -= 15;
   }
-  if (player->angle > 360)
-  {
+  if (player->angle > 360) {
     player->angle -= 360;
   }
-  if (player->angle < 0)
-  {
+  if (player->angle < 0) {
     player->angle += 360;
   }
-  
 
   int speed = 0;
-  if (action.name == "MOVE_UP")
-  {
+  if (action.name == "MOVE_UP") {
     speed += SPEED;
   }
-  if (action.name == "MOVE_DOWN")
-  {
+  if (action.name == "MOVE_DOWN") {
     speed -= SPEED;
   }
   playerPos += Util::toVelocity(speed, player->angle);
-  
+
   Logger::info("Action[%s] type: %s", action.name.c_str(), action.type == ActionType::START ? "start" : "end");
 
   Logger::info("Angle: %f, speed: %d", player->angle, speed);
