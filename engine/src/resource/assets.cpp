@@ -36,7 +36,7 @@ void Animation::load(std::ifstream& in) {
 Assets::Assets() : resources({}) {
   // Register loaders for different resource types
   loaders["Window"] = []() { return std::make_shared<Asset::Window>(); };
-  loaders["Font"] = []() { return std::make_shared<Asset::Font>(FONT_NAME); };
+  loaders["Font"] = []() { return std::make_shared<Asset::Font>(); };
   loaders["Texture"] = []() { return std::make_shared<Asset::Sprite>(); };
   loaders["Animation"] = []() { return std::make_shared<Asset::Animation>(); };
 }
