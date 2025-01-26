@@ -9,6 +9,12 @@
 
 int SPEED = 10;
 
+#include <cmath> // For M_PI
+
+double degreesToRadians(double degrees) {
+    return degrees * M_PI / 180.0;
+}
+
 void SpaceScene::update() {
   checkBounds();
 
@@ -61,7 +67,8 @@ void SpaceScene::onAction(const Action& action) {
   if (action.name == "MOVE_DOWN") {
     speed -= SPEED;
   }
-  playerPos += Util::toVelocity(speed, player->angle);
+  auto velocity = Util::toVelocity(speed, degreesToRadians(player->angle - 90));
+  playerPos += velocity;
 
   Logger::info("Action[%s] type: %s", action.name.c_str(), action.type == ActionType::START ? "start" : "end");
 
