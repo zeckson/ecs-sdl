@@ -9,14 +9,13 @@
 #include "scene.h"
 
 class PlayScene : public Scene {
-  EntityManager manager;
-
  public:
   explicit PlayScene() : Scene() {}
 
   void update() override;
 
  protected:
+  EntityManager manager;
   void onAction(const Action& action) override;
 
  private:

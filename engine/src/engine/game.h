@@ -23,13 +23,12 @@ class Game {
 
   void start();
   void quit() { running = false; }
-  
+
   const AssetsManager& getAssetsManager() const { return app.assetsManager; }
+  FrameRate frameRate = FrameRate(config.window.fps);
 
  protected:
   explicit Game(const char* title, const Config& config);
-
-  FrameRate frameRate = FrameRate(config.window.fps);
 
   // Return true -- if created successfully, false -- otherwise
   virtual bool onGameCreate() = 0;
