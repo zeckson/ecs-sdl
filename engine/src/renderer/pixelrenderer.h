@@ -37,11 +37,13 @@ class PixelRenderer {
 
   void drawPoint(const int x, const int y);
 
-  void drawRect(const SDL_Rect* pRect);
+  void drawRect(const SDL_Rect* pRect, bool fill = false);
 
   void drawCircle(const Vec2& center, int radius);
 
   void renderText(const std::string& text, const Uint32 x, const Uint32 y);
+  
+  void renderText(const std::string& text, const Uint32 x, const Uint32 y, const Pixel& color);
 
   void renderTexture(SDL_Texture* texture, const Vec2& size, const Vec2& dest);
 
