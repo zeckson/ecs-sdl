@@ -36,19 +36,18 @@ void MenuScene::update() {
   int menuItemHeight = 40;
 
   auto font = game.getAssetsManager().getFont("glitchgoblin");
+  auto textBuilder = TextRenderer::Builder(font);
 
   for (size_t i = 0; i < menuItems.size(); ++i) {
     Pixel background = (i == selectedItem) ? WHITE : GRAY;
     Pixel textColor = (i == selectedItem) ? Pixel{255, 0, 0, 255} : BLACK;
     const SDL_Rect box = {game.width / 2 - menuWidth / 2, menuStartY + static_cast<int>(i) * menuItemHeight, menuWidth,
                           menuItemHeight};
-    TextRenderer textRenderer = TextRenderer::Builder(font)
-                                    .withText(menuItems[i])
-                                    .withColor(textColor)
-                                    .withBackgroundColor(background)
-                                    .justify(TextRenderer::Left)
-                                    .inside(box)
-                                    .build();
-    textRenderer.render(renderer->renderer());
+    renderer->render(textBuilder.withText(menuItems[i])
+                         .withColor(textColor)
+                         .withBackgroundColor(background)
+                         .justify(TextRenderer::Left)
+                         .inside(box)
+                         .build());
   }
 }

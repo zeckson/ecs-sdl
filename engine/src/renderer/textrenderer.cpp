@@ -2,7 +2,7 @@
 
 TextRenderer::TextRenderer(TTF_Font* font, const TextRenderer::Config& config) : font(font), config(config) {}
 
-void TextRenderer::render(SDL_Renderer* renderer) {
+void TextRenderer::render(SDL_Renderer* renderer) const {
   SDL_Surface* textSurface = TTF_RenderText_Blended(font, config.text.c_str(), config.textColor);
   SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 

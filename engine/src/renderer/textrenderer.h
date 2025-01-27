@@ -14,7 +14,7 @@ class TextRenderer: public Renderable {
 
   class Builder;
 
-  void render(SDL_Renderer* renderer) override;
+  void render(SDL_Renderer* renderer) const override;
 
  private:
   struct Config {
