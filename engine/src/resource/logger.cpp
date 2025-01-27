@@ -18,6 +18,13 @@ void Logger::log(ApplicationLog category, SDL_LogPriority priority, const char* 
   va_end(args);
 }
 
+void Logger::logAll() { SDL_LogSetAllPriority(SDL_LOG_PRIORITY_DEBUG); }
+
+void Logger::logDefault() {
+  SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN);
+  SDL_LogSetPriority(ApplicationLog::GAME_ENGINE, SDL_LOG_PRIORITY_INFO);
+}
+
 void Logger::logv(ApplicationLog category, SDL_LogPriority priority, const char* format, va_list ap) {
   SDL_LogMessageV(category, priority, format, ap);
 }

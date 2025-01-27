@@ -19,6 +19,9 @@ class Logger {
 
   static void log(ApplicationLog category, SDL_LogPriority priority, const char* format, ...);
 
+  static void logAll();
+  static void logDefault();
+
  private:
   static void logv(ApplicationLog category, SDL_LogPriority priority, const char* format, va_list ap);
 };
