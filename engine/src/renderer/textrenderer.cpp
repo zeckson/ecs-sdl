@@ -8,9 +8,9 @@ void TextRenderer::render(SDL_Renderer* renderer) const {
 
   SDL_Rect textRect = {config.bbox.x, config.bbox.y, textSurface->w, textSurface->h};
   if (config.alignment == Center) {
-    textRect.x -= textSurface->w / 2;
+    textRect.x += config.bbox.w / 2 - textSurface->w / 2;
   } else if (config.alignment == Right) {
-    textRect.x -= textSurface->w;
+    textRect.x += config.bbox.w - textSurface->w;
   }
 
   SDL_SetRenderDrawColor(renderer, config.bgColor.r, config.bgColor.g, config.bgColor.b, config.bgColor.a);

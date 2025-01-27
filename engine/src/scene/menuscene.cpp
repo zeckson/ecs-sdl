@@ -46,7 +46,7 @@ void MenuScene::update() {
     renderer->render(textBuilder.withText(menuItems[i])
                          .withColor(textColor)
                          .withBackgroundColor(background)
-                         .justify(TextRenderer::Left)
+                         .justify(TextRenderer::Center)
                          .inside(box)
                          .build());
   }
