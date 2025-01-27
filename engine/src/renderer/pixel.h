@@ -16,9 +16,9 @@ class Pixel {
   static Uint32 pack(Uint8 r, Uint8 g, Uint8 b, Uint8 a) { return (r | g << 8 | b << 16 | a << 24); }
 
  public:
-  Pixel(const Uint8 r, const Uint8 g, const Uint8 b, const Uint8 a) : data(Pixel::pack(r, g, b, a)){};
+  Pixel(const Uint8 r, const Uint8 g, const Uint8 b, const Uint8 a) : data(Pixel::pack(r, g, b, a)) {};
 
-  Pixel(const Uint8 r, const Uint8 g, const Uint8 b) : Pixel(r, g, b, 255){};
+  Pixel(const Uint8 r, const Uint8 g, const Uint8 b) : Pixel(r, g, b, 255) {};
 
   [[nodiscard]] Uint8 r() const;
 
