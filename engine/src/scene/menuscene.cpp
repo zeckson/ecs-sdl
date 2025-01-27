@@ -24,11 +24,21 @@ void MenuScene::onKeyboardAction(const Action& action) {
 
 void MenuScene::onMouseAction(const MouseAction& action) {}
 
+const Pixel GRAY = Pixel{100, 100, 100, 255};
+
 void MenuScene::update() {
   auto &renderer = game.renderer;
 
+  int menuWidth = game.width / 2;
+  int menuStartY = game.height / 4;
+  int menuItemHeight = 40;
+
   for (size_t i = 0; i < menuItems.size(); ++i) {
-    Pixel color = (i == selectedItem) ? Pixel{255, 0, 0, 255} : Pixel{255, 255, 255, 255};
+    Pixel background = (i == selectedItem) ? WHITE : GRAY;
+    renderer->setColor(background);
+    const SDL_Rect rect = {game.width / 2 - menuWidth / 2, menuStartY + static_cast<int>(i) * menuItemHeight, menuWidth, menuItemHeight};
+    renderer->drawRect(&rect, true);
+    Pixel textColor = (i == selectedItem) ? Pixel{255, 0, 0, 255} : BLACK;
     renderer->renderText(menuItems[i], 100, 100 + static_cast<int>(i) * 40);
   }
 }
