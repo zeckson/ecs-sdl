@@ -47,14 +47,14 @@ TextRenderer::Builder& TextRenderer::Builder::withText(const std::string& text) 
 }
 
 // Set background color for the text
-TextRenderer::Builder& TextRenderer::Builder::withBackgroundColor(const SDL_Color& color) {
-    config.bgColor = color;
+TextRenderer::Builder& TextRenderer::Builder::withBackgroundColor(const Pixel& color) {
+    config.bgColor = {color.r(), color.g(), color.b()};
     return *this;
 }
 
 // Set foreground color for the text
-TextRenderer::Builder& TextRenderer::Builder::withColor(const SDL_Color& color) {
-    config.textColor = color;
+TextRenderer::Builder& TextRenderer::Builder::withColor(const Pixel& color) {
+    config.textColor = {color.r(), color.g(), color.b()};
     return *this;
 }
 

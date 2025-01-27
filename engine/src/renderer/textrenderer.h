@@ -5,6 +5,7 @@
 #include <SDL_ttf.h>
 
 #include <string>
+#include "pixel.h"
 
 class TextRenderer {
  public:
@@ -40,8 +41,8 @@ class TextRenderer::Builder {
   Builder& justify(Alignment align);
   Builder& inside(const SDL_Rect& bbox);
   Builder& withText(const std::string& text);
-  Builder& withBackgroundColor(const SDL_Color& color);
-  Builder& withColor(const SDL_Color& color);
+  Builder& withBackgroundColor(const Pixel& color);
+  Builder& withColor(const Pixel& color);
 
   TextRenderer build() const;
 };
