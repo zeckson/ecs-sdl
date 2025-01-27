@@ -6,14 +6,15 @@
 
 #include <string>
 #include "pixel.h"
+#include "renderable.h"
 
-class TextRenderer {
+class TextRenderer: public Renderable {
  public:
   enum Alignment { Left, Center, Right };
 
   class Builder;
 
-  void render(SDL_Renderer* renderer);
+  void render(SDL_Renderer* renderer) override;
 
  private:
   struct Config {

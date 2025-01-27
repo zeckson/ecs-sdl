@@ -13,6 +13,7 @@
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "pixel.h"
+#include "renderable.h"
 
 class PixelRenderer {
  public:
@@ -48,6 +49,8 @@ class PixelRenderer {
   void renderTexture(SDL_Texture* texture, const Vec2& size, const Vec2& dest);
 
   void renderSprite(const std::shared_ptr<Sprite>& sprite, const Vec2& dest);
+
+  void render(Renderable& renderable);
 
   SDL_Renderer* renderer() { return pSDLRenderer; }
 
