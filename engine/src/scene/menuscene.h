@@ -7,7 +7,7 @@
 #include "scene.h"
 #include <engine/scenegame.h>
 
-class MenuScene : public Scene {
+class MenuScene : public Scene<SceneGame> {
  public:
   MenuScene(const std::vector<std::string>& items, SceneGame& game);
   ~MenuScene();
@@ -20,8 +20,6 @@ class MenuScene : public Scene {
   int selectedItem;
 
  protected:
-  SceneGame& game;
-  
   void onKeyboardAction(const Action& action) override;
   void onMouseAction(const MouseAction& action) override;
 

@@ -7,10 +7,11 @@
 
 #include "entity/entitymanager.h"
 #include "scene.h"
+#include <engine/scenegame.h>
 
-class PlayScene : public Scene {
+class PlayScene : public Scene<SceneGame> {
  public:
-  explicit PlayScene(Game& game) : Scene(game) {}
+  explicit PlayScene(SceneGame& game) : Scene(game) {}
 
   void update() override;
 

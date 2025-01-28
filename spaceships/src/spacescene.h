@@ -5,17 +5,17 @@
 #ifndef ECS_SPACESCENE_H
 #define ECS_SPACESCENE_H
 
-#include "scene/scene.h"
-#include <engine/game.h>
+#include <scene/playscene.h>
+#include <engine/scenegame.h>
 
-class SpaceScene: public Scene {
+class SpaceScene: public PlayScene {
   private:
     std::shared_ptr<Sprite> player;
     Vec2 playerPos{100, 100};
     int currentFrame = 0;
 
   public:
-    SpaceScene(Game& game): Scene(game) {}
+    SpaceScene(SceneGame& game): PlayScene(game) {}
 
     void update() override;
     void checkBounds();

@@ -36,7 +36,7 @@ bool collides(const std::shared_ptr<Entity>& source, const std::shared_ptr<Entit
   return collided;
 }
 
-BallScene::BallScene(Game& game) : PlayScene(game) {}
+BallScene::BallScene(SceneGame& game) : PlayScene(game) {}
 
 void BallScene::init() {
   registerKeyboardAction(SDL_SCANCODE_RIGHT, "MOVE_RIGHT");

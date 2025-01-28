@@ -11,11 +11,12 @@
 #include "../scene/scene.h"
 #include "game.h"
 
-typedef std::map<std::string, std::shared_ptr<Scene>> SceneMap;
-
 class SceneGame : public Game {
+  using ScenePointer = std::shared_ptr<Scene<SceneGame>>;
+  using SceneMap = std::map<std::string, ScenePointer>;
+
  private:
-  std::shared_ptr<Scene> getCurrentScene() { return scenes[currentScene]; }
+  ScenePointer getCurrentScene() { return scenes[currentScene]; }
   std::string currentScene;
   SceneMap scenes;
 
@@ -28,10 +29,9 @@ class SceneGame : public Game {
 
   void onMouseEvent(const SDL_Event& event) override;
 
+  void registerScene(const std::string& name, const ScenePointer& scene);
 
-  void registerScene(const std::string& name, const std::shared_ptr<Scene>& scene);
-
-public:
+ public:
   void changeScene(const std::string& name);
 };
 

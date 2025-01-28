@@ -5,7 +5,7 @@
 #ifndef ECS_BALLSCENE_H
 #define ECS_BALLSCENE_H
 
-#include <engine/game.h>
+#include <engine/scenegame.h>
 
 #include "scene/playscene.h"
 #include "entityconfig.h"
@@ -39,7 +39,7 @@ class BallScene : public PlayScene {
   bool checkScreenCollision(TransformComponent& transform, CollisionComponent& collision) const;
 
  public:
-  BallScene(Game& gameObj);
+  BallScene(SceneGame& game);
 
   void update() override;
   void init() override;

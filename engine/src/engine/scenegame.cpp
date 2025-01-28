@@ -10,7 +10,7 @@ void SceneGame::onKeyEvent(const SDL_Event& event) { getCurrentScene()->handleKe
 
 void SceneGame::onMouseEvent(const SDL_Event& event) { getCurrentScene()->handleMouseEvent(event); }
 
-void SceneGame::registerScene(const std::string& name, const std::shared_ptr<Scene>& scene) {
+void SceneGame::registerScene(const std::string& name, const ScenePointer& scene) {
   scene->init();
   scenes[name] = scene;
 }
@@ -20,7 +20,7 @@ void SceneGame::changeScene(const std::string& name) {
     return;
   }
 
-  std::shared_ptr<Scene>& cScene = scenes[currentScene];
+  ScenePointer& cScene = scenes[currentScene];
   if (cScene) {
     // TODO: exit action
   }
