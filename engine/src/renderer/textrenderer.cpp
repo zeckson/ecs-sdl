@@ -12,6 +12,7 @@ void TextRenderer::render(SDL_Renderer* renderer) const {
   } else if (config.alignment == Right) {
     textRect.x += config.bbox.w - textSurface->w;
   }
+  textRect.y += config.bbox.h / 2 - textSurface->h / 2;
 
   SDL_SetRenderDrawColor(renderer, config.bgColor.r, config.bgColor.g, config.bgColor.b, config.bgColor.a);
   SDL_RenderFillRect(renderer, &config.bbox);
