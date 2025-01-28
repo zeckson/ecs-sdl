@@ -7,8 +7,9 @@
 #include <scene/menuscene.h>
 
 bool BallGame::onGameCreate() {
-  auto menu = MenuScene({"Start", "Exit"}, *this);
-  // auto scene = std::make_shared<BallScene>(*this);
-  this->changeScene("menu", std::make_shared<MenuScene>(menu));
+  auto menu = std::make_shared<MenuScene>(MenuScene({"Start", "Exit"}, *this));
+  registerScene("menu", menu);
+  registerScene("game", std::make_shared<BallScene>(BallScene(*this)));
+  changeScene("menu");
   return true;
 }

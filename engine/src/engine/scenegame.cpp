@@ -4,19 +4,18 @@
 
 #include "scenegame.h"
 
-void SceneGame::onGameUpdate() {
-  getCurrentScene()->update();
+void SceneGame::onGameUpdate() { getCurrentScene()->update(); }
+
+void SceneGame::onKeyEvent(const SDL_Event& event) { getCurrentScene()->handleKeyboardEvent(event); }
+
+void SceneGame::onMouseEvent(const SDL_Event& event) { getCurrentScene()->handleMouseEvent(event); }
+
+void SceneGame::registerScene(const std::string& name, const std::shared_ptr<Scene>& scene) {
+  scene->init();
+  scenes[name] = scene;
 }
 
-void SceneGame::onKeyEvent(const SDL_Event& event) {
-  getCurrentScene()->handleKeyboardEvent(event);
-}
-
-void SceneGame::onMouseEvent(const SDL_Event& event) {
-  getCurrentScene()->handleMouseEvent(event);
-}
-
-void SceneGame::changeScene(const std::string& name, const std::shared_ptr<Scene> scene) {
+void SceneGame::changeScene(const std::string& name) {
   if (currentScene == name) {
     return;
   }
@@ -25,14 +24,11 @@ void SceneGame::changeScene(const std::string& name, const std::shared_ptr<Scene
   if (cScene) {
     // TODO: exit action
   }
-  if (scene) {
-    scenes[name] = scene;
+  auto scene = scenes.find(name);
+  if (scene == scenes.end()) {
+    throw std::runtime_error("Scene is not registerd for name: " + name);
   }
-  const std::shared_ptr<Scene>& newScene = scenes[name];
-  if (!newScene) {
-    throw std::runtime_error("Scene not found: " + name);
-  }
+  const auto& newScene = scene->second;
 
-  newScene->init();
   currentScene = name;
 }

@@ -9,7 +9,7 @@
 SpaceshipGame::SpaceshipGame(const char* title, const Config& config) : SceneGame(title, config) {}
 
 bool SpaceshipGame::onGameCreate() {
-  auto scene = std::make_shared<SpaceScene>(*this);
-  this->changeScene("space", scene);
+  registerScene("space", std::make_shared<SpaceScene>(SpaceScene(*this)));
+  this->changeScene("space");
   return true;
 }

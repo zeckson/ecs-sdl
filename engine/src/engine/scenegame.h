@@ -8,8 +8,8 @@
 #include <map>
 #include <memory>
 
-#include "game.h"
 #include "../scene/scene.h"
+#include "game.h"
 
 typedef std::map<std::string, std::shared_ptr<Scene>> SceneMap;
 
@@ -18,7 +18,7 @@ class SceneGame : public Game {
   SceneMap scenes;
 
  protected:
-  explicit SceneGame(const char* title, const Config& config): Game(title, config) {}
+  explicit SceneGame(const char* title, const Config& config) : Game(title, config) {}
 
   void onGameUpdate() override;
 
@@ -26,7 +26,9 @@ class SceneGame : public Game {
 
   void onMouseEvent(const SDL_Event& event) override;
 
-  void changeScene(const std::string& name, std::shared_ptr<Scene> scene);
+  void changeScene(const std::string& name);
+
+  void registerScene(const std::string& name, const std::shared_ptr<Scene>& scene);
 
  private:
   std::shared_ptr<Scene> getCurrentScene() { return scenes[currentScene]; }
