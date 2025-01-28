@@ -5,6 +5,8 @@
 
 #include <SDL.h>
 
+#include "textrenderer.h"
+
 PixelRenderer* PixelRenderer::setColor(const Pixel& pixel) {
   SDL_SetRenderDrawColor(pSDLRenderer, pixel.r(), pixel.g(), pixel.b(), pixel.a());
   return this;
@@ -26,13 +28,13 @@ void PixelRenderer::drawLine(Uint32 startX, Uint32 startY, Uint32 endX, Uint32 e
 
 void PixelRenderer::drawLine(const Vec2& from, const Vec2& to) { drawLine(from.x, from.y, to.x, to.y); }
 
-void PixelRenderer::drawRect(const SDL_Rect* pRect, bool fill) { 
+void PixelRenderer::drawRect(const SDL_Rect* pRect, bool fill) {
   if (fill) {
     SDL_RenderFillRect(pSDLRenderer, pRect);
   } else {
     SDL_RenderDrawRect(pSDLRenderer, pRect);
   }
- }
+}
 
 void PixelRenderer::drawCircle(const Vec2& center, int radius) {
   int centerX = (int)center.x;
@@ -51,15 +53,9 @@ void PixelRenderer::renderText(const std::string& text, const Uint32 x, const Ui
 }
 
 void PixelRenderer::renderText(const std::string& text, const Uint32 x, const Uint32 y, const Pixel& color) {
-  SDL_Surface* surface =
-      TTF_RenderText_Solid(manager.getFont("glitchgoblin"), text.c_str(), {color.r(), color.g(), color.b()});
-  SDL_Texture* texture = SDL_CreateTextureFromSurface(pSDLRenderer, surface);
-  SDL_Rect textRect = {(int)x, (int)y, surface->w, surface->h};
-
-  SDL_RenderCopy(pSDLRenderer, texture, nullptr, &textRect);
-
-  SDL_FreeSurface(surface);
-  SDL_DestroyTexture(texture);
+  auto builder = TextRenderer::Builder(manager.getFont("glitchgoblin"));
+  builder.justify(TextRenderer::Left).ofSize({0, 0}).withText(text).withColor(color);
+  render(builder.build(), {(int)x, (int)y});
 }
 
 void PixelRenderer::renderTexture(SDL_Texture* texture, const Vec2& size, const Vec2& dest) {
