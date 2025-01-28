@@ -9,7 +9,7 @@
 #include "../resource/logger.h"
 
 App::App(const char* title, const Config& config) {
-  Logger::logDefault()
+  Logger::logDefault();
 
 
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
