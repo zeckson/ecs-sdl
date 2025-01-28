@@ -12,9 +12,9 @@
 #include "geometry/vec2.h"
 #include "renderer/renderable.h"
 
-class Sprite: public Renderable {
+class Sprite : public Renderable {
   const std::string& name;
-  const SDL_Texture* sdlTexture;
+  SDL_Texture* sdlTexture;
 
  public:
   const int height;
@@ -44,7 +44,7 @@ class Sprite: public Renderable {
 
   void rotate(double angleDeg);
 
-  SDL_Texture* texture() { return const_cast<SDL_Texture*>(sdlTexture); }
+  SDL_Texture* texture() { return sdlTexture; }
 
   void render(SDL_Renderer* renderer, const Vec2& dest) const override;
 };

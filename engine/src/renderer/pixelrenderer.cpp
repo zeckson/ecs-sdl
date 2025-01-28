@@ -71,11 +71,7 @@ void PixelRenderer::drawPoint(const Vec2& point) { drawPoint(int(point.x), int(p
 void PixelRenderer::drawPoint(const int x, const int y) { SDL_RenderDrawPoint(pSDLRenderer, x, y); }
 
 void PixelRenderer::renderSprite(const std::shared_ptr<Sprite>& sprite, const Vec2& dest) {
-  SDL_Rect rect = {int(dest.x), (int)dest.y, sprite->width, sprite->height};
-  const SDL_Point center = SDL_Point{int(rect.w / 2), int(rect.h / 2)};
-  SDL_RenderCopyEx(renderer(), sprite->texture(), nullptr,  //
-                   &rect,                                   //
-                   sprite->angle, &center, SDL_FLIP_NONE);
+  render(*sprite, dest);
 }
 
 void PixelRenderer::render(const Renderable& renderable, const Vec2& dest) const {
