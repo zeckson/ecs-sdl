@@ -17,6 +17,7 @@ void MenuScene::init() {
   registerKeyboardAction(SDL_SCANCODE_UP, "UP");
   registerKeyboardAction(SDL_SCANCODE_DOWN, "DOWN");
   registerKeyboardAction(SDL_SCANCODE_RETURN, "RETURN");
+  registerKeyboardAction(SDL_SCANCODE_ESCAPE, "EXIT");
 }
 
 void MenuScene::onKeyboardAction(const Action& action) {
@@ -30,6 +31,8 @@ void MenuScene::onKeyboardAction(const Action& action) {
 
       Logger::info("Selected item: %s", item.c_str());
       onMenuItemSelected(item);
+    } else if (action.name == "EXIT") {
+      game.quit();
     }
   }
 }
