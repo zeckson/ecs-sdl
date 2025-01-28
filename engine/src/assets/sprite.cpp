@@ -16,3 +16,7 @@ Sprite::~Sprite() {
 const Vec2 Sprite::getBBox() const { return {width, height}; }
 
 void Sprite::rotate(const double angleDeg) { angle = angleDeg; }
+
+void Sprite::render(SDL_Renderer* renderer, const Vec2& dest) const {
+
+}

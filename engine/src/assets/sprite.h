@@ -10,8 +10,9 @@
 #include <string>
 
 #include "geometry/vec2.h"
+#include "renderer/renderable.h"
 
-class Sprite {
+class Sprite: public Renderable {
   const std::string& name;
   const SDL_Texture* sdlTexture;
 
@@ -44,6 +45,8 @@ class Sprite {
   void rotate(double angleDeg);
 
   SDL_Texture* texture() { return const_cast<SDL_Texture*>(sdlTexture); }
+
+  void render(SDL_Renderer* renderer, const Vec2& dest) const override;
 };
 
 #endif  // ECS_SPRITE_H

@@ -50,7 +50,7 @@ class PixelRenderer {
 
   void renderSprite(const std::shared_ptr<Sprite>& sprite, const Vec2& dest);
 
-  void render(const Renderable& renderable);
+  void render(const Renderable& renderable, const Vec2& dest) const;
 
   SDL_Renderer* renderer() { return pSDLRenderer; }
 

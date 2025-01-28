@@ -7,6 +7,7 @@
 #include <string>
 #include "pixel.h"
 #include "renderable.h"
+#include <geometry/vec2.h>
 
 class TextRenderer: public Renderable {
  public:
@@ -14,12 +15,12 @@ class TextRenderer: public Renderable {
 
   class Builder;
 
-  void render(SDL_Renderer* renderer) const override;
+  void render(SDL_Renderer* renderer, const Vec2& dest) const override;
 
  private:
   struct Config {
     std::string text;
-    SDL_Rect bbox;
+    Vec2 size;
     SDL_Color textColor;
     SDL_Color bgColor;
     Alignment alignment;
@@ -40,7 +41,7 @@ class TextRenderer::Builder {
   Builder(TTF_Font* font);
 
   Builder& justify(Alignment align);
-  Builder& inside(const SDL_Rect& bbox);
+  Builder& ofSize(const Vec2& size);
   Builder& withText(const std::string& text);
   Builder& withBackgroundColor(const Pixel& color);
   Builder& withColor(const Pixel& color);

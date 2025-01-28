@@ -82,6 +82,6 @@ void PixelRenderer::renderSprite(const std::shared_ptr<Sprite>& sprite, const Ve
                    sprite->angle, &center, SDL_FLIP_NONE);
 }
 
-void PixelRenderer::render(const Renderable& renderable) {
-  renderable.render(pSDLRenderer);
+void PixelRenderer::render(const Renderable& renderable, const Vec2& dest) const {
+  renderable.render(pSDLRenderer, dest);
 }
