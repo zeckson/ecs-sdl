@@ -10,7 +10,7 @@
 
 class PlayScene : public Scene {
  public:
-  explicit PlayScene() : Scene() {}
+  explicit PlayScene(Game& game) : Scene(game) {}
 
   void update() override;
 

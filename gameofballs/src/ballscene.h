@@ -22,8 +22,6 @@
 
 class BallScene : public PlayScene {
  private:
-  Game& game;
-
   std::shared_ptr<Entity> player;
   Randomizer random;
   EntityConfig config = EntityConfig::loadFromFile("gameofballs/conf/entity.conf");

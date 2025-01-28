@@ -14,6 +14,8 @@
 typedef std::map<std::string, std::shared_ptr<Scene>> SceneMap;
 
 class SceneGame : public Game {
+ private:
+  std::shared_ptr<Scene> getCurrentScene() { return scenes[currentScene]; }
   std::string currentScene;
   SceneMap scenes;
 
@@ -26,12 +28,11 @@ class SceneGame : public Game {
 
   void onMouseEvent(const SDL_Event& event) override;
 
-  void changeScene(const std::string& name);
 
   void registerScene(const std::string& name, const std::shared_ptr<Scene>& scene);
 
- private:
-  std::shared_ptr<Scene> getCurrentScene() { return scenes[currentScene]; }
+public:
+  void changeScene(const std::string& name);
 };
 
 #endif  // ECS_SDL_SCENEGAME_H

@@ -9,7 +9,7 @@ const Pixel GRAY = Pixel{100, 100, 100, 255};
 #define MENU_ITEM_INDENT 10
 
 MenuScene::MenuScene(const std::vector<std::string>& items, SceneGame& game)
-    : menuItems(items), game(game), selectedItem(0) {}
+    : Scene(game), menuItems(items), selectedItem(0), game(game) {}
 
 MenuScene::~MenuScene() {}
 
@@ -26,7 +26,10 @@ void MenuScene::onKeyboardAction(const Action& action) {
     } else if (action.name == "DOWN") {
       selectedItem = (selectedItem + 1) % menuItems.size();
     } else if (action.name == "RETURN") {
-      Logger::info("Selected item: %s", menuItems[selectedItem].c_str());
+      const auto& item = menuItems[selectedItem];
+      
+      Logger::info("Selected item: %s", item.c_str());
+      onMenuItemSelected(item);
     }
   }
 }

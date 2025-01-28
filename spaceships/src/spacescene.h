@@ -10,13 +10,12 @@
 
 class SpaceScene: public Scene {
   private:
-    Game& game;
     std::shared_ptr<Sprite> player;
     Vec2 playerPos{100, 100};
     int currentFrame = 0;
 
   public:
-    SpaceScene(Game& gameObj): game(gameObj) {}
+    SpaceScene(Game& game): Scene(game) {}
 
     void update() override;
     void checkBounds();

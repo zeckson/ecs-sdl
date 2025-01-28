@@ -16,13 +16,16 @@ class MenuScene : public Scene {
   void update() override;
 
  private:
-  SceneGame& game;
   std::vector<std::string> menuItems;
   int selectedItem;
 
  protected:
+  SceneGame& game;
+  
   void onKeyboardAction(const Action& action) override;
   void onMouseAction(const MouseAction& action) override;
+
+  virtual void onMenuItemSelected(const std::string& item) = 0;
 };
 
 #endif  // MENUSCENE_H

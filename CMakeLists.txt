@@ -32,6 +32,7 @@ target_link_libraries(SpaceShips PRIVATE ZECSEngine)
 # Add an executable target named "GameOfBalls"
 add_executable(GameOfBalls
         gameofballs/src/ballgame.cpp
+        gameofballs/src/entryscene.cpp
         gameofballs/src/ballscene.cpp
         gameofballs/src/entityconfig.cpp
         gameofballs/src/main.cpp
