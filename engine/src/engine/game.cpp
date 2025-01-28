@@ -69,5 +69,5 @@ bool Game::input() {
     }
   }
 
-  return true;
+  return running;
 }
