@@ -13,24 +13,7 @@ Sprite::Sprite(const std::string& name, SDL_Texture* sdlTexture, SDL_Surface* su
 Sprite::~Sprite() {}
 
 const Vec2 Sprite::getBBox() const {
-  double radians = angle * M_PI / 180.0;
-
-  double cosTheta = cos(radians);
-  double sinTheta = sin(radians);
-
-  SDL_Point center = {width / 2, height / 2};
-  SDL_Point position = {center.x, center.y};
-
-  SDL_Point rotated = {center.x + (int)(position.x * cosTheta - position.y * sinTheta),
-                       center.y + (int)(position.x * sinTheta + position.y * cosTheta)};
-
-  int minX = SDL_min(width - rotated.x, width);
-  int minY = SDL_min(height - rotated.y, height);
-
-  int maxX = SDL_max(rotated.x + width, width);
-  int maxY = SDL_max(rotated.y + height, height);
-
-  return {maxX - minX, maxY - minY};
+  return {width, height};
 }
 
 void Sprite::rotate(const double angleDeg) { angle = angleDeg; }

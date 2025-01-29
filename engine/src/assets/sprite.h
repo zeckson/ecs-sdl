@@ -39,7 +39,6 @@ class Sprite : public Renderable {
 
   virtual ~Sprite();
 
-  // TODO: fix bounding box on rotation
   const Vec2 getBBox() const;
 
   void rotate(double angleDeg);
