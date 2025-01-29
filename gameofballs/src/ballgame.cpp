@@ -7,8 +7,8 @@
 #include "entryscene.h"
 
 bool BallGame::onGameCreate() {
-  registerScene("menu", std::make_shared<EntryScene>(EntryScene(*this)));
   registerScene("game", std::make_shared<BallScene>(BallScene(*this)));
+  registerScene("menu", std::make_shared<EntryScene>(EntryScene(*this, std::make_shared<BallScene>(BallScene(*this)))));
   changeScene("menu");
   return true;
 }

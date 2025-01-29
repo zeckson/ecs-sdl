@@ -1,6 +1,7 @@
 #include "entryscene.h"
 
-EntryScene::EntryScene(SceneGame& game) : MenuScene({"Start", "Exit"}, game) {}
+EntryScene::EntryScene(SceneGame& game, std::shared_ptr<BallScene> bgScene)
+    : MenuScene({"Start", "Exit"}, game), bgScene(bgScene) {}
 
 void EntryScene::onMenuItemSelected(const std::string& item) {
   if (item == "Start") {
@@ -8,4 +9,14 @@ void EntryScene::onMenuItemSelected(const std::string& item) {
   } else if (item == "Exit") {
     game.quit();
   }
+}
+
+void EntryScene::init() {
+    MenuScene::init();
+    bgScene->init();
+}
+
+void EntryScene::update() {
+  bgScene->update();
+  MenuScene::update();
 }
