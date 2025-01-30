@@ -120,7 +120,7 @@ void BallScene::spawnEnemySystem() {
     int startX = random.between(radius, game.width - radius);
     int startY = random.between(radius, game.height - radius);
     auto center = Vec2(startX, startY);
-    double direction = random.get(1.0f) * M_2_PI;
+    double direction = random.getf(1.0f) * M_2_PI;
     const auto speed = random.betweenf(enemyConfig.speed.first, enemyConfig.speed.second);
     enemy->addComponent<TransformComponent>(center, speed, direction);
     Logger::info("Entity[%s] created at: [%d, %d] with radius: %d", name.c_str(), startX, startY, radius);
