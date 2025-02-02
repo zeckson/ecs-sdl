@@ -206,7 +206,7 @@ void BallScene::collisionSystem() {
         // Velocity along normal
         float dotProduct = vxRelative * nx + vyRelative * ny;
 
-        if (dotProduct > 0) return;  // Already separating
+        if (dotProduct > 0) break;  // Already separating
 
         float e = 1.0f; // Coefficient of restitution (elastic collision)
         float impulse = (2 * dotProduct) / (BALL_MASS + BALL_MASS);
