@@ -8,7 +8,7 @@
 
 bool BallGame::onGameCreate() {
   registerScene("game", std::make_shared<BallScene>(BallScene(*this)));
-  registerScene("menu", std::make_shared<EntryScene>(EntryScene(*this, std::make_shared<BallScene>(BallScene(*this)))));
+  registerScene("menu", std::make_shared<EntryScene>(EntryScene(*this, std::make_shared<BallScene>(BallScene(*this, true)))));
   changeScene("menu");
   return true;
 }

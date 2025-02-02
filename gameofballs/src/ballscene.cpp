@@ -36,7 +36,8 @@ bool collides(const std::shared_ptr<Entity>& source, const std::shared_ptr<Entit
   return collided;
 }
 
-BallScene::BallScene(SceneGame& game) : PlayScene(game) {}
+BallScene::BallScene(SceneGame& game, bool demo) : PlayScene(game), demo(demo) {}
+BallScene::BallScene(SceneGame& game) : BallScene(game, false) {}
 
 void BallScene::init() {
   registerKeyboardAction(SDL_SCANCODE_RIGHT, "MOVE_RIGHT");
@@ -197,10 +198,14 @@ void BallScene::collisionSystem() {
 
     // enemy - player collision
     if (collides(player, enemy)) {
-      manager.removeEntity(enemy);
-      player->getComponent<TransformComponent>().position = Vec2(game.width / 2, game.height / 2);
+      if (demo) {
+        resolveCollision(player->getComponent<TransformComponent>(), enemy->getComponent<TransformComponent>());
+      } else {
+        manager.removeEntity(enemy);
+        player->getComponent<TransformComponent>().position = Vec2(game.width / 2, game.height / 2);
 
-      goto endloop;  // we don't care about collision enemy is dead
+        goto endloop;  // we don't care about collision enemy is dead
+      }
     }
 
     // enemy - bullet collision

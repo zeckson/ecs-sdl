@@ -30,6 +30,7 @@ class BallScene : public PlayScene {
 
   Vec2 playerPos{100, 100};
   int currentFrame = 0;
+  bool demo = false;
 
   void spawnEnemySystem();
   void spawnBullet(const Vec2& target);
@@ -42,6 +43,7 @@ class BallScene : public PlayScene {
 
  public:
   BallScene(SceneGame& game);
+  BallScene(SceneGame& game, bool demo);
 
   void update() override;
   void init() override;
