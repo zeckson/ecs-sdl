@@ -140,6 +140,38 @@ void BallScene::movementSystem() {
   }
 }
 
+void resolveCollision(TransformComponent& left, TransformComponent& right) {
+  float dx = left.position.x - right.position.x;
+  float dy = left.position.y - right.position.y;
+  float distance = std::sqrt(dx * dx + dy * dy);
+
+  if (distance == 0.0f) return;
+
+  // Normalize direction vector
+  float nx = dx / distance;
+  float ny = dy / distance;
+
+  // Relative velocity
+  float vxRelative = left.velocity.x - right.velocity.x;
+  float vyRelative = left.velocity.y - right.velocity.y;
+
+  // Velocity along normal
+  float dotProduct = vxRelative * nx + vyRelative * ny;
+
+  if (dotProduct > 0) return;  // Already separating
+
+  float e = 1.0f;  // Coefficient of restitution (elastic collision)
+  float impulse = (2 * dotProduct) / (BALL_MASS + BALL_MASS);
+
+  // Swap velocities along normal direction
+  left.velocity.x -= impulse * nx;
+  left.velocity.y -= impulse * ny;
+  right.velocity.x += impulse * nx;
+  right.velocity.y += impulse * ny;
+
+  // TODO: fix merging of balls
+}
+
 void BallScene::collisionSystem() {
   for (const auto& entity : manager.getAllEntities()) {
     if (entity->has<TransformComponent>() && entity->has<CollisionComponent>()) {
@@ -186,38 +218,7 @@ void BallScene::collisionSystem() {
       const auto& otherEnemy = enemyVector[j];
 
       if (collides(enemy, otherEnemy)) {
-        auto& a = enemy->getComponent<TransformComponent>();
-        auto& b = otherEnemy->getComponent<TransformComponent>();
-
-        float dx = a.position.x - b.position.x;
-        float dy = a.position.y - b.position.y;
-        float distance = std::sqrt(dx * dx + dy * dy);
-
-        if (distance == 0.0f) break;
-
-        // Normalize direction vector
-        float nx = dx / distance;
-        float ny = dy / distance;
-
-        // Relative velocity
-        float vxRelative = a.velocity.x - b.velocity.x;
-        float vyRelative = a.velocity.y - b.velocity.y;
-
-        // Velocity along normal
-        float dotProduct = vxRelative * nx + vyRelative * ny;
-
-        if (dotProduct > 0) break;  // Already separating
-
-        float e = 1.0f; // Coefficient of restitution (elastic collision)
-        float impulse = (2 * dotProduct) / (BALL_MASS + BALL_MASS);
-
-        // Swap velocities along normal direction
-        a.velocity.x -= impulse * nx;
-        a.velocity.y -= impulse * ny;
-        b.velocity.x += impulse * nx;
-        b.velocity.y += impulse * ny;
-
-        // TODO: resolve collision overlapping (circles can attach or stick together)
+        resolveCollision(enemy->getComponent<TransformComponent>(), otherEnemy->getComponent<TransformComponent>());
       }
     }
   endloop:;
