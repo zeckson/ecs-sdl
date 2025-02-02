@@ -20,6 +20,8 @@
 
 #define BULLET_MINIMUM_FADE 100
 
+#define BALL_MASS 1.0f
+
 class BallScene : public PlayScene {
  private:
   std::shared_ptr<Entity> player;
